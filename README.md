@@ -6,6 +6,15 @@ This is a boilerplate project using the following technologies:
 - [Sass](http://sass-lang.com/) for styles (using the SCSS syntax)
 - [Webpack](https://webpack.github.io/) for compilation
 
+## Server
+
+- All Server codes are in below folders
+
+```shell
+/config
+/server
+```
+
 
 ## Requirements
 
