@@ -25,11 +25,11 @@ const getAll = condition => {
   return dispatch => {
     dispatch(request());
     trustService.getAll(condition).then(
-      trusts => {
-        if (Object.keys(trusts.data).length === 0) {
-          dispatch(alertActions.error(trusts.error.errmsg ? trusts.error.errmsg : trusts.error.message));
-        } else {
-          dispatch(success(trusts.data));
+      response => {
+        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+          dispatch(success(response.data.data));
+        } else if(response.status === 200) {
+          dispatch(alertActions.error(response.data.error.errmsg ? response.error.errmsg : response.error.message));
         }
       },
       error => {

@@ -44,7 +44,7 @@ class TrustListing extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {trusts.data &&
+                      {trusts.data && Object.keys(trusts.data).length > 0 &&
                         trusts.data.map((prop, key) => {
                           return (
                             <tr key={key}>
