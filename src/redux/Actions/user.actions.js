@@ -15,13 +15,14 @@ function login(username, password) {
   return dispatch => {
     dispatch(request({ username }));
     userService.login(username, password).then(
-      user => {
-        if (Object.keys(user.data).length === 0) {
-          dispatch(failure(user.error.Message));
-          dispatch(alertActions.error(user.error.Message));
-        } else {
-          dispatch(success(user));
+      response => {
+        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+          localStorage.setItem('user', JSON.stringify(response.data.data));
+          dispatch(success(response));
           window.location.href = '/dashboard';
+        } else {
+          dispatch(failure(response.data.error.message));
+          dispatch(alertActions.error(response.data.error.message));
         }
       },
       error => {

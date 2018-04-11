@@ -1,6 +1,5 @@
-import { authHeader } from './auth.header';
-import { serverConfig } from './server.config';
 
+import {http} from './http.service';
 export const userService = {
   login,
   logout,
@@ -11,82 +10,33 @@ export const userService = {
   delete: _delete
 };
 
-const API_BASE_PATH = serverConfig();
-
 function login(username, password) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username, password })
-  };
-
-  return fetch(`${API_BASE_PATH}/api/login`, requestOptions)
-    .then(handleResponse)
-    .then(user => {
-      // login successful if there's a jwt token in the response
-      if (user.error === null && user.data.token) {
-        // store user details and jwt token in local storage to keep user logged in between page refreshes
-        localStorage.setItem('user', JSON.stringify(user.data));
-      }
-      return user;
-    });
+  return  http.post('/api/login', { username, password });
 }
 
+// remove user from local storage to log user out
 function logout() {
-  // remove user from local storage to log user out
   localStorage.removeItem('user');
 }
 
 function getAll() {
-  const requestOptions = {
-    method: 'GET',
-    headers: authHeader()
-  };
-  return fetch('/users', requestOptions).then(handleResponse);
+  return http.get('/users');
 }
 
 function getById(id) {
-  const requestOptions = {
-    method: 'GET',
-    headers: authHeader()
-  };
-
-  return fetch('/users/' + id, requestOptions).then(handleResponse);
+  return http.get('/users/' + id);
 }
 
 function register(user) {
-  const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(user)
-  };
-
-  return fetch('/users/register', requestOptions).then(handleResponse);
+  return http.post('/users/register', user);
 }
 
 function update(user) {
-  const requestOptions = {
-    method: 'PUT',
-    headers: { ...authHeader(), 'Content-Type': 'application/json' },
-    body: JSON.stringify(user)
-  };
-
-  return fetch('/users/' + user.id, requestOptions).then(handleResponse);
+  return fetch('/users/update', user);
 }
 
 // prefixed function name with underscore because delete is a reserved word in javascript
 function _delete(id) {
-  const requestOptions = {
-    method: 'DELETE',
-    headers: authHeader()
-  };
-  return fetch('/users/' + id, requestOptions).then(handleResponse);
+  return fetch.post('/users/delete', id);
 }
 
-function handleResponse(response) {
-  if (!response.ok) {
-    return Promise.reject(response.statusText);
-  }
-
-  return response.json();
-}

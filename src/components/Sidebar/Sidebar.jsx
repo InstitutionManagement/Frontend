@@ -6,12 +6,10 @@ import logo from '../../assets/img/reactlogo.png';
 import appRoutes from '../../routes/routing';
 
 class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      width: window.innerWidth
-    };
-  }
+  state = {
+    width: window.innerWidth
+  };
+
   activeRoute(routeName) {
     return this.props.location.pathname.indexOf(routeName) > -1 ? 'active' : '';
   }

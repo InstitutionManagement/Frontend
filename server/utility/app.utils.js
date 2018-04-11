@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-DecodeToken = token => {
+const DecodeToken = token => {
   return jwt.decode(token);
 };
 
@@ -11,7 +11,7 @@ class DataModel {
   }
 }
 
-IsEmpty = obj => {
+const IsEmpty = obj => {
   // null and undefined are "empty"
   if (obj == null) return true;
 

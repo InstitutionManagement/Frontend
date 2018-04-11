@@ -54,6 +54,7 @@ loginRouter.route('/').post((req, res, next) => {
                 res.json(dataout);
               }
             });
+            break;
           default:
             res.json("This type of user doesn't exist");
         }
