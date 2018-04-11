@@ -9,7 +9,7 @@ const getAll = () =>  http.get('/users');
 
 const getById = (id) =>  http.get('/users/' + id);
 
-const register = (user) => http.post('/users/register', user);
+const superAdminRegister = (user) => http.post('/api/superadmin/register', user);
 
 const update = (user) => fetch('/users/update', user);
 
@@ -19,7 +19,7 @@ const _delete = (id) => fetch.post('/users/delete', id);
 export const userService = {
   login,
   logout,
-  register,
+  superAdminRegister,
   getAll,
   getById,
   update,
