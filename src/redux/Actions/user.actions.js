@@ -41,33 +41,23 @@ function logout() {
 
 function superAdminRegister(user) {
   return dispatch => {
-    dispatch(request(user));
+    dispatch(actionHelper.request(userConstants.REGISTER_REQUEST, user));
     userService.superAdminRegister(user).then(
       response => {
         if(response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0){
-          dispatch(success(response.data.data));
+          dispatch(actionHelper.success(userConstants.REGISTER_SUCCESS, response.data.data));
           dispatch(alertActions.success('Super Admin Registration Successfull'));
         }else{
-          dispatch(failure(response.data.error));
+          dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, response.data.error));
           dispatch(alertActions.error(response.data.error.message));
         }
       },
       error => {
-        dispatch(failure(error));
+        dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, error));
         dispatch(alertActions.error(error));
       }
     );
   };
-
-  function request(user) {
-    return { type: userConstants.REGISTER_REQUEST, user };
-  }
-  function success(user) {
-    return { type: userConstants.REGISTER_SUCCESS, user };
-  }
-  function failure(error) {
-    return { type: userConstants.REGISTER_FAILURE, error };
-  }
 }
 
 function getAll() {

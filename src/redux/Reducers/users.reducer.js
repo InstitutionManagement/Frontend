@@ -40,6 +40,7 @@ export function users(state = {}, action) {
           return user;
         })
       };
+      
     default:
       return state;
   }
