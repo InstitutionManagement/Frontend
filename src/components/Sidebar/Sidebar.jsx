@@ -3,7 +3,8 @@ import { NavLink } from 'react-router-dom';
 import HeaderLinks from '../Header/HeaderLinks';
 import imagine from '../../assets/img/sidebar-3.jpg';
 import logo from '../../assets/img/reactlogo.png';
-import appRoutes from '../../routes/routing';
+import {SUPER_ADMIN_ROUTES, TRUST_ADMIN_ROUTES, INSTITUTION_ADMIN_ROUTES, STAFF_ROUTES, STUDENT_ROUTES} from '../../routes/routing';
+import './Sidebar.css'
 
 class Sidebar extends Component {
   state = {
@@ -20,6 +21,7 @@ class Sidebar extends Component {
     this.updateDimensions();
     window.addEventListener('resize', this.updateDimensions.bind(this));
   }
+
   render() {
     const sidebarBackground = {
       backgroundImage: 'url(' + imagine + ')'
@@ -40,16 +42,17 @@ class Sidebar extends Component {
         <div className="sidebar-wrapper">
           <ul className="nav">
             {this.state.width <= 991 ? <HeaderLinks /> : null}
-            {appRoutes.map((prop, key) => {
-              if (!prop.redirect && !prop.visible)
+            {SUPER_ADMIN_ROUTES.map((prop, key) => {
+              if (!prop.redirect && !prop.visible )
                 return (
-                  <li className={prop.upgrade ? 'active active-pro' : this.activeRoute(prop.path)} key={key}>
+                  <li className={prop.children ? this.activeRoute(prop.path) + ' children' : this.activeRoute(prop.path)} key={key} >
                     <NavLink to={prop.path} className="nav-link" activeClassName="active">
                       <i className={prop.icon} />
-                      <p>{prop.name}</p>
+                      <div>{prop.name}</div>
                     </NavLink>
                   </li>
                 );
+                
               return null;
             })}
           </ul>

@@ -2,45 +2,36 @@ import { userConstants } from '../../constants/user.constants';
 import { userService } from '../../services/user.service';
 import { alertActions } from './alert.actions';
 import { history } from '../../services/browser.history';
+import {actionHelper} from './Helpers/action.helper'
 
 export const userActions = {
   login,
   logout,
-  register,
+  superAdminRegister,
   getAll,
   delete: _delete
 };
 
 function login(username, password) {
   return dispatch => {
-    dispatch(request({ username }));
+    dispatch(actionHelper.request(userConstants.LOGIN_REQUEST, { username }));
     userService.login(username, password).then(
       response => {
-        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+        if (actionHelper.successCheck(response)) {
           localStorage.setItem('user', JSON.stringify(response.data.data));
-          dispatch(success(response));
+          dispatch(actionHelper.success(userConstants.LOGIN_SUCCESS, response.data.data));
           window.location.href = '/dashboard';
         } else {
-          dispatch(failure(response.data.error.message));
+          dispatch(actionHelper.failure(userConstants.LOGIN_FAILURE, response.data.error.message));
           dispatch(alertActions.error(response.data.error.message));
         }
       },
       error => {
-        dispatch(failure(error));
+        dispatch(actionHelper.failure(userConstants.LOGIN_FAILURE, error));
         dispatch(alertActions.error(error));
       }
     );
   };
-
-  function request(user) {
-    return { type: userConstants.LOGIN_REQUEST, user };
-  }
-  function success(user) {
-    return { type: userConstants.LOGIN_SUCCESS, user };
-  }
-  function failure(error) {
-    return { type: userConstants.LOGIN_FAILURE, error };
-  }
 }
 
 function logout() {
@@ -48,32 +39,25 @@ function logout() {
   return { type: userConstants.LOGOUT };
 }
 
-function register(user) {
+function superAdminRegister(user) {
   return dispatch => {
-    dispatch(request(user));
-
-    userService.register(user).then(
-      user => {
-        dispatch(success());
-        history.push('/login');
-        dispatch(alertActions.success('Registration successful'));
+    dispatch(actionHelper.request(userConstants.REGISTER_REQUEST, user));
+    userService.superAdminRegister(user).then(
+      response => {
+        if(response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0){
+          dispatch(actionHelper.success(userConstants.REGISTER_SUCCESS, response.data.data));
+          dispatch(alertActions.success('Super Admin Registration Successfull'));
+        }else{
+          dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, response.data.error));
+          dispatch(alertActions.error(response.data.error.message));
+        }
       },
       error => {
-        dispatch(failure(error));
+        dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, error));
         dispatch(alertActions.error(error));
       }
     );
   };
-
-  function request(user) {
-    return { type: userConstants.REGISTER_REQUEST, user };
-  }
-  function success(user) {
-    return { type: userConstants.REGISTER_SUCCESS, user };
-  }
-  function failure(error) {
-    return { type: userConstants.REGISTER_FAILURE, error };
-  }
 }
 
 function getAll() {

@@ -1,42 +1,27 @@
 
 import {http} from './http.service';
+
+const login = (username, password) =>  http.post('/api/login', { username, password });
+// remove user from local storage to log user out
+const logout = () => {  localStorage.removeItem('user');}
+
+const getAll = () =>  http.get('/users');
+
+const getById = (id) =>  http.get('/users/' + id);
+
+const superAdminRegister = (user) => http.post('/api/superadmin/register', user);
+
+const update = (user) => fetch('/users/update', user);
+
+// prefixed const name with underscore because delete is a reserved word in javascript
+const _delete = (id) => fetch.post('/users/delete', id);
+
 export const userService = {
   login,
   logout,
-  register,
+  superAdminRegister,
   getAll,
   getById,
   update,
   delete: _delete
 };
-
-function login(username, password) {
-  return  http.post('/api/login', { username, password });
-}
-
-// remove user from local storage to log user out
-function logout() {
-  localStorage.removeItem('user');
-}
-
-function getAll() {
-  return http.get('/users');
-}
-
-function getById(id) {
-  return http.get('/users/' + id);
-}
-
-function register(user) {
-  return http.post('/users/register', user);
-}
-
-function update(user) {
-  return fetch('/users/update', user);
-}
-
-// prefixed function name with underscore because delete is a reserved word in javascript
-function _delete(id) {
-  return fetch.post('/users/delete', id);
-}
-
