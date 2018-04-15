@@ -11,6 +11,8 @@ const getById = (id) =>  http.get('/users/' + id);
 
 const superAdminRegister = (user) => http.post('/api/superadmin/register', user);
 
+const getAllSuperAdmins = () =>  http.post('/api/superadmin/getAllSuperAdmins');
+
 const update = (user) => fetch('/users/update', user);
 
 // prefixed const name with underscore because delete is a reserved word in javascript
@@ -20,6 +22,7 @@ export const userService = {
   login,
   logout,
   superAdminRegister,
+  getAllSuperAdmins,
   getAll,
   getById,
   update,

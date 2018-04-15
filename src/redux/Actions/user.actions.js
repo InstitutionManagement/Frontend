@@ -2,12 +2,13 @@ import { userConstants } from '../../constants/user.constants';
 import { userService } from '../../services/user.service';
 import { alertActions } from './alert.actions';
 import { history } from '../../services/browser.history';
-import {actionHelper} from './Helpers/action.helper'
+import { actionHelper } from './Helpers/action.helper';
 
 export const userActions = {
   login,
   logout,
   superAdminRegister,
+  getAllSuperAdmins,
   getAll,
   delete: _delete
 };
@@ -44,10 +45,10 @@ function superAdminRegister(user) {
     dispatch(actionHelper.request(userConstants.REGISTER_REQUEST, user));
     userService.superAdminRegister(user).then(
       response => {
-        if(response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0){
+        if (response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0) {
           dispatch(actionHelper.success(userConstants.REGISTER_SUCCESS, response.data.data));
           dispatch(alertActions.success('Super Admin Registration Successfull'));
-        }else{
+        } else {
           dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, response.data.error));
           dispatch(alertActions.error(response.data.error.message));
         }
@@ -58,6 +59,24 @@ function superAdminRegister(user) {
       }
     );
   };
+}
+
+function getAllSuperAdmins() {
+  return dispatch => {
+    dispatch(actionHelper.request(userConstants.GETALL_SUPERADMIN_REQUEST));
+    userService.getAllSuperAdmins()
+    .then(
+      response => {
+        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+          dispatch(actionHelper.success(userConstants.GETALL_SUPERADMIN_SUCCESS, response.data.data));
+        } else if (response.status === 200) {
+          dispatch(actionHelper.failure(userConstants.GETALL_SUPERADMIN_FAILURE, response.data.error));
+        }
+      },
+      error => 
+        dispatch(actionHelper.failure(userConstants.GETALL_SUPERADMIN_FAILURE, error))
+    );
+  }
 }
 
 function getAll() {

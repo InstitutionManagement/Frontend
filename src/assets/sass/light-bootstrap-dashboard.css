@@ -266,7 +266,7 @@ input:focus {
     margin-top: 20px; }
     .sidebar .nav li > a {
       color: #FFFFFF;
-      margin: 5px 5px;
+      margin: 5px 15px;
       opacity: .86;
       border-radius: 4px; }
     .sidebar .nav li:hover > a,
@@ -279,7 +279,7 @@ input:focus {
       color: #FFFFFF;
       opacity: 1;
       background: rgba(255, 255, 255, 0.23); }
-    .sidebar .nav div {
+    .sidebar .nav p {
       margin: 0;
       line-height: 30px;
       font-size: 12px;

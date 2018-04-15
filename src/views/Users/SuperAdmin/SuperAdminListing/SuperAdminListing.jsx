@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
-import Card from '../../../components/Card/Card.jsx';
-import { trustActions } from '../../../redux/Actions/trust.actions';
+import Card from '../../../../components/Card/Card.jsx';
+import { userActions } from '../../../../redux/Actions/user.actions';
 import { connect } from 'react-redux';
 
-class TrustListing extends Component {
+class SuperAdminListing extends Component {
   componentDidMount() {
-    this.props.getAll();
+    this.props.getAllSuperAdmins();
   }
 
   deleteTrust(id) {
@@ -14,8 +14,8 @@ class TrustListing extends Component {
   }
 
   render() {
-    const { trusts } = this.props;
-    const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
+    const { users } = this.props;
+    const loading = users.loading ? 'Loading Super Admins....' : 'Super Admins';
     return (
       <div className="content">
         <Grid fluid>
@@ -23,36 +23,34 @@ class TrustListing extends Component {
             <Col md={12}>
               <Card
                 title={loading}
-                category="Active Trusts in the System"
+                category="Super Admins in the Platform"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
                   <Table striped hover>
                     <thead>
                       <tr>
-                        {/* {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })} */}
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Address</th>
-                        <th>Created By</th>
+                       
                         <th />
                       </tr>
                     </thead>
                     <tbody>
-                      {trusts.data && Object.keys(trusts.data).length > 0 &&
-                        trusts.data.map((prop, key) => {
+                      {users.superAdmins && users.superAdmins.length > 0 &&
+                        users.superAdmins.map((prop, key) => {
                           return (
                             <tr key={key}>
                               <td>{key + 1}</td>
+                              <td><img src={prop.image_url} alt={prop.name} width="150"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
                               <td>{prop.phone}</td>
-                              <td>{prop.address}</td>
-                              <td>{prop.created_by.name}</td>
+                              <td>{prop.address}</td>                             
                               <td>
                                 <button className="btn btn-danger">Delete</button>
                               </td>
@@ -104,19 +102,19 @@ class TrustListing extends Component {
 }
 
 const mapStateToProps = state => {
-  const { trusts } = state;
+  const { users } = state;
   return {
-    trusts
+    users
   };
 };
 
 const mapDispachToProps = dispatch => ({
-  getAll: () => {
-    dispatch(trustActions.getAll());
+getAllSuperAdmins: () => {
+    dispatch(userActions.getAllSuperAdmins());
   },
   deleteTrust: id => {
-    dispatch(trustActions.delete(id));
+    dispatch(userActions.delete(id));
   }
 });
 
-export default connect(mapStateToProps, mapDispachToProps)(TrustListing);
+export default connect(mapStateToProps, mapDispachToProps)(SuperAdminListing);

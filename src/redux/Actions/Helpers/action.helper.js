@@ -1,8 +1,8 @@
-const request = (type, action) => {
-    return { type: type, action };
+const request = (type, action = {}) => {
+    return { type: type,  action };
   }
-  const success = (type, action) => {
-    return { type: type, action };
+  const success = (type, data) => {
+    return { type: type, data };
   }
   const failure = (type, error) => {
     return { type: type, error };

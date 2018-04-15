@@ -28,7 +28,7 @@ const getAll = condition => {
       response => {
         if (response.status === 200 && Object.keys(response.data.data).length > 0) {
           dispatch(success(response.data.data));
-        } else if(response.status === 200) {
+        } else if (response.status === 200) {
           dispatch(alertActions.error(response.data.error.message));
         }
       },

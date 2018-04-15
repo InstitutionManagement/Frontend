@@ -14,6 +14,18 @@ export function users(state = {}, action) {
       return {
         error: action.error
       };
+      case userConstants.GETALL_SUPERADMIN_REQUEST:
+      return {
+        loading: true
+      };
+    case userConstants.GETALL_SUPERADMIN_SUCCESS:
+      return {
+        superAdmins: action.data
+      };
+    case userConstants.GETALL_SUPERADMIN_FAILURE:
+      return {
+        error: action.error
+      };
     case userConstants.DELETE_REQUEST:
       // add 'deleting:true' property to user being deleted
       return {
@@ -40,7 +52,7 @@ export function users(state = {}, action) {
           return user;
         })
       };
-      
+
     default:
       return state;
   }

@@ -74,7 +74,7 @@ superAdminRouter
     _AppMiddlewareService.verifyAccess(appConst.API_ACCESS_CODE['superadmin/getAllSuperAdmins']),
     (req, res, next) => {
       let condition = {};
-      if (!appUtils.IsEmpty(res.body.condition)) {
+      if (!appUtils.IsEmpty(req.body.condition)) {
         condition = req.body.condition;
       }
       _SuperAdminModel.find(condition, (err, superadmins) => {

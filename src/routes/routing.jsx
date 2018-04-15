@@ -7,13 +7,15 @@ import Icons from '../views/Icons/Icons';
 // import Notifications from 'views/Notifications/Notifications';
 import TrustListing from '../views/Trust/TrustListing/TrustListing';
 import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
+import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
+import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
 
 export const SUPER_ADMIN_ROUTES = [
   { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },
   { path: '/create-trust', name: 'Create Trust', icon: 'pe-7s-user', component: CreateTrust },
   { path: '/trust-listing', name: 'Trust Listing', icon: 'pe-7s-user', component: TrustListing },
-  { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-user', component: UserProfile},
-  { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-user', component: TrustListing },
+  { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-user', component: CreateSuperAdmin},
+  { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-user', component: SuperAdminListing },
   { path: '/create-trust-admin', name: 'Create Trust Admin', icon: 'pe-7s-user', component: UserProfile},
   { path: '/trust-admin-listing', name: 'Trust Admin Listing', icon: 'pe-7s-user', component: TrustListing },
   { path: '/create-institution-admin', name: 'Create Institution Admin', icon: 'pe-7s-user', component: UserProfile},
