@@ -466,6 +466,15 @@ body > .navbar-collapse[data-color="purple"]:after {
   padding: 8px 16px;
   border-color: #888888;
   color: #888888; }
+
+  .btn.margin-right{
+    margin-right: 15px;
+  }
+
+  .btn.margin-left{
+    margin-left: 15px;
+  }
+
   .btn:hover, .btn:focus, .btn:active, .btn.active,
   .open > .btn.dropdown-toggle {
     background-color: transparent;

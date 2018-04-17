@@ -25,8 +25,8 @@ const SocialIcon = props => {
 
 class Login extends Component {
   state = {
-    username: 'a0d00kc',
-    password: 'iit_EN003',
+    username: 'vgautam',
+    password: 'vgautam@321',
     submitted: false
   };
 

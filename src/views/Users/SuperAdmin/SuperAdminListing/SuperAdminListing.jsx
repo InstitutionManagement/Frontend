@@ -1,21 +1,28 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table } from 'react-bootstrap';
 import Card from '../../../../components/Card/Card.jsx';
-import { userActions } from '../../../../redux/Actions/user.actions';
+import { superAdminActions } from '../../../../redux/Actions/super_admin.actions';
 import { connect } from 'react-redux';
+import './SuperAdminListing.css';
 
 class SuperAdminListing extends Component {
   componentDidMount() {
-    this.props.getAllSuperAdmins();
+    this.props.getSuperAdmins();
   }
 
-  deleteTrust(id) {
-    this.props.deleteTrust(id);
+  deleteSuperAdmin(authId, superAdminId) {
+    this.props.deleteSuperAdmin(authId, superAdminId);
   }
+
+
+  activateSuperAdmin(authId) {
+    this.props.activateSuperAdmin(authId);
+  }
+
 
   render() {
-    const { users } = this.props;
-    const loading = users.loading ? 'Loading Super Admins....' : 'Super Admins';
+    const { superAdmin } = this.props;
+    const loading = superAdmin.loading ? 'Loading Super Admins....' : 'Super Admins';
     return (
       <div className="content">
         <Grid fluid>
@@ -34,25 +41,28 @@ class SuperAdminListing extends Component {
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
-                        <th>Phone</th>
                         <th>Address</th>
-                       
-                        <th />
+                        <th>Status</th>
+                        <th>Action </th>
                       </tr>
                     </thead>
                     <tbody>
-                      {users.superAdmins && users.superAdmins.length > 0 &&
-                        users.superAdmins.map((prop, key) => {
+                      {superAdmin.data && superAdmin.data.length > 0 &&
+                        superAdmin.data.map((prop, key) => {
                           return (
-                            <tr key={key}>
+                            <tr key={key} >
                               <td>{key + 1}</td>
                               <td><img src={prop.image_url} alt={prop.name} width="150"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
-                              <td>{prop.phone}</td>
-                              <td>{prop.address}</td>                             
+                              <td>{prop.address}<br/>Phone : {prop.phone}</td>   
+                              <td>{prop.status.tag === "DELETED" ? <i className="icon pe-7s-close-circle text-danger"></i>:<i className="icon pe-7s-check text-success"></i> }</td>                         
                               <td>
-                                <button className="btn btn-danger">Delete</button>
+                              {prop.status.tag === "DELETED" ?
+                                <button className="btn btn-success"  onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); } }>{ prop.activating ? 'Activating' : 'Activate'}</button>
+                                :
+                                <button className="btn btn-danger"  onClick={e => { e.preventDefault(); this.deleteSuperAdmin(prop.auth_id, prop.superadmin_id); } }>{ prop.deleting ? 'Deleting' : 'Delete'}</button>
+                              }
                               </td>
                             </tr>
                           );
@@ -62,38 +72,6 @@ class SuperAdminListing extends Component {
                 }
               />
             </Col>
-
-            {/* <Col md={12}>
-              <Card
-                plain
-                title="Striped Table with Hover"
-                category="Here is a subtitle for this table"
-                ctTableFullWidth
-                ctTableResponsive
-                content={
-                  <Table hover>
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                }
-              />
-            </Col> */}
           </Row>
         </Grid>
       </div>
@@ -102,18 +80,21 @@ class SuperAdminListing extends Component {
 }
 
 const mapStateToProps = state => {
-  const { users } = state;
+  const { superAdmin } = state;
   return {
-    users
+    superAdmin
   };
 };
 
 const mapDispachToProps = dispatch => ({
-getAllSuperAdmins: () => {
-    dispatch(userActions.getAllSuperAdmins());
+  getSuperAdmins: () => {
+    dispatch(superAdminActions.getSuperAdmins());
   },
-  deleteTrust: id => {
-    dispatch(userActions.delete(id));
+  deleteSuperAdmin: (authId, superAdminId) => {
+    dispatch(superAdminActions.deleteSuperAdmin(authId, superAdminId));
+  },
+  activateSuperAdmin: (authId) => {
+    dispatch(superAdminActions.activateSuperAdmin(authId));
   }
 });
 

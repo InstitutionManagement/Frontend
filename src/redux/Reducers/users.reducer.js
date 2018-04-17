@@ -14,7 +14,7 @@ export function users(state = {}, action) {
       return {
         error: action.error
       };
-      case userConstants.GETALL_SUPERADMIN_REQUEST:
+    case userConstants.GETALL_SUPERADMIN_REQUEST:
       return {
         loading: true
       };

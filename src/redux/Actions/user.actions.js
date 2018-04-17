@@ -6,8 +6,6 @@ import { actionHelper } from './Helpers/action.helper';
 export const userActions = {
   login,
   logout,
-  superAdminRegister,
-  getAllSuperAdmins,
   getAll,
   delete: _delete
 };
@@ -37,45 +35,6 @@ function login(username, password) {
 function logout() {
   userService.logout();
   return { type: userConstants.LOGOUT };
-}
-
-function superAdminRegister(user) {
-  return dispatch => {
-    dispatch(actionHelper.request(userConstants.REGISTER_REQUEST, user));
-    userService.superAdminRegister(user).then(
-      response => {
-        if (response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0) {
-          dispatch(actionHelper.success(userConstants.REGISTER_SUCCESS, response.data.data));
-          dispatch(alertActions.success('Super Admin Registration Successfull'));
-        } else {
-          dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, response.data.error));
-          dispatch(alertActions.error(response.data.error.message));
-        }
-      },
-      error => {
-        dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, error));
-        dispatch(alertActions.error(error));
-      }
-    );
-  };
-}
-
-function getAllSuperAdmins() {
-  return dispatch => {
-    dispatch(actionHelper.request(userConstants.GETALL_SUPERADMIN_REQUEST));
-    userService.getAllSuperAdmins()
-    .then(
-      response => {
-        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
-          dispatch(actionHelper.success(userConstants.GETALL_SUPERADMIN_SUCCESS, response.data.data));
-        } else if (response.status === 200) {
-          dispatch(actionHelper.failure(userConstants.GETALL_SUPERADMIN_FAILURE, response.data.error));
-        }
-      },
-      error => 
-        dispatch(actionHelper.failure(userConstants.GETALL_SUPERADMIN_FAILURE, error))
-    );
-  }
 }
 
 function getAll() {

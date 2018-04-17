@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { userActions } from '../../../../redux/Actions/user.actions';
+import { superAdminActions } from '../../../../redux/Actions/super_admin.actions';
 import {alertConstants} from '../../../../constants/alert.constants';
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { Card } from '../../../../components/Card/Card.jsx';
@@ -38,19 +38,25 @@ class CreateSuperAdmin extends Component {
 
     componentDidUpdate(){
         if (Object.keys(this.props.alert).length > 0 && this.props.alert.type === alertConstants.SUCCESS) {
-            document.getElementById('createSuperAdminForm').reset();
+            this.clearForm();
           }
+    }
+
+    clearForm = () =>{
+      document.getElementById('createSuperAdminForm').reset();
     }
 
     
     render(){
+      const { superAdmin } = this.props;
+      const buttonLabel = superAdmin.registering ? 'Creating Super Admin' : 'Create Super Admin';
         return (
             <div className="content">
             <Grid fluid>
               <Row>
                 <Col md={12}>
                   <Card
-                    title="Edit Profile"
+                    title="Super Admin"
                     content={
                       <form id="createSuperAdminForm" onSubmit={this.handleSubmit}>
                         <FormInputs
@@ -123,44 +129,19 @@ class CreateSuperAdmin extends Component {
                             </FormGroup>
                           </Col>
                         </Row>
-                        <Button bsStyle="info" pullRight fill type="submit">
-                          Create Super Admin
+                        
+                        
+                        <Button bsStyle="default" pullRight marginLeft onClick={this.clearForm}>
+                        Cancel
+                        </Button>
+                        <Button bsStyle="info" pullRight type="submit" disabled={superAdmin.registering} >
+                          {buttonLabel}
                         </Button>
                         <div className="clearfix" />
                       </form>
                     }
                   />
                 </Col>
-                {/* <Col md={4}>
-                  <UserCard
-                    bgImage="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"
-                    avatar={avatar}
-                    name="Mike Andrew"
-                    userName="michael24"
-                    description={
-                      <span>
-                        "Lamborghini Mercy
-                        <br />
-                        Your chick she so thirsty
-                        <br />
-                        I'm in that two seat Lambo"
-                      </span>
-                    }
-                    socials={
-                      <div>
-                        <Button simple>
-                          <i className="fa fa-facebook-square" />
-                        </Button>
-                        <Button simple>
-                          <i className="fa fa-twitter" />
-                        </Button>
-                        <Button simple>
-                          <i className="fa fa-google-plus-square" />
-                        </Button>
-                      </div>
-                    }
-                  />
-                </Col> */}
               </Row>
             </Grid>
           </div>
@@ -170,13 +151,14 @@ class CreateSuperAdmin extends Component {
 
 const mapStateToProps = state => {
     return {
-        alert: state.alert
+        alert: state.alert,
+        superAdmin: state.superAdmin
     }
 };
 
 const mapDispatchToState = dispatch => ({
-    dispatchSubmit: user => {
-        dispatch(userActions.superAdminRegister(user));
+    dispatchSubmit: superAdmin => {
+        dispatch(superAdminActions.registerSuperAdmin(superAdmin));
     }
 });
 
