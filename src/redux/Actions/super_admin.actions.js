@@ -3,8 +3,6 @@ import { superAdminService } from '../../services/super_admin.service';
 import { alertActions } from './alert.actions';
 import { actionHelper } from './Helpers/action.helper';
 
-
-
 function registerSuperAdmin(user) {
   return dispatch => {
     dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_REGISTER_REQUEST, user));
@@ -76,9 +74,9 @@ function deleteSuperAdmin(authId, superAdminId) {
 
 function activateSuperAdmin(authId) {
   return dispatch => {
-    dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_ACTIVATE_REQUEST,{authId}));
+    dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_ACTIVATE_REQUEST, { authId }));
     superAdminService.activateSuperAdmin(authId).then(
-      response =>{
+      response => {
         if (response.status === 200 && response.data.error === null) {
           dispatch(actionHelper.success(superAdminConstants.SUPERADMIN_ACTIVATE_SUCCESS, { authId }));
           dispatch(alertActions.success('Successfully Activated SuperAdmin'));
@@ -91,20 +89,22 @@ function activateSuperAdmin(authId) {
         dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_ACTIVATE_FAILURE, error));
         dispatch(alertActions.error(String(error.message)));
       }
-    )
-  }
+    );
+  };
 }
 
-function resetPassword(authId, email, phone){
+function resetPassword(authId, email, phone) {
   return dispatch => {
-    dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_RESET_PASSWORD_REQUEST,{authId}));
-    superAdminService.resetSuperAdminPassword({auth_id : authId, email, phone}).then(
-      response =>{
+    dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_RESET_PASSWORD_REQUEST, { authId }));
+    superAdminService.resetSuperAdminPassword({ auth_id: authId, email, phone }).then(
+      response => {
         if (response.status === 200 && response.data.error === null) {
           dispatch(actionHelper.success(superAdminConstants.SUPERADMIN_RESET_PASSWORD_SUCCESS, { authId }));
           dispatch(alertActions.success('Successfully Reset SuperAdmin Password'));
         } else {
-          dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE, response.data.error.message));
+          dispatch(
+            actionHelper.failure(superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE, response.data.error.message)
+          );
           dispatch(alertActions.error(String(response.data.error.message)));
         }
       },
@@ -112,8 +112,8 @@ function resetPassword(authId, email, phone){
         dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE, error));
         dispatch(alertActions.error(String(error.message)));
       }
-    )
-  }
+    );
+  };
 }
 
 export const superAdminActions = {

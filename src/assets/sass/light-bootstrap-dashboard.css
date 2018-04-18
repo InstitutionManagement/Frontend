@@ -466,15 +466,6 @@ body > .navbar-collapse[data-color="purple"]:after {
   padding: 8px 16px;
   border-color: #888888;
   color: #888888; }
-
-  .btn.margin-right{
-    margin-right: 15px;
-  }
-
-  .btn.margin-left{
-    margin-left: 15px;
-  }
-
   .btn:hover, .btn:focus, .btn:active, .btn.active,
   .open > .btn.dropdown-toggle {
     background-color: transparent;
@@ -513,6 +504,10 @@ body > .navbar-collapse[data-color="purple"]:after {
     outline: 0 !important; }
   .btn.btn-icon {
     padding: 8px; }
+  .btn.margin-left {
+    margin-left: 15px; }
+  .btn.margin-right {
+    margin-right: 15px; }
 
 .btn-primary {
   border-color: #3472F7;
@@ -1386,7 +1381,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   .navbar .btn-simple {
     font-size: 16px; }
   .navbar.fixed {
-    width: calc(100% - $sidebar-width);
+    width: calc(100% - 260px);
     right: 0;
     left: auto;
     border-radius: 0; }

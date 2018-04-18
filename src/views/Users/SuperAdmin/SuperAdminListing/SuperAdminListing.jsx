@@ -57,7 +57,7 @@ class SuperAdminListing extends Component {
                           return (
                             <tr key={key} >
                               <td>{key + 1}</td>
-                              <td><img src={prop.image_url} alt={prop.name} width="100" className="img-thumbnail"/></td>
+                              <td><img src={prop.image_url} alt={prop.name} width="100" className="profile-pic"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
                               <td>{prop.address}<br/>Phone : {prop.phone}</td>   

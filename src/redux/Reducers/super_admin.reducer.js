@@ -77,11 +77,11 @@ export function superAdmin(state = {}, action) {
       return {
         ...state,
         data: state.data.map(
-          superAdmin => 
+          superAdmin =>
             superAdmin.auth_id === action.request.authId ? { ...superAdmin, activating: true } : superAdmin
         )
       };
-      case superAdminConstants.SUPERADMIN_ACTIVATE_SUCCESS:
+    case superAdminConstants.SUPERADMIN_ACTIVATE_SUCCESS:
       return {
         ...state,
         data: state.data.map(superAdmin => {
@@ -92,7 +92,7 @@ export function superAdmin(state = {}, action) {
           return superAdmin;
         })
       };
-      case superAdminConstants.SUPERADMIN_ACTIVATE_FAILURE:
+    case superAdminConstants.SUPERADMIN_ACTIVATE_FAILURE:
       // remove 'deleting:true' property and add 'deleteError:[error]' property to user
       return {
         ...state,

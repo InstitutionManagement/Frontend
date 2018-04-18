@@ -1,19 +1,58 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Table } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
+import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
 import Card from '../../../components/Card/Card.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { connect } from 'react-redux';
+import Button from '../../../elements/CustomButton/CustomButton.jsx';
+import Modal from '../../../components/Modal/Modal';
+import { institutionActions } from '../../../redux/Actions/institution.action';
 
 class TrustListing extends Component {
+  state = {
+    name: '',
+    email: '',
+    phone: '',
+    address: '',
+    isModalOpen: false,
+    trust: {}
+  }
   componentDidMount() {
     this.props.getAll();
   }
+
+  handleChange = e => {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  };
 
   deleteTrust(id) {
     this.props.deleteTrust(id);
   }
 
+  setTrustName = (prop) => {
+    this.setState({ trust: prop });
+  }
+
+  toggleModal = () => {
+    this.setState({ isModalOpen: !this.state.isModalOpen });
+  }
+
+  handleSubmit = e => {
+    e.preventDefault();
+    const { name, email, phone, address } = this.state;
+    let institution = {
+      name,
+      email,
+      phone,
+      address,
+      trust_id: this.state.trust._id
+    }
+    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.trust_id !== '') this.props.dispatchSubmit(institution);
+  };
+
   render() {
+    const { name, email, phone, submitted } = this.state;
     const { trusts } = this.props;
     const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
     return (
@@ -30,15 +69,13 @@ class TrustListing extends Component {
                   <Table striped hover>
                     <thead>
                       <tr>
-                        {/* {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })} */}
                         <th>ID</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Created By</th>
+                        <th>Add Institution</th>
                         <th />
                       </tr>
                     </thead>
@@ -53,8 +90,9 @@ class TrustListing extends Component {
                               <td>{prop.phone}</td>
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
+                              <td>{<Button bsStyle="default" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}> Add Institution </Button>}</td>
                               <td>
-                                <button className="btn btn-danger">Delete</button>
+                                <Button bsStyle="danger">Delete</Button>
                               </td>
                             </tr>
                           );
@@ -64,40 +102,93 @@ class TrustListing extends Component {
                 }
               />
             </Col>
-
-            {/* <Col md={12}>
-              <Card
-                plain
-                title="Striped Table with Hover"
-                category="Here is a subtitle for this table"
-                ctTableFullWidth
-                ctTableResponsive
-                content={
-                  <Table hover>
-                    <thead>
-                      <tr>
-                        {thArray.map((prop, key) => {
-                          return <th key={key}>{prop}</th>;
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {tdArray.map((prop, key) => {
-                        return (
-                          <tr key={key}>
-                            {prop.map((prop, key) => {
-                              return <td key={key}>{prop}</td>;
-                            })}
-                          </tr>
-                        );
-                      })}
-                    </tbody>
-                  </Table>
-                }
-              />
-            </Col> */}
           </Row>
         </Grid>
+        <Modal
+          show={this.state.isModalOpen}
+          header={`Add Institution in ${this.state.trust.name}`}
+        >
+          <div>
+            <Grid fluid>
+              <Row>
+                <Col md={12}>
+                  <form id="createInstitutionForm" onSubmit={this.handleSubmit}>
+                    <FormInputs
+                      ncols={['col-md-5', 'col-md-3', 'col-md-4']}
+                      proprieties={[
+                        {
+                          label: 'Name',
+                          type: 'text',
+                          name: 'name',
+                          bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
+                          placeholder: 'Trust Name',
+                          onChange: this.handleChange
+                        },
+                        {
+                          label: 'Email',
+                          type: 'email',
+                          name: 'email',
+                          bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
+                          placeholder: 'Email',
+                          onChange: this.handleChange
+                        },
+                        {
+                          label: 'Phone',
+                          type: 'number',
+                          name: 'phone',
+                          bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
+                          placeholder: 'Phone',
+                          onChange: this.handleChange
+                        }
+                      ]}
+                    />
+
+                    <Row>
+                      <Col md={12}>
+                        <FormGroup controlId="formControlsTextarea">
+                          <ControlLabel>Address</ControlLabel>
+                          <FormControl
+                            rows="5"
+                            name="address"
+                            componentClass="textarea"
+                            bsClass="form-control"
+                            placeholder="Address"
+                            onChange={this.handleChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col md={12}>
+                        <FormGroup controlId="formControlsTextarea">
+                          <ControlLabel>Documents</ControlLabel>
+                          <FormControl
+                            rows="5"
+                            name="document_link"
+                            componentClass="textarea"
+                            bsClass="form-control"
+                            placeholder="Documents if any"
+                            default=" "
+                            onChange={this.handleChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Button bsStyle="default" marginLeft pullRight onClick={this.toggleModal}>
+                      Cancel
+                    </Button>
+                    <Button bsStyle="info" pullRight type="submit">
+                      Create Institution
+                    </Button>
+                    <div className="clearfix" />
+
+                  </form>
+
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </Modal>
       </div>
     );
   }
@@ -116,6 +207,9 @@ const mapDispachToProps = dispatch => ({
   },
   deleteTrust: id => {
     dispatch(trustActions.delete(id));
+  },
+  dispatchSubmit: institution => {
+    dispatch(institutionActions.create(institution));
   }
 });
 
