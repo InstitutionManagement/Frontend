@@ -95,9 +95,31 @@ function activateSuperAdmin(authId) {
   }
 }
 
+function resetPassword(authId, email, phone){
+  return dispatch => {
+    dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_RESET_PASSWORD_REQUEST,{authId}));
+    superAdminService.resetSuperAdminPassword({auth_id : authId, email, phone}).then(
+      response =>{
+        if (response.status === 200 && response.data.error === null) {
+          dispatch(actionHelper.success(superAdminConstants.SUPERADMIN_RESET_PASSWORD_SUCCESS, { authId }));
+          dispatch(alertActions.success('Successfully Reset SuperAdmin Password'));
+        } else {
+          dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE, response.data.error.message));
+          dispatch(alertActions.error(String(response.data.error.message)));
+        }
+      },
+      error => {
+        dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE, error));
+        dispatch(alertActions.error(String(error.message)));
+      }
+    )
+  }
+}
+
 export const superAdminActions = {
   registerSuperAdmin,
   getSuperAdmins,
   activateSuperAdmin,
-  deleteSuperAdmin
+  deleteSuperAdmin,
+  resetPassword
 };

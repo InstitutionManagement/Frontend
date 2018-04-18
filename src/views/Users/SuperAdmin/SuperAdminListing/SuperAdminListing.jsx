@@ -10,13 +10,17 @@ class SuperAdminListing extends Component {
     this.props.getSuperAdmins();
   }
 
-  deleteSuperAdmin(authId, superAdminId) {
+  deleteSuperAdmin = (authId, superAdminId) =>{
     this.props.deleteSuperAdmin(authId, superAdminId);
   }
 
 
-  activateSuperAdmin(authId) {
+  activateSuperAdmin = (authId) => {
     this.props.activateSuperAdmin(authId);
+  }
+
+  resetPassword = (authId, email, phone) => {
+    this.props.resetPassword(authId, email, phone);
   }
 
 
@@ -43,7 +47,8 @@ class SuperAdminListing extends Component {
                         <th>Email</th>
                         <th>Address</th>
                         <th>Status</th>
-                        <th>Action </th>
+                        <th>Action</th>
+                        <th>Reset</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -52,17 +57,20 @@ class SuperAdminListing extends Component {
                           return (
                             <tr key={key} >
                               <td>{key + 1}</td>
-                              <td><img src={prop.image_url} alt={prop.name} width="150"/></td>
+                              <td><img src={prop.image_url} alt={prop.name} width="100" className="img-thumbnail"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
                               <td>{prop.address}<br/>Phone : {prop.phone}</td>   
                               <td>{prop.status.tag === "DELETED" ? <i className="icon pe-7s-close-circle text-danger"></i>:<i className="icon pe-7s-check text-success"></i> }</td>                         
                               <td>
                               {prop.status.tag === "DELETED" ?
-                                <button className="btn btn-success"  onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); } }>{ prop.activating ? 'Activating' : 'Activate'}</button>
+                                <button className="btn btn-success btn-sm"  onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); } }>{ prop.activating ? 'Activating' : 'Activate'}</button>
                                 :
-                                <button className="btn btn-danger"  onClick={e => { e.preventDefault(); this.deleteSuperAdmin(prop.auth_id, prop.superadmin_id); } }>{ prop.deleting ? 'Deleting' : 'Delete'}</button>
+                                <button className="btn btn-danger btn-sm"  onClick={e => { e.preventDefault(); this.deleteSuperAdmin(prop.auth_id, prop.superadmin_id); } }>{ prop.deleting ? 'Deleting' : 'Delete'}</button>
                               }
+                              </td>
+                              <td>
+                              <button className="btn btn-info btn-sm" onClick={e=> {e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone);}}>Reset Password</button>
                               </td>
                             </tr>
                           );
@@ -95,6 +103,9 @@ const mapDispachToProps = dispatch => ({
   },
   activateSuperAdmin: (authId) => {
     dispatch(superAdminActions.activateSuperAdmin(authId));
+  },
+  resetPassword:(authId, email, phone) => {
+    dispatch(superAdminActions.resetPassword(authId, email, phone));
   }
 });
 
