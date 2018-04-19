@@ -26,7 +26,7 @@ class SuperAdminListing extends Component {
 
   render() {
     const { superAdmin } = this.props;
-    const loading = superAdmin.loading ? 'Loading Super Admins....' : 'Super Admins';
+    const loading = superAdmin.loading ? 'Loading Super Admins....' : 'Super Administrators';
     return (
       <div className="content">
         <Grid fluid>
@@ -34,34 +34,35 @@ class SuperAdminListing extends Component {
             <Col md={12}>
               <Card
                 title={loading}
-                category="Super Admins in the Platform"
+                category="Super Administrators in the platform are listed below. This page allows to Deactivate a Super Admin, Reset Password, Add Super Admin to a Group Policy"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
-                  <Table striped hover>
+                  <Table hover>
                     <thead>
                       <tr>
                         <th>ID</th>
+                        <th>Status</th>
                         <th>Image</th>
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Status</th>
                         <th>Action</th>
-                        <th>Reset</th>
+                        <th>Reset Password</th>
                       </tr>
                     </thead>
                     <tbody>
                       {superAdmin.data && superAdmin.data.length > 0 &&
                         superAdmin.data.map((prop, key) => {
                           return (
-                            <tr key={key} >
+                            <tr key={key} className={prop.status.tag === "DELETED" ?"backgroundRed":""}>
                               <td>{key + 1}</td>
+                              <td> <i className= {prop.status.tag === "DELETED" ?"icon fas fa-circle text-danger":"icon fas fa-circle text-success"} ></i></td>
                               <td><img src={prop.image_url} alt={prop.name} width="100" className="profile-pic"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
                               <td>{prop.address}<br/>Phone : {prop.phone}</td>   
-                              <td>{prop.status.tag === "DELETED" ? <i className="icon pe-7s-close-circle text-danger"></i>:<i className="icon pe-7s-check text-success"></i> }</td>                         
+                                                      
                               <td>
                               {prop.status.tag === "DELETED" ?
                                 <button className="btn btn-success btn-sm"  onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); } }>{ prop.activating ? 'Activating' : 'Activate'}</button>

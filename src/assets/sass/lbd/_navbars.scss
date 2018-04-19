@@ -60,10 +60,6 @@
     .btn-simple{
         font-size: $font-size-medium;
     }
-    .caret{
-       // @include center-item();
-    }
-    
     &.fixed{
         width: calc(100% - 260px);
         right: 0;

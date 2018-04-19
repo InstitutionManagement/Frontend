@@ -29,9 +29,9 @@
    }
     > thead > tr > th{
         border-bottom-width: 1px;
-        font-size: $font-size-small;
+        font-size: $font-size-base;
         text-transform: uppercase;
-        color: $dark-gray;
+        color: $black-hr;
         font-weight: $font-weight-normal;
         padding-bottom: 5px;
     }
@@ -57,4 +57,10 @@
             }
         }
     }
+    > thead > tr > th.center, 
+    > tbody > tr > td.center{
+        text-align: center;
+    }
 }
+
+

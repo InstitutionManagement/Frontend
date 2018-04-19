@@ -982,9 +982,9 @@ body > .navbar-collapse[data-color="purple"]:after {
 
 .table > thead > tr > th {
   border-bottom-width: 1px;
-  font-size: 12px;
+  font-size: 14px;
   text-transform: uppercase;
-  color: #9A9A9A;
+  color: #444444;
   font-weight: 400;
   padding-bottom: 5px; }
 
@@ -1003,6 +1003,10 @@ body > .navbar-collapse[data-color="purple"]:after {
   .table > tbody > tr:hover .td-actions .btn {
     opacity: 1;
     filter: alpha(opacity=100); }
+
+.table > thead > tr > th.center,
+.table > tbody > tr > td.center {
+  text-align: center; }
 
 /*      Checkbox and radio         */
 .checkbox,
@@ -1774,7 +1778,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   .card label {
     font-size: 14px;
     font-weight: 400;
-    color: #9A9A9A;
+    color: #444444;
     margin-bottom: 0px; }
     .card .category i,
     .card label i {

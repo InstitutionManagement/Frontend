@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
+
+
 import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
 import Card from '../../../components/Card/Card.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
@@ -7,6 +9,7 @@ import { connect } from 'react-redux';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Modal from '../../../components/Modal/Modal';
 import { institutionActions } from '../../../redux/Actions/institution.action';
+
 
 class TrustListing extends Component {
   state = {
@@ -55,6 +58,7 @@ class TrustListing extends Component {
     const { name, email, phone, submitted } = this.state;
     const { trusts } = this.props;
     const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
+    
     return (
       <div className="content">
         <Grid fluid>
@@ -75,7 +79,7 @@ class TrustListing extends Component {
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Created By</th>
-                        <th>Add Institution</th>
+                        <th className="center">Add Institution</th>
                         <th/>
                         <th/>
                       </tr>
@@ -91,18 +95,27 @@ class TrustListing extends Component {
                               <td>{prop.phone}</td>
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
-                              <td>{<Button bsStyle="default" className="btn-sm" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}> Add Institution </Button>}</td>
-                              <td>
-                              <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal}></i>
+                              <td className="center">
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}>
+                              <i className="icon text-primary far fa-building" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
+                              </OverlayTrigger>
                               </td>
                               <td>
-                              <i className="icon pe-7s-tools text-info" onClick={this.toggleModal}></i>
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
+                                <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal}></i>
+                              </OverlayTrigger>
+                              </td>
+                              <td>
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
+                                <i className="icon fas fa-pencil-alt text-info" onClick={this.toggleModal}></i>
+                              </OverlayTrigger>
                               </td>
                             </tr>
                           );
                         })}
                     </tbody>
                   </Table>
+                  
                 }
               />
             </Col>
@@ -177,6 +190,7 @@ class TrustListing extends Component {
             </Grid>
           </div>
         </Modal>
+        
       </div>
     );
   }
