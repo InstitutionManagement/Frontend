@@ -76,7 +76,8 @@ class TrustListing extends Component {
                         <th>Address</th>
                         <th>Created By</th>
                         <th>Add Institution</th>
-                        <th />
+                        <th/>
+                        <th/>
                       </tr>
                     </thead>
                     <tbody>
@@ -90,9 +91,12 @@ class TrustListing extends Component {
                               <td>{prop.phone}</td>
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
-                              <td>{<Button bsStyle="default" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}> Add Institution </Button>}</td>
+                              <td>{<Button bsStyle="default" className="btn-sm" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}> Add Institution </Button>}</td>
                               <td>
-                                <Button bsStyle="danger">Delete</Button>
+                              <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal}></i>
+                              </td>
+                              <td>
+                              <i className="icon pe-7s-tools text-info" onClick={this.toggleModal}></i>
                               </td>
                             </tr>
                           );
@@ -121,7 +125,7 @@ class TrustListing extends Component {
                           type: 'text',
                           name: 'name',
                           bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
-                          placeholder: 'Trust Name',
+                          placeholder: 'Institution Name',
                           onChange: this.handleChange
                         },
                         {
@@ -153,22 +157,6 @@ class TrustListing extends Component {
                             componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Address"
-                            onChange={this.handleChange}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col md={12}>
-                        <FormGroup controlId="formControlsTextarea">
-                          <ControlLabel>Documents</ControlLabel>
-                          <FormControl
-                            rows="5"
-                            name="document_link"
-                            componentClass="textarea"
-                            bsClass="form-control"
-                            placeholder="Documents if any"
-                            default=" "
                             onChange={this.handleChange}
                           />
                         </FormGroup>

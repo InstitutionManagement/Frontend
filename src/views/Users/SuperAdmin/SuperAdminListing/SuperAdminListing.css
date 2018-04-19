@@ -1,6 +1,7 @@
 .content .table .icon {
-    font-size: 36;
+    font-size: 28;
     font-weight: bolder;
+    cursor: pointer;
 }
 
 .profile-pic{
