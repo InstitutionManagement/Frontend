@@ -266,7 +266,7 @@ input:focus {
     margin-top: 20px; }
     .sidebar .nav li > a {
       color: #FFFFFF;
-      margin: 5px 5px;
+      margin: 5px 15px;
       opacity: .86;
       border-radius: 4px; }
     .sidebar .nav li:hover > a,
@@ -279,7 +279,7 @@ input:focus {
       color: #FFFFFF;
       opacity: 1;
       background: rgba(255, 255, 255, 0.23); }
-    .sidebar .nav div {
+    .sidebar .nav p {
       margin: 0;
       line-height: 30px;
       font-size: 12px;
@@ -504,6 +504,10 @@ body > .navbar-collapse[data-color="purple"]:after {
     outline: 0 !important; }
   .btn.btn-icon {
     padding: 8px; }
+  .btn.margin-left {
+    margin-left: 15px; }
+  .btn.margin-right {
+    margin-right: 15px; }
 
 .btn-primary {
   border-color: #3472F7;
@@ -1377,7 +1381,7 @@ body > .navbar-collapse[data-color="purple"]:after {
   .navbar .btn-simple {
     font-size: 16px; }
   .navbar.fixed {
-    width: calc(100% - $sidebar-width);
+    width: calc(100% - 260px);
     right: 0;
     left: auto;
     border-radius: 0; }

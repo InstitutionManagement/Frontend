@@ -1,13 +1,11 @@
 import { userConstants } from '../../constants/user.constants';
 import { userService } from '../../services/user.service';
 import { alertActions } from './alert.actions';
-import { history } from '../../services/browser.history';
-import {actionHelper} from './Helpers/action.helper'
+import { actionHelper } from './Helpers/action.helper';
 
 export const userActions = {
   login,
   logout,
-  superAdminRegister,
   getAll,
   delete: _delete
 };
@@ -17,10 +15,17 @@ function login(username, password) {
     dispatch(actionHelper.request(userConstants.LOGIN_REQUEST, { username }));
     userService.login(username, password).then(
       response => {
-        if (actionHelper.successCheck(response)) {
+        if (response.data.error === null && response.data.data.token !== null && actionHelper.successCheck(response)) {
           localStorage.setItem('user', JSON.stringify(response.data.data));
           dispatch(actionHelper.success(userConstants.LOGIN_SUCCESS, response.data.data));
           window.location.href = '/dashboard';
+        } else if (
+          response.data.error === null &&
+          response.data.data.token === null &&
+          response.data.data.error !== null
+        ) {
+          dispatch(actionHelper.failure(userConstants.LOGIN_FAILURE, response.data.data.error.message));
+          dispatch(alertActions.error(response.data.data.error.message));
         } else {
           dispatch(actionHelper.failure(userConstants.LOGIN_FAILURE, response.data.error.message));
           dispatch(alertActions.error(response.data.error.message));
@@ -37,27 +42,6 @@ function login(username, password) {
 function logout() {
   userService.logout();
   return { type: userConstants.LOGOUT };
-}
-
-function superAdminRegister(user) {
-  return dispatch => {
-    dispatch(actionHelper.request(userConstants.REGISTER_REQUEST, user));
-    userService.superAdminRegister(user).then(
-      response => {
-        if(response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0){
-          dispatch(actionHelper.success(userConstants.REGISTER_SUCCESS, response.data.data));
-          dispatch(alertActions.success('Super Admin Registration Successfull'));
-        }else{
-          dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, response.data.error));
-          dispatch(alertActions.error(response.data.error.message));
-        }
-      },
-      error => {
-        dispatch(actionHelper.failure(userConstants.REGISTER_FAILURE, error));
-        dispatch(alertActions.error(error));
-      }
-    );
-  };
 }
 
 function getAll() {

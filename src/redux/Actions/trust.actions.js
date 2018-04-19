@@ -26,9 +26,9 @@ const getAll = condition => {
     dispatch(request());
     trustService.getAll(condition).then(
       response => {
-        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+        if (response.status === 200 && response.data.error === null) {
           dispatch(success(response.data.data));
-        } else if(response.status === 200) {
+        } else if (response.status === 200) {
           dispatch(alertActions.error(response.data.error.message));
         }
       },

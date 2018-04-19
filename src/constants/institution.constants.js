@@ -1,4 +1,4 @@
-export const institutionConstant = {
+export const institutionConstants = {
   GETALL_REQUEST: 'INSTITUTION_GETALL_REQUEST',
   GETALL_SUCCESS: 'INSTITUTION_GETALL_SUCCESS'
 };

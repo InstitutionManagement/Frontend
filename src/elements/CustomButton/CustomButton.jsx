@@ -5,9 +5,11 @@ import PropTypes from 'prop-types';
 
 class CustomButton extends Component {
   render() {
-    const { fill, simple, pullRight, round, block, ...rest } = this.props;
+    const { fill, simple, pullRight, round, block, marginRight, marginLeft, ...rest } = this.props;
 
     const btnClasses = cx({
+      'margin-right': marginRight,
+      'margin-left': marginLeft,
       'btn-fill': fill,
       'btn-simple': simple,
       'pull-right': pullRight,

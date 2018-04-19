@@ -7,6 +7,8 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { alertConstants } from '../../../constants/alert.constants';
 import './CreateTrust.css';
+import Modal from '../../../components/Modal/Modal';
+
 
 class CreateTrust extends Component {
   state = {
@@ -15,13 +17,22 @@ class CreateTrust extends Component {
     phone: '',
     address: '',
     document_link: '',
-    submitted: false
+    submitted: false,
+    isOpen: false
   };
+
+  
 
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
+  toggleModal = () => {
+    this.setState({
+      isOpen: !this.state.isOpen
+    });
+  }
 
   handleSubmit = e => {
     e.preventDefault();
@@ -37,8 +48,20 @@ class CreateTrust extends Component {
 
   componentDidUpdate() {
     if (Object.keys(this.props.alert).length > 0 && this.props.alert.type === alertConstants.SUCCESS) {
-      document.getElementById('createTrustForm').reset();
+      this.clearForm();
     }
+  }
+
+  clearForm = () =>{
+    document.getElementById('createTrustForm').reset();
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
   }
 
   render() {
@@ -48,6 +71,7 @@ class CreateTrust extends Component {
         <Grid fluid>
           <Row>
             <Col md={12}>
+            
               <Card
                 title="Create Trust"
                 content={
@@ -113,16 +137,32 @@ class CreateTrust extends Component {
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Button bsStyle="info" pullRight fill type="submit">
+                    <Button bsStyle="default" marginLeft pullRight onClick={this.clearForm}>
+                      Cancel
+                    </Button>
+                    <Button bsStyle="info" pullRight type="submit">
                       Create Trust
                     </Button>
                     <div className="clearfix" />
+                    {/* <button onClick={this.toggleModal}>
+                      Open the modal
+                    </button> */}
                   </form>
                 }
               />
             </Col>
           </Row>
         </Grid>
+        
+        {/* <Modal 
+          show={this.state.isOpen}
+          header="New Modal"
+          onClose={this.toggleModal}
+          onSave={this.toggleModal} >
+          <div>
+                
+          </div>
+        </Modal> */}
       </div>
     );
   }
