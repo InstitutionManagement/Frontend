@@ -1,5 +1,5 @@
 
-import {http} from './http.service';
+import http from './http.service';
 
 const login = (username, password) =>  http.post('/api/login', { username, password });
 // remove user from local storage to log user out

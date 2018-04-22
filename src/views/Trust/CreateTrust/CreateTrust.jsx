@@ -7,7 +7,6 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { alertConstants } from '../../../constants/alert.constants';
 import './CreateTrust.css';
-import Modal from '../../../components/Modal/Modal';
 
 
 class CreateTrust extends Component {
@@ -153,16 +152,6 @@ class CreateTrust extends Component {
             </Col>
           </Row>
         </Grid>
-        
-        {/* <Modal 
-          show={this.state.isOpen}
-          header="New Modal"
-          onClose={this.toggleModal}
-          onSave={this.toggleModal} >
-          <div>
-                
-          </div>
-        </Modal> */}
       </div>
     );
   }

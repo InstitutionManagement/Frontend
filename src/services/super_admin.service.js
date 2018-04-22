@@ -1,5 +1,5 @@
 
-import {http} from './http.service';
+import http from './http.service';
 
 const getSuperAdminById = (id) =>  http.get('/users/' + id);
 

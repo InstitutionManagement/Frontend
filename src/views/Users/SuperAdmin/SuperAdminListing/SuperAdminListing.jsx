@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, Table } from 'react-bootstrap';
+import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Card from '../../../../components/Card/Card.jsx';
 import { superAdminActions } from '../../../../redux/Actions/super_admin.actions';
 import { connect } from 'react-redux';
@@ -47,8 +47,8 @@ class SuperAdminListing extends Component {
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
-                        <th>Action</th>
-                        <th>Reset Password</th>
+                        <th></th>
+                        <th></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -57,21 +57,31 @@ class SuperAdminListing extends Component {
                           return (
                             <tr key={key} className={prop.status.tag === "DELETED" ?"backgroundRed":""}>
                               <td>{key + 1}</td>
-                              <td> <i className= {prop.status.tag === "DELETED" ?"icon fas fa-circle text-danger":"icon fas fa-circle text-success"} ></i></td>
-                              <td><img src={prop.image_url} alt={prop.name} width="100" className="profile-pic"/></td>
+                              <td> 
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{prop.status.tag === "DELETED"?"Deleted":"Active"}</Tooltip>}>
+                              <i className= {prop.status.tag === "DELETED" ?"icon fas fa-circle text-danger":"icon fas fa-circle text-success"} ></i>
+                              </OverlayTrigger>
+                              </td>
+                              <td><img src={prop.image_url} alt={prop.name} className="profile-pic"/></td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
-                              <td>{prop.address}<br/>Phone : {prop.phone}</td>   
-                                                      
-                              <td>
+                              <td>{prop.address}<br/>Phone : {prop.phone}</td>                                                         
+                              <td className="center">                              
                               {prop.status.tag === "DELETED" ?
-                                <button className="btn btn-success btn-sm"  onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); } }>{ prop.activating ? 'Activating' : 'Activate'}</button>
-                                :
-                                <button className="btn btn-danger btn-sm"  onClick={e => { e.preventDefault(); this.deleteSuperAdmin(prop.auth_id, prop.superadmin_id); } }>{ prop.deleting ? 'Deleting' : 'Delete'}</button>
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{ prop.activating ? 'Activating '+prop.name : 'Activate '+prop.name }</Tooltip>}>
+                                <i className="icon pe-7s-add-user text-success" onClick={e => { e.preventDefault(); this.activateSuperAdmin(prop.auth_id); }}></i>
+                              </OverlayTrigger>
+                              :
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{ prop.deleting ? 'Deleting '+prop.name : 'Delete '+prop.name }</Tooltip>}>
+                                <i className="icon pe-7s-delete-user text-danger" onClick={e => { e.preventDefault(); this.deleteSuperAdmin(prop.auth_id, prop.superadmin_id); } }></i>
+                              </OverlayTrigger>
                               }
                               </td>
-                              <td>
-                              <button className="btn btn-info btn-sm" onClick={e=> {e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone);}}>Reset Password</button>
+                              <td className="center">
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{ prop.resetPassword ? 'Resetting Password' : 'Reset Password'}</Tooltip>}>
+                                <i className={prop.resetPassword ? "icon pe-7s-shuffle text-danger" :"icon pe-7s-repeat text-warning"}   onClick={e => { e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone); } }></i>
+                              </OverlayTrigger>
+                              {/* <button className="btn btn-info btn-sm" onClick={e=> {e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone);}}>Reset Password</button> */}
                               </td>
                             </tr>
                           );

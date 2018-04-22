@@ -9,10 +9,13 @@ export function superAdmin(state = {}, action) {
       };
     case superAdminConstants.SUPERADMIN_GETALL_SUCCESS:
       return {
+        loading: false,
         data: action.data
       };
     case superAdminConstants.SUPERADMIN_GETALL_FAILURE:
       return {
+        data: [],
+        loading: false,
         error: action.error
       };
     // END GETALL REQUEST
@@ -107,6 +110,43 @@ export function superAdmin(state = {}, action) {
         })
       };
     // END ACTIVATION REQUEST
+
+    // START RESET PASSWORD REQUEST
+
+    case superAdminConstants.SUPERADMIN_RESET_PASSWORD_REQUEST:
+      return {
+        ...state,
+        data: state.data.map(
+          superAdmin =>
+            superAdmin.auth_id === action.request.authId ? { ...superAdmin, resetPassword: true } : superAdmin
+        )
+      };
+    case superAdminConstants.SUPERADMIN_RESET_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        data: state.data.map(superAdmin => {
+          if (superAdmin.auth_id === action.data.authId) {
+            superAdmin.resetPassword = false;
+          }
+          return superAdmin;
+        })
+      };
+    case superAdminConstants.SUPERADMIN_RESET_PASSWORD_FAILURE:
+      // remove 'deleting:true' property and add 'deleteError:[error]' property to user
+      return {
+        ...state,
+        data: state.data.map(superAdmin => {
+          if (superAdmin.resetPassword) {
+            // make copy of user without 'deleting:true' property
+            const { resetPassword, ...superAdminCopy } = superAdmin;
+            // return copy of user with 'deleteError:[error]' property
+            return { ...superAdminCopy, resetPasswordError: action.error };
+          }
+          return superAdmin;
+        })
+      };
+    // END RESET PASSWORD REQUEST
+
 
     default:
       return state;

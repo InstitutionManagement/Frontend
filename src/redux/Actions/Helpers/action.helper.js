@@ -1,3 +1,4 @@
+
 const request = (type, request) => {
     return { type: type,  request };
   }
@@ -5,6 +6,9 @@ const request = (type, request) => {
     return { type: type, data };
   }
   const failure = (type, error) => {
+    if(String(error) === "Failed to authenticate token."){
+      window.location.href = '/login';
+    }
     return { type: type, error };
   }
 

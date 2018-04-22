@@ -1,14 +1,8 @@
 /*!
 
  =========================================================
- * Light Bootstrap Dashboard React - v1.1.0
+ * React Node Express Application - v1.1.0
  * Based on Light Bootstrap Dashboard - v1.3.0
- =========================================================
-
- * Product Page: http://www.creative-tim.com/product/light-bootstrap-dashboard-react
- * Copyright 2017 Creative Tim (http://www.creative-tim.com)
- * Licensed under MIT (https://github.com/creativetimofficial/light-bootstrap-dashboard-react/blob/master/LICENSE.md)
-
  =========================================================
 
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
@@ -266,9 +260,12 @@ input:focus {
     margin-top: 20px; }
     .sidebar .nav li > a {
       color: #FFFFFF;
-      margin: 5px 15px;
+      margin: 5px 10px;
       opacity: .86;
-      border-radius: 4px; }
+      border-radius: 4px;
+      padding: 5px 15px; }
+      .sidebar .nav li > a > div {
+        padding: 5px; }
     .sidebar .nav li:hover > a,
     .sidebar .nav li.open > a,
     .sidebar .nav li.open > a:focus,
@@ -279,6 +276,47 @@ input:focus {
       color: #FFFFFF;
       opacity: 1;
       background: rgba(255, 255, 255, 0.23); }
+    .sidebar .nav li.parent {
+      color: #FFFFFF;
+      opacity: .86;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px 10px;
+      padding: 5px 15px; }
+      .sidebar .nav li.parent > div {
+        padding: 5px 0px; }
+      .sidebar .nav li.parent > span.arrow {
+        right: 18px;
+        width: 0;
+        height: 0;
+        display: inline-block;
+        position: absolute;
+        transition: all 150ms ease-in;
+        margin-top: 13px;
+        border-top: 4px solid;
+        margin-left: 2px;
+        border-left: 4px solid transparent;
+        border-right: 4px solid transparent;
+        vertical-align: middle; }
+      .sidebar .nav li.parent > span.arrow.rotate {
+        transform: rotate(180deg); }
+      .sidebar .nav li.parent > ul {
+        margin-top: 10px;
+        border-top: 1px solid #777676; }
+        .sidebar .nav li.parent > ul > li > a {
+          margin: 5px 0px;
+          padding: 5px; }
+    .sidebar .nav li.parent:hover {
+      background: rgba(255, 255, 255, 0.13);
+      opacity: 1; }
+    .sidebar .nav li.parent.open {
+      opacity: 1;
+      background: rgba(255, 255, 255, 0.23);
+      border-radius: 5px; }
+    .sidebar .nav li.parent.open {
+      opacity: 1;
+      background-color: #4e4d4d;
+      border-radius: 5px; }
     .sidebar .nav p {
       margin: 0;
       line-height: 30px;
@@ -292,7 +330,7 @@ input:focus {
     .sidebar .nav i {
       font-size: 28px;
       float: left;
-      margin-right: 15px;
+      margin-right: 10px;
       line-height: 30px;
       width: 30px;
       text-align: center; }

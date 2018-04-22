@@ -1,5 +1,5 @@
 
-import {http} from './http.service';
+import http from './http.service';
 
 const create = institution => http.post('/api/institution/register', institution);
 
