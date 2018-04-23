@@ -1,4 +1,4 @@
-import { superAdminConstants } from '../../constants/super_admin.constants';
+import { superAdminConstants } from '../../constants/superAdmin.constants';
 
 export function superAdmin(state = {}, action) {
   switch (action.type) {

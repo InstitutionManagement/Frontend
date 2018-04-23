@@ -1,5 +1,5 @@
-import { superAdminConstants } from '../../constants/super_admin.constants';
-import { superAdminService } from '../../services/super_admin.service';
+import { superAdminConstants } from '../../constants/superAdmin.constants';
+import { superAdminService } from '../../services/superAdmin.service';
 import { alertActions } from './alert.actions';
 import { actionHelper } from './Helpers/action.helper';
 

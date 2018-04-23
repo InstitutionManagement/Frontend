@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Card from '../../../../components/Card/Card.jsx';
-import { superAdminActions } from '../../../../redux/Actions/super_admin.actions';
+import { superAdminActions } from '../../../../redux/Actions/superAdmin.actions';
 import { connect } from 'react-redux';
 import './SuperAdminListing.css';
 
