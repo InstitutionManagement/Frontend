@@ -9,16 +9,16 @@ const user = JSON.parse(localStorage.getItem('user'));
 const SUPER_ADMIN_SIDEBAR = [
   { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },
   {
-    path: null, name: 'User Management', icon: 'pe-7s-user', children: [
-      { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-user', component: CreateSuperAdmin },
-      { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-user', component: SuperAdminListing },
-      { path: '/trust-admin-listing', name: 'Trust Admin Listing', icon: 'pe-7s-user', component: SuperAdminListing },
+    path: null, name: 'User Management', icon: 'pe-7s-users', children: [
+      { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-add-user', component: CreateSuperAdmin },
+      { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing },
+      { path: '/trust-admin-listing', name: 'Trust Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing },
     ]
   },
   {
-    path: null, name: 'Trust Management', icon: 'pe-7s-user', children: [
-      { path: '/create-trust', name: 'Create Trust', icon: 'pe-7s-user', component: CreateTrust },
-      { path: '/trust-listing', name: 'Trust Listing', icon: 'pe-7s-user', component: TrustListing },
+    path: null, name: 'Trust Management', icon: 'pe-7s-culture', children: [
+      { path: '/create-trust', name: 'Create Trust', icon: 'pe-7s-home', component: CreateTrust },
+      { path: '/trust-listing', name: 'Trust Listing', icon: 'pe-7s-albums', component: TrustListing },
     ]
   },
   { redirect: true, path: '/', to: '/dashboard', name: 'Dashboard' }

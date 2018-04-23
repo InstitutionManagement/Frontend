@@ -147,7 +147,6 @@ export function superAdmin(state = {}, action) {
       };
     // END RESET PASSWORD REQUEST
 
-
     default:
       return state;
   }

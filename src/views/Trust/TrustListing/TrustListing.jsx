@@ -18,6 +18,8 @@ class TrustListing extends Component {
     phone: '',
     address: '',
     isModalOpen: false,
+    isInstitution: false,
+    isTrustAdmin: true,
     trust: {}
   }
   componentDidMount() {
@@ -41,7 +43,7 @@ class TrustListing extends Component {
     this.setState({ isModalOpen: !this.state.isModalOpen });
   }
 
-  handleSubmit = e => {
+  handleInstitutionSubmit = e => {
     e.preventDefault();
     const { name, email, phone, address } = this.state;
     let institution = {
@@ -55,7 +57,7 @@ class TrustListing extends Component {
   };
 
   render() {
-    const { name, email, phone, submitted } = this.state;
+    
     const { trusts } = this.props;
     const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
     
@@ -79,6 +81,7 @@ class TrustListing extends Component {
                         <th>Phone</th>
                         <th>Address</th>
                         <th>Created By</th>
+                        <th className="center">Add Admin</th>
                         <th className="center">Add Institution</th>
                         <th/>
                         <th/>
@@ -96,8 +99,13 @@ class TrustListing extends Component {
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
                               <td className="center">
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Trust Admin</Tooltip>}>
+                              <i className="icon text-info pe-7s-add-user" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
+                              </OverlayTrigger>
+                              </td>
+                              <td className="center">
                               <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}>
-                              <i className="icon text-primary far fa-building" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
+                              <i className="icon text-primary pe-7s-culture" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
                               </OverlayTrigger>
                               </td>
                               <td>
@@ -129,7 +137,23 @@ class TrustListing extends Component {
             <Grid fluid>
               <Row>
                 <Col md={12}>
-                  <form id="createInstitutionForm" onSubmit={this.handleSubmit}>
+                  {this.state.isInstitution && <CreateInstitution {...this}/>}
+                  {this.state.isTrustAdmin && <CreateTrustAdmin {...this}/>}
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+        </Modal>
+        
+      </div>
+    );
+  }
+}
+
+const CreateInstitution = (context) => {
+  const { name, email, phone, submitted } = context.state;
+return(
+  <form id="createInstitutionForm" onSubmit={context.handleInstitutionSubmit}>
                     <FormInputs
                       ncols={['col-md-5', 'col-md-3', 'col-md-4']}
                       proprieties={[
@@ -139,7 +163,7 @@ class TrustListing extends Component {
                           name: 'name',
                           bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
                           placeholder: 'Institution Name',
-                          onChange: this.handleChange
+                          onChange: context.handleChange
                         },
                         {
                           label: 'Email',
@@ -147,7 +171,7 @@ class TrustListing extends Component {
                           name: 'email',
                           bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
                           placeholder: 'Email',
-                          onChange: this.handleChange
+                          onChange: context.handleChange
                         },
                         {
                           label: 'Phone',
@@ -155,7 +179,7 @@ class TrustListing extends Component {
                           name: 'phone',
                           bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
                           placeholder: 'Phone',
-                          onChange: this.handleChange
+                          onChange: context.handleChange
                         }
                       ]}
                     />
@@ -170,12 +194,12 @@ class TrustListing extends Component {
                             componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Address"
-                            onChange={this.handleChange}
+                            onChange={context.handleChange}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Button bsStyle="default" marginLeft pullRight onClick={this.toggleModal}>
+                    <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
                       Cancel
                     </Button>
                     <Button bsStyle="info" pullRight type="submit">
@@ -183,17 +207,68 @@ class TrustListing extends Component {
                     </Button>
                     <div className="clearfix" />
 
-                  </form>
+                  </form>);
+};
 
-                </Col>
-              </Row>
-            </Grid>
-          </div>
-        </Modal>
-        
-      </div>
-    );
-  }
+
+const CreateTrustAdmin = (context) => {
+  const { name, email, phone, submitted } = context.state;
+return(
+  <form id="createTrustAdmin" onSubmit={context.handleInstitutionSubmit}>
+                    <FormInputs
+                      ncols={['col-md-5', 'col-md-3', 'col-md-4']}
+                      proprieties={[
+                        {
+                          label: 'Name',
+                          type: 'text',
+                          name: 'name',
+                          bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
+                          placeholder: 'Institution Name',
+                          onChange: context.handleChange
+                        },
+                        {
+                          label: 'Email',
+                          type: 'email',
+                          name: 'email',
+                          bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
+                          placeholder: 'Email',
+                          onChange: context.handleChange
+                        },
+                        {
+                          label: 'Phone',
+                          type: 'number',
+                          name: 'phone',
+                          bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
+                          placeholder: 'Phone',
+                          onChange: context.handleChange
+                        }
+                      ]}
+                    />
+
+                    <Row>
+                      <Col md={12}>
+                        <FormGroup controlId="formControlsTextarea">
+                          <ControlLabel>Address</ControlLabel>
+                          <FormControl
+                            rows="5"
+                            name="address"
+                            componentClass="textarea"
+                            bsClass="form-control"
+                            placeholder="Address"
+                            onChange={context.handleChange}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
+                      Cancel
+                    </Button>
+                    <Button bsStyle="info" pullRight type="submit">
+                      Create Institution
+                    </Button>
+                    <div className="clearfix" />
+
+                  </form>);
 }
 
 const mapStateToProps = state => {
