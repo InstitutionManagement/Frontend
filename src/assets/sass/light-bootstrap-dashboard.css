@@ -263,7 +263,7 @@ input:focus {
       margin: 5px 10px;
       opacity: .86;
       border-radius: 4px;
-      padding: 5px 15px; }
+      padding: 10px 15px; }
       .sidebar .nav li > a > div {
         padding: 5px; }
     .sidebar .nav li:hover > a,
@@ -271,20 +271,25 @@ input:focus {
     .sidebar .nav li.open > a:focus,
     .sidebar .nav li.open > a:hover {
       background: rgba(255, 255, 255, 0.13);
-      opacity: 1; }
+      opacity: 1;
+      text-shadow: grey 1px 1.5px; }
     .sidebar .nav li.active > a {
       color: #FFFFFF;
       opacity: 1;
-      background: rgba(255, 255, 255, 0.23); }
+      background: rgba(255, 255, 255, 0.23);
+      text-shadow: grey 1px 1.5px; }
     .sidebar .nav li.parent {
       color: #FFFFFF;
       opacity: .86;
       border-radius: 4px;
       cursor: pointer;
       margin: 5px 10px;
-      padding: 5px 15px; }
+      padding: 10px 15px; }
       .sidebar .nav li.parent > div {
         padding: 5px 0px; }
+      .sidebar .nav li.parent > div:hover,
+      .sidebar .nav li.parent > div:focus {
+        text-shadow: grey 1px 1.5px; }
       .sidebar .nav li.parent > span.arrow {
         right: 18px;
         width: 0;
@@ -302,7 +307,7 @@ input:focus {
         transform: rotate(180deg); }
       .sidebar .nav li.parent > ul {
         margin-top: 10px;
-        border-top: 1px solid #777676; }
+        border-top: 1px solid rgba(255, 255, 255, 0.23); }
         .sidebar .nav li.parent > ul > li > a {
           margin: 5px 0px;
           padding: 5px; }
@@ -313,9 +318,11 @@ input:focus {
       opacity: 1;
       background: rgba(255, 255, 255, 0.23);
       border-radius: 5px; }
+      .sidebar .nav li.parent.open > div {
+        text-shadow: grey 1px 1.5px; }
     .sidebar .nav li.parent.open {
       opacity: 1;
-      background-color: #4e4d4d;
+      background-color: rgba(255, 255, 255, 0.13);
       border-radius: 5px; }
     .sidebar .nav p {
       margin: 0;

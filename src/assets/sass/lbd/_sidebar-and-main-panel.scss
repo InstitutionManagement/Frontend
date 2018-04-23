@@ -101,7 +101,7 @@
                 margin: 5px 10px;
                 opacity: .86;
                 border-radius: 4px;
-                padding: 5px 15px;
+                padding: 10px 15px;
 
                 >div{
                     padding: 5px;
@@ -114,13 +114,14 @@
             &.open > a:hover{
                 background: rgba(255,255,255,0.13);
                 opacity: 1;
+                text-shadow: grey 1px 1.5px;
             }
 
             &.active > a{
                 color: #FFFFFF;
                 opacity: 1;
                 background: rgba(255,255,255,0.23);
-
+                text-shadow: grey 1px 1.5px;
             }
         }
         li.parent{
@@ -129,10 +130,15 @@
                 border-radius: 4px;
                 cursor: pointer;
                 margin: 5px 10px;
-                padding: 5px 15px;
+                padding: 10px 15px;
 
                 >div{
                     padding: 5px 0px;
+                }
+
+                >div:hover,
+                >div:focus{
+                    text-shadow: grey 1px 1.5px;
                 }
 
                 >span.arrow{
@@ -156,7 +162,7 @@
 
                 >ul{
                     margin-top: 10px;
-                    border-top: 1px solid #777676;
+                    border-top: 1px solid rgba(255,255,255,0.23);
 
                     >li{
                         >a{
@@ -169,17 +175,22 @@
         li.parent:hover{
             background: rgba(255,255,255,0.13);
             opacity: 1;
+            
         }
 
         li.parent.open{
             opacity: 1;
             background: rgba(255,255,255,0.23);
             border-radius: 5px;
+
+            >div{
+                text-shadow: grey 1px 1.5px;
+            }
         }
 
         li.parent.open{
             opacity: 1;
-            background-color: #4e4d4d;
+            background-color: rgba(255,255,255,0.13);
             border-radius: 5px;
         }
 

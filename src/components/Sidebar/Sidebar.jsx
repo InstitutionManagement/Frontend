@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import HeaderLinks from '../Header/HeaderLinks';
-import imagine from '../../assets/img/sidebar-3.jpg';
+import imagine from '../../assets/img/sidebar-4.jpg';
 import logo from '../../assets/img/reactlogo.png';
 import { SidebarRoutes } from '../../routes/routing';
 
@@ -30,7 +30,7 @@ class Sidebar extends Component {
       backgroundImage: 'url(' + imagine + ')'
     };
     return (
-      <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
+      <div id="sidebar" className="sidebar" data-color="purple" data-image={imagine}>
         <div className="sidebar-background" style={sidebarBackground} />
         <div className="logo">
           <a href="www.google.com" className="simple-text logo-mini">
