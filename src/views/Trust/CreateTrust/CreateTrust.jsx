@@ -6,7 +6,6 @@ import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { alertConstants } from '../../../constants/alert.constants';
-import './CreateTrust.css';
 
 
 class CreateTrust extends Component {

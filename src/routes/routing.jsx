@@ -4,7 +4,7 @@ import TrustListing from '../views/Trust/TrustListing/TrustListing';
 import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
 import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
 import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem('user')) || {};
 
 const SUPER_ADMIN_SIDEBAR = [
   { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },

@@ -9,7 +9,6 @@ import { style } from '../../variables/Variables';
 import { Routes } from '../../routes/routing';
 import { alertConstants } from '../../constants/alert.constants';
 import { alertActions } from '../../redux/Actions/alert.actions';
-import './Private.css';
 
 class Private extends Component {
   constructor(props) {

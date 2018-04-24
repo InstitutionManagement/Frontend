@@ -1,25 +1,33 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-
-
 import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
 import Card from '../../../components/Card/Card.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { connect } from 'react-redux';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Modal from '../../../components/Modal/Modal';
-import { institutionActions } from '../../../redux/Actions/institution.action';
+import { institutionActions } from '../../../redux/Actions/institution.actions';
+import { trustAdminActions } from '../../../redux/Actions/trustAdmin.actions';
+import { alertConstants } from '../../../constants/alert.constants';
+
+const formFields = {
+  name: '',
+  email:'',
+  phone:'',
+  address:'',
+  username:'',
+  password:''
+}
+
 
 
 class TrustListing extends Component {
   state = {
-    name: '',
-    email: '',
-    phone: '',
-    address: '',
+    ...formFields,
+    submitted: false,
     isModalOpen: false,
     isInstitution: false,
-    isTrustAdmin: true,
+    isTrustAdmin: false,
     trust: {}
   }
   componentDidMount() {
@@ -35,16 +43,26 @@ class TrustListing extends Component {
     this.props.deleteTrust(id);
   }
 
-  setTrustName = (prop) => {
+  setTrustName = (prop, toggle) => {
     this.setState({ trust: prop });
+    if(toggle === 'admin') {
+      this.setState({ isTrustAdmin: true, isInstitution: false })
+    } 
+    if(toggle === 'institution') {
+      this.setState({ isTrustAdmin: false, isInstitution: true })
+    } 
   }
 
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
+    if(!this.state.isModalOpen){
+      this.setState({formFields: formFields, submitted: false});
+    }
   }
 
-  handleInstitutionSubmit = e => {
+  handleCreateInstitutionSubmit = e => {
     e.preventDefault();
+    this.setState({submitted: true});
     const { name, email, phone, address } = this.state;
     let institution = {
       name,
@@ -55,6 +73,38 @@ class TrustListing extends Component {
     }
     if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.trust_id !== '') this.props.dispatchSubmit(institution);
   };
+
+  handleCreateTrustAdminSubmit = e => {
+    e.preventDefault();
+    this.setState({submitted: true});
+    const { name, email, phone, address, username, password } = this.state;
+    let trustAdmin = {
+      name,
+      email,
+      phone,
+      address,
+      username,
+      password,
+      parentTrustId: this.state.trust._id
+    }
+    if (trustAdmin.username !== '' && trustAdmin.password !== '' &&trustAdmin.name !== '' && trustAdmin.email !== '' && trustAdmin.phone !== '' && trustAdmin.parentTrustId !== '') {
+      this.props.dispatchTrustSubmit(trustAdmin);
+    }
+
+  }
+
+  componentDidUpdate() {
+    if (Object.keys(this.props.alert).length > 0 && this.props.alert.type === alertConstants.SUCCESS) {
+      this.clearForm();
+    }
+  }
+
+  clearForm = () =>{
+    if(this.state.isTrustAdmin)
+    document.getElementById('createTrustAdminForm').reset();
+    if(this.state.isInstitution)
+    document.getElementById('createInstitutionForm').reset();
+  }
 
   render() {
     
@@ -100,12 +150,12 @@ class TrustListing extends Component {
                               <td>{prop.created_by.name}</td>
                               <td className="center">
                               <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Trust Admin</Tooltip>}>
-                              <i className="icon text-info pe-7s-add-user" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
+                              <i className="icon text-info pe-7s-add-user" onClick={e => { this.setTrustName(prop, 'admin'); this.toggleModal(); }}></i>
                               </OverlayTrigger>
                               </td>
                               <td className="center">
                               <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}>
-                              <i className="icon text-primary pe-7s-culture" onClick={e => { this.setTrustName(prop); this.toggleModal(); }}></i>
+                              <i className="icon text-primary pe-7s-culture" onClick={e => { this.setTrustName(prop, 'institution'); this.toggleModal(); }}></i>
                               </OverlayTrigger>
                               </td>
                               <td>
@@ -131,7 +181,7 @@ class TrustListing extends Component {
         </Grid>
         <Modal
           show={this.state.isModalOpen}
-          header={`Add Institution in ${this.state.trust.name}`}
+          header={this.state.isTrustAdmin ? `Add a Trust Admin to ${this.state.trust.name}`: this.state.isInstitution ? `Add an Institution to ${this.state.trust.name}` : "" }
         >
           <div>
             <Grid fluid>
@@ -153,7 +203,7 @@ class TrustListing extends Component {
 const CreateInstitution = (context) => {
   const { name, email, phone, submitted } = context.state;
 return(
-  <form id="createInstitutionForm" onSubmit={context.handleInstitutionSubmit}>
+  <form id="createInstitutionForm" onSubmit={context.handleCreateInstitutionSubmit}>
                     <FormInputs
                       ncols={['col-md-5', 'col-md-3', 'col-md-4']}
                       proprieties={[
@@ -189,7 +239,7 @@ return(
                         <FormGroup controlId="formControlsTextarea">
                           <ControlLabel>Address</ControlLabel>
                           <FormControl
-                            rows="5"
+                            rows="2"
                             name="address"
                             componentClass="textarea"
                             bsClass="form-control"
@@ -203,7 +253,7 @@ return(
                       Cancel
                     </Button>
                     <Button bsStyle="info" pullRight type="submit">
-                      Create Institution
+                      Add New Institution
                     </Button>
                     <div className="clearfix" />
 
@@ -212,18 +262,39 @@ return(
 
 
 const CreateTrustAdmin = (context) => {
-  const { name, email, phone, submitted } = context.state;
+  const { name, email, phone, username, password, submitted } = context.state; 
 return(
-  <form id="createTrustAdmin" onSubmit={context.handleInstitutionSubmit}>
+  <form id="createTrustAdminForm" onSubmit={context.handleCreateTrustAdminSubmit}>
+                <FormInputs
+                      ncols={['col-md-6', 'col-md-6']}
+                      proprieties={[
+                        {
+                          label: 'Username',
+                          type: 'text',
+                          name: 'username',
+                          bsClass: 'form-control' + (submitted && !username ? ' has-error' : ''),
+                          placeholder: 'Username',
+                          onChange: context.handleChange
+                        },
+                        {
+                          label: 'Password',
+                          type: 'password',
+                          name: 'password',
+                          bsClass: 'form-control' + (submitted && !password ? ' has-error' : ''),
+                          placeholder: 'Password',
+                          onChange: context.handleChange
+                        }
+                      ]}
+                    />
                     <FormInputs
-                      ncols={['col-md-5', 'col-md-3', 'col-md-4']}
+                      ncols={['col-md-4', 'col-md-4', 'col-md-4']}
                       proprieties={[
                         {
                           label: 'Name',
                           type: 'text',
                           name: 'name',
                           bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
-                          placeholder: 'Institution Name',
+                          placeholder: 'Name',
                           onChange: context.handleChange
                         },
                         {
@@ -250,7 +321,7 @@ return(
                         <FormGroup controlId="formControlsTextarea">
                           <ControlLabel>Address</ControlLabel>
                           <FormControl
-                            rows="5"
+                            rows="2"
                             name="address"
                             componentClass="textarea"
                             bsClass="form-control"
@@ -264,7 +335,7 @@ return(
                       Cancel
                     </Button>
                     <Button bsStyle="info" pullRight type="submit">
-                      Create Institution
+                      Add New Trust Admin
                     </Button>
                     <div className="clearfix" />
 
@@ -272,9 +343,10 @@ return(
 }
 
 const mapStateToProps = state => {
-  const { trusts } = state;
+  const { trusts, alert } = state;
   return {
-    trusts
+    trusts,
+    alert
   };
 };
 
@@ -287,6 +359,9 @@ const mapDispachToProps = dispatch => ({
   },
   dispatchSubmit: institution => {
     dispatch(institutionActions.create(institution));
+  },
+  dispatchTrustSubmit: trustAdmin => {
+    dispatch(trustAdminActions.registerTrustAdmin(trustAdmin));
   }
 });
 

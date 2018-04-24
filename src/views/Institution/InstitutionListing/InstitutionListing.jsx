@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { institutionActions } from '../../../redux/Actions/institution.action';
+import { institutionActions } from '../../../redux/Actions/institution.actions';
 
 class InstitutionListing extends Component {
   componentWillMount() {}
