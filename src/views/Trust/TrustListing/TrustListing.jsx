@@ -12,11 +12,11 @@ import { alertConstants } from '../../../constants/alert.constants';
 
 const formFields = {
   name: '',
-  email:'',
-  phone:'',
-  address:'',
-  username:'',
-  password:''
+  email: '',
+  phone: '',
+  address: '',
+  username: '',
+  password: ''
 }
 
 
@@ -28,6 +28,7 @@ class TrustListing extends Component {
     isModalOpen: false,
     isInstitution: false,
     isTrustAdmin: false,
+    tabToggler: true,
     trust: {}
   }
   componentDidMount() {
@@ -43,32 +44,42 @@ class TrustListing extends Component {
     this.props.dispatchDeleteTrust(id);
   }
 
+  getTrustAdminsById = (id) => {
+    const params = {
+      condition: {
+        parent_trust_id: id
+      }
+    }
+    this.props.dispatchGetTrustAdmins(params);
+  }
+
   setTrustName = (prop, toggle) => {
     this.setState({ trust: prop });
-    if(toggle === 'admin') {
+    if (toggle === 'admin') {
       this.setState({ isTrustAdmin: true, isInstitution: false });
-      const params = {
-        condition: {
-          parent_trust_id:prop._id
-        }
-      }
-      this.props.dispatchGetTrustAdmins(params);
-    } 
-    if(toggle === 'institution') {
+      this.getTrustAdminsById(prop._id);
+    }
+    if (toggle === 'institution') {
       this.setState({ isTrustAdmin: false, isInstitution: true })
-    } 
+    }
   }
+
+  
 
   toggleModal = () => {
     this.setState({ isModalOpen: !this.state.isModalOpen });
-    if(!this.state.isModalOpen){
-      this.setState({formFields: formFields, submitted: false});
+    if (!this.state.isModalOpen) {
+      this.setState({ formFields: formFields, submitted: false });
     }
+  }
+
+  toggleTab = () => {
+    this.setState({ tabToggler: !this.state.tabToggler });
   }
 
   handleCreateInstitutionSubmit = e => {
     e.preventDefault();
-    this.setState({submitted: true});
+    this.setState({ submitted: true });
     const { name, email, phone, address } = this.state;
     let institution = {
       name,
@@ -82,7 +93,7 @@ class TrustListing extends Component {
 
   handleCreateTrustAdminSubmit = e => {
     e.preventDefault();
-    this.setState({submitted: true});
+    this.setState({ submitted: true });
     const { name, email, phone, address, username, password } = this.state;
     let trustAdmin = {
       name,
@@ -93,7 +104,7 @@ class TrustListing extends Component {
       password,
       parentTrustId: this.state.trust._id
     }
-    if (trustAdmin.username !== '' && trustAdmin.password !== '' &&trustAdmin.name !== '' && trustAdmin.email !== '' && trustAdmin.phone !== '' && trustAdmin.parentTrustId !== '') {
+    if (trustAdmin.username !== '' && trustAdmin.password !== '' && trustAdmin.name !== '' && trustAdmin.email !== '' && trustAdmin.phone !== '' && trustAdmin.parentTrustId !== '') {
       this.props.dispatchCreateTrustAdminSubmit(trustAdmin);
     }
 
@@ -105,18 +116,22 @@ class TrustListing extends Component {
     }
   }
 
-  clearForm = () =>{
-    if(this.state.isTrustAdmin)
-    document.getElementById('createTrustAdminForm').reset();
-    if(this.state.isInstitution)
-    document.getElementById('createInstitutionForm').reset();
+  clearForm = () => {
+    if (this.state.isTrustAdmin){
+      document.getElementById('createTrustAdminForm').reset();
+      this.toggleTab();
+      // this.getTrustAdminsById(this.state.trust._id);
+    }
+     
+    if (this.state.isInstitution)
+      document.getElementById('createInstitutionForm').reset();
   }
 
   render() {
-    
+
     const { trusts } = this.props;
     const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
-    
+
     return (
       <div className="content">
         <Grid fluid>
@@ -139,8 +154,8 @@ class TrustListing extends Component {
                         <th>Created By</th>
                         <th className="center">Add Admin</th>
                         <th className="center">Add Institution</th>
-                        <th/>
-                        <th/>
+                        <th />
+                        <th />
                       </tr>
                     </thead>
                     <tbody>
@@ -155,31 +170,31 @@ class TrustListing extends Component {
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
                               <td className="center">
-                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Trust Admin Management</Tooltip>}>
-                              <i className="icon text-info pe-7s-id" onClick={e => { this.setTrustName(prop, 'admin'); this.toggleModal(); }}></i>
-                              </OverlayTrigger>
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Trust Admin Management</Tooltip>}>
+                                  <i className="icon text-info pe-7s-id" onClick={e => { this.setTrustName(prop, 'admin'); this.toggleModal(); }}></i>
+                                </OverlayTrigger>
                               </td>
                               <td className="center">
-                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}>
-                              <i className="icon text-primary pe-7s-culture" onClick={e => { this.setTrustName(prop, 'institution'); this.toggleModal(); }}></i>
-                              </OverlayTrigger>
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}>
+                                  <i className="icon text-primary pe-7s-culture" onClick={e => { this.setTrustName(prop, 'institution'); this.toggleModal(); }}></i>
+                                </OverlayTrigger>
                               </td>
                               <td>
-                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
-                                <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal}></i>
-                              </OverlayTrigger>
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
+                                  <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal}></i>
+                                </OverlayTrigger>
                               </td>
                               <td>
-                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
-                                <i className="icon fas fa-pencil-alt text-info" onClick={this.toggleModal}></i>
-                              </OverlayTrigger>
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
+                                  <i className="icon fas fa-pencil-alt text-info" onClick={this.toggleModal}></i>
+                                </OverlayTrigger>
                               </td>
                             </tr>
                           );
                         })}
                     </tbody>
                   </Table>
-                  
+
                 }
               />
             </Col>
@@ -187,20 +202,17 @@ class TrustListing extends Component {
         </Grid>
         <Modal
           show={this.state.isModalOpen}
-          header={this.state.isTrustAdmin ? `Add a Trust Admin to ${this.state.trust.name}`: this.state.isInstitution ? `Add an Institution to ${this.state.trust.name}` : "" }
+          close={this.toggleModal}
+          header={this.state.isTrustAdmin ? `Trust Admin Management for ${this.state.trust.name}` : this.state.isInstitution ? `Add an Institution to ${this.state.trust.name}` : ""}
         >
           <div>
-            <Grid fluid>
-              <Row>
-                <Col md={12}>
-                  {this.state.isInstitution && <CreateInstitution {...this}/>}
-                  {this.state.isTrustAdmin && <CreateTrustAdmin {...this}/>}
-                </Col>
-              </Row>
-            </Grid>
+
+            {this.state.isInstitution && <CreateInstitution {...this} />}
+            {this.state.isTrustAdmin && <CreateTrustAdmin {...this} />}
+
           </div>
         </Modal>
-        
+
       </div>
     );
   }
@@ -208,70 +220,152 @@ class TrustListing extends Component {
 
 const CreateInstitution = (context) => {
   const { name, email, phone, submitted } = context.state;
-return(
-  <form id="createInstitutionForm" onSubmit={context.handleCreateInstitutionSubmit}>
-                    <FormInputs
-                      ncols={['col-md-5', 'col-md-3', 'col-md-4']}
-                      proprieties={[
-                        {
-                          label: 'Name',
-                          type: 'text',
-                          name: 'name',
-                          bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
-                          placeholder: 'Institution Name',
-                          onChange: context.handleChange
-                        },
-                        {
-                          label: 'Email',
-                          type: 'email',
-                          name: 'email',
-                          bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
-                          placeholder: 'Email',
-                          onChange: context.handleChange
-                        },
-                        {
-                          label: 'Phone',
-                          type: 'number',
-                          name: 'phone',
-                          bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
-                          placeholder: 'Phone',
-                          onChange: context.handleChange
-                        }
-                      ]}
-                    />
+  return (
+    <Grid fluid>
+      <Row>
+        <Col md={12}>
+          <form id="createInstitutionForm" onSubmit={context.handleCreateInstitutionSubmit}>
+            <FormInputs
+              ncols={['col-md-5', 'col-md-3', 'col-md-4']}
+              proprieties={[
+                {
+                  label: 'Name',
+                  type: 'text',
+                  name: 'name',
+                  bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
+                  placeholder: 'Institution Name',
+                  onChange: context.handleChange
+                },
+                {
+                  label: 'Email',
+                  type: 'email',
+                  name: 'email',
+                  bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
+                  placeholder: 'Email',
+                  onChange: context.handleChange
+                },
+                {
+                  label: 'Phone',
+                  type: 'number',
+                  name: 'phone',
+                  bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
+                  placeholder: 'Phone',
+                  onChange: context.handleChange
+                }
+              ]}
+            />
 
-                    <Row>
-                      <Col md={12}>
-                        <FormGroup controlId="formControlsTextarea">
-                          <ControlLabel>Address</ControlLabel>
-                          <FormControl
-                            rows="2"
-                            name="address"
-                            componentClass="textarea"
-                            bsClass="form-control"
-                            placeholder="Address"
-                            onChange={context.handleChange}
-                          />
-                        </FormGroup>
-                      </Col>
-                    </Row>
-                    <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
-                      Cancel
+            <Row>
+              <Col md={12}>
+                <FormGroup controlId="formControlsTextarea">
+                  <ControlLabel>Address</ControlLabel>
+                  <FormControl
+                    rows="2"
+                    name="address"
+                    componentClass="textarea"
+                    bsClass="form-control"
+                    placeholder="Address"
+                    onChange={context.handleChange}
+                  />
+                </FormGroup>
+              </Col>
+            </Row>
+            <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
+              Cancel
                     </Button>
-                    <Button bsStyle="info" pullRight type="submit">
-                      Add New Institution
+            <Button bsStyle="info" pullRight type="submit">
+              Add New Institution
                     </Button>
-                    <div className="clearfix" />
+            <div className="clearfix" />
 
-                  </form>);
+          </form></Col>
+      </Row>
+    </Grid>);
 };
 
 
 const CreateTrustAdmin = (context) => {
-  const { name, email, phone, username, password, submitted } = context.state; 
-return(
-  <form id="createTrustAdminForm" onSubmit={context.handleCreateTrustAdminSubmit}>
-                <FormInputs
+  const { name, email, phone, username, password, submitted } = context.state;
+  const { trustAdmin } = context.props;
+  const loading = trustAdmin.adminsByIdloading ? 'Loading Trust Admins' : 'Trust Admin Listing';
+  return (
+    <div className="content">
+      <div className="clearfix row">
+        <Col md={12}>
+          <ul role="tablist" className="nav nav-tabs">
+            <li className={context.state.tabToggler ? 'active' : ''} onClick={context.toggleTab}>
+
+              <a role="tab">{loading}</a>
+            </li>
+            <li className={!context.state.tabToggler ? 'active' : ''} onClick={context.toggleTab}>
+              <a role="tab">Create New Trust Admin</a>
+            </li>
+          </ul>
+        </Col>
+        <div className="tab-content">
+        <div className={context.state.tabToggler ? 'fade tab-pane active in' : 'tab-pane'}>
+            <Grid fluid>
+              <Row>
+                <Col md={12}>
+                 
+                      <Table striped hover>
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Address</th>
+
+                            <th />
+                            <th />
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {trustAdmin.adminsById && Object.keys(trustAdmin.adminsById).length > 0 &&
+                            trustAdmin.adminsById.map((prop, key) => {
+                              return (
+                                <tr key={key}>
+                                  <td>{key + 1}</td>
+                                  <td>{prop.name}</td>
+                                  <td>{prop.email}</td>
+                                  <td>{prop.phone}</td>
+                                  <td>{prop.address}</td>
+
+                                  <td>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
+                                      <i className="icon pe-7s-trash text-danger" ></i>
+                                    </OverlayTrigger>
+                                  </td>
+                                  <td>
+                                    <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
+                                      <i className="icon fas fa-pencil-alt text-info" ></i>
+                                    </OverlayTrigger>
+                                  </td>
+                                </tr>
+                              );
+                            })}
+                            {trustAdmin.adminsById && trustAdmin.adminsById.length === 0 &&
+                              (
+                              <tr>
+                                <td colSpan="7" className="text-center">No Data Found.</td>
+                              </tr>
+                              )
+                            }
+                        </tbody>
+                      </Table>
+
+                    
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+          <div  className={!context.state.tabToggler ? 'fade tab-pane active in' : 'tab-pane'}>
+            <Grid fluid>
+              <Row>
+                <Col md={12}>
+                  <form id="createTrustAdminForm" onSubmit={context.handleCreateTrustAdminSubmit}>
+                    <FormInputs
                       ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
@@ -345,13 +439,23 @@ return(
                     </Button>
                     <div className="clearfix" />
 
-                  </form>);
+                  </form>
+                </Col>
+              </Row>
+            </Grid>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  );
 }
 
 const mapStateToProps = state => {
-  const { trusts, alert } = state;
+  const { trusts, alert, trustAdmin } = state;
   return {
     trusts,
+    trustAdmin,
     alert
   };
 };

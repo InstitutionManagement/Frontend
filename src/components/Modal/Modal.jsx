@@ -10,6 +10,10 @@ class Modal extends React.Component {
   //onClose: function
   //buttonName: ButtonName
 
+
+  
+
+
   render() {
     // Render nothing if the "show" prop is false
     if (!this.props.show) {
@@ -19,6 +23,7 @@ class Modal extends React.Component {
     return (
       <div className="backdropStyle">
         <div className="modalStyle">
+        {<i className="pe-7s-close close-icon" onClick={this.props.close}></i>}
           {this.props.header && <h3>{this.props.header}</h3>}
           {this.props.children}
           {this.props.onClose &&

@@ -21,7 +21,7 @@ const request = (type, request) => {
     return `${name[0].toUpperCase()}${name.slice(1)} already exists`
   }
 
-  const successCheck = (response) => (response.status === 200 && response.data.error === null && Object.keys(response.data.data).length > 0);
+  const successCheck = (response) => (response.status === 200 && response.data.error === null);
 
   export const actionHelper = {
       request,

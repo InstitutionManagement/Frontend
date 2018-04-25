@@ -1,4 +1,17 @@
-@mixin pill-style($color){
+@mixin pill-style($color) {
     border: 1px solid $color;
     color: $color;
+}
+
+.content {
+    .tab-content {
+        .tab-pane {
+            .table {
+                margin-top: 15px;
+            }
+            form {
+                margin-top: 25px;
+            }
+        }
+    }
 }
