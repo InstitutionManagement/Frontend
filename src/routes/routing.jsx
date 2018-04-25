@@ -4,7 +4,8 @@ import TrustListing from '../views/Trust/TrustListing/TrustListing';
 import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
 import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
 import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
-const user = JSON.parse(localStorage.getItem('user')) || {};
+import Login from '../views/Login/Login';
+const user = JSON.parse(localStorage.getItem('user')).user || {};
 
 const SUPER_ADMIN_SIDEBAR = [
   { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },
@@ -138,7 +139,7 @@ STUDENT_SIDEBAR.forEach((prop, key) => {
 
 let Routes, SidebarRoutes;
 
-switch (user.userType) {
+switch (user.user_type) {
   case 'SuperAdmin':
     Routes = SUPER_ADMIN_ROUTES;
     SidebarRoutes = SUPER_ADMIN_SIDEBAR;
@@ -160,8 +161,8 @@ switch (user.userType) {
     SidebarRoutes = STUDENT_SIDEBAR;
     break;
   default:
-    Routes = SUPER_ADMIN_ROUTES;
-    SidebarRoutes = SUPER_ADMIN_SIDEBAR;
+    Routes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login },];
+    SidebarRoutes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login },];
     break;
 }
 

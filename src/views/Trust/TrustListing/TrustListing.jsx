@@ -31,7 +31,7 @@ class TrustListing extends Component {
     trust: {}
   }
   componentDidMount() {
-    this.props.getAll();
+    this.props.dispatchGetAllTrusts();
   }
 
   handleChange = e => {
@@ -40,13 +40,19 @@ class TrustListing extends Component {
   };
 
   deleteTrust(id) {
-    this.props.deleteTrust(id);
+    this.props.dispatchDeleteTrust(id);
   }
 
   setTrustName = (prop, toggle) => {
     this.setState({ trust: prop });
     if(toggle === 'admin') {
-      this.setState({ isTrustAdmin: true, isInstitution: false })
+      this.setState({ isTrustAdmin: true, isInstitution: false });
+      const params = {
+        condition: {
+          parent_trust_id:prop._id
+        }
+      }
+      this.props.dispatchGetTrustAdmins(params);
     } 
     if(toggle === 'institution') {
       this.setState({ isTrustAdmin: false, isInstitution: true })
@@ -71,7 +77,7 @@ class TrustListing extends Component {
       address,
       trust_id: this.state.trust._id
     }
-    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.trust_id !== '') this.props.dispatchSubmit(institution);
+    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.trust_id !== '') this.props.dispatchCreateInstitutionSubmit(institution);
   };
 
   handleCreateTrustAdminSubmit = e => {
@@ -88,7 +94,7 @@ class TrustListing extends Component {
       parentTrustId: this.state.trust._id
     }
     if (trustAdmin.username !== '' && trustAdmin.password !== '' &&trustAdmin.name !== '' && trustAdmin.email !== '' && trustAdmin.phone !== '' && trustAdmin.parentTrustId !== '') {
-      this.props.dispatchTrustSubmit(trustAdmin);
+      this.props.dispatchCreateTrustAdminSubmit(trustAdmin);
     }
 
   }
@@ -149,8 +155,8 @@ class TrustListing extends Component {
                               <td>{prop.address}</td>
                               <td>{prop.created_by.name}</td>
                               <td className="center">
-                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Add Trust Admin</Tooltip>}>
-                              <i className="icon text-info pe-7s-add-user" onClick={e => { this.setTrustName(prop, 'admin'); this.toggleModal(); }}></i>
+                              <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Trust Admin Management</Tooltip>}>
+                              <i className="icon text-info pe-7s-id" onClick={e => { this.setTrustName(prop, 'admin'); this.toggleModal(); }}></i>
                               </OverlayTrigger>
                               </td>
                               <td className="center">
@@ -351,18 +357,22 @@ const mapStateToProps = state => {
 };
 
 const mapDispachToProps = dispatch => ({
-  getAll: () => {
+  dispatchGetAllTrusts: () => {
     dispatch(trustActions.getAll());
   },
-  deleteTrust: id => {
+  dispatchDeleteTrust: id => {
     dispatch(trustActions.delete(id));
   },
-  dispatchSubmit: institution => {
+  dispatchCreateInstitutionSubmit: institution => {
     dispatch(institutionActions.create(institution));
   },
-  dispatchTrustSubmit: trustAdmin => {
+  dispatchCreateTrustAdminSubmit: trustAdmin => {
     dispatch(trustAdminActions.registerTrustAdmin(trustAdmin));
+  },
+  dispatchGetTrustAdmins: params => {
+    dispatch(trustAdminActions.getTrustAdmins(params));
   }
+
 });
 
 export default connect(mapStateToProps, mapDispachToProps)(TrustListing);

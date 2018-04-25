@@ -79,7 +79,7 @@ class SuperAdminListing extends Component {
                               </td>
                               <td className="center">
                               <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">{ prop.resetPassword ? 'Resetting Password' : 'Reset Password'}</Tooltip>}>
-                                <i className={prop.resetPassword ? "icon pe-7s-shuffle text-danger" :"icon pe-7s-repeat text-warning"}   onClick={e => { e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone); } }></i>
+                                <i className={prop.resetPassword ? "icon pe-7s-shuffle text-danger" :"icon pe-7s-refresh-2 text-warning"}   onClick={e => { e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone); } }></i>
                               </OverlayTrigger>
                               {/* <button className="btn btn-info btn-sm" onClick={e=> {e.preventDefault(); this.resetPassword(prop.auth_id, prop.email, prop.phone);}}>Reset Password</button> */}
                               </td>
