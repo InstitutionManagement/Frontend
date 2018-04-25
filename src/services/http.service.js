@@ -1,4 +1,5 @@
 import axios from 'axios';
+// import { reporters } from 'mocha';
 
 function authHeader() {
   // return authorization header with jwt token
@@ -25,7 +26,19 @@ function serverConfig() {
 const API_BASE_PATH = serverConfig();
 const HEADER = authHeader();
 
-export  const http = axios.create({
+const http = axios.create({
   baseURL: API_BASE_PATH,
   headers: HEADER
 });
+
+
+
+http.interceptors.response.use(function (response) {
+    return response;
+  }, function (error) {
+    // Do something with response error
+    return Promise.reject(error);
+  });
+
+export  default http;
+

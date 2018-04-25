@@ -1,6 +1,7 @@
 import { alertActions } from './alert.actions';
 import { trustService } from '../../services/trust.service';
 import { trustConstants } from '../../constants/trust.constants';
+import { actionHelper } from './Helpers/action.helper';
 
 const create = trust => {
   return dispatch => {
@@ -33,7 +34,13 @@ const getAll = condition => {
         }
       },
       error => {
-        dispatch(alertActions.error(error));
+        if (error.response.status === 500 && error.response.data) {
+          dispatch(actionHelper.failure(trustConstants.GETALL_FAILURE, String(error.response.data.error.message)));
+          dispatch(alertActions.error(error.response.data.error.message));
+        } else {
+          dispatch(actionHelper.failure(trustConstants.GETALL_FAILURE, error.message));
+          dispatch(alertActions.error(String(error.message)));
+        }
       }
     );
   };

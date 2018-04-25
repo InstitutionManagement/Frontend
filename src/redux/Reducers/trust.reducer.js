@@ -6,6 +6,13 @@ export function trusts(state = {}, action) {
       return {
         loading: true
       };
+    case trustConstants.GETALL_FAILURE:
+      return {
+        data: [],
+        error: {
+          message: action.error
+        }
+      };
     case trustConstants.GETALL_SUCCESS:
       return {
         data: action.trusts

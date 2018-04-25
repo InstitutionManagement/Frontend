@@ -3,13 +3,7 @@ import { Navbar } from 'react-bootstrap';
 
 import HeaderLinks from './HeaderLinks';
 
-import {
-  SUPER_ADMIN_ROUTES,
-  TRUST_ADMIN_ROUTES,
-  INSTITUTION_ADMIN_ROUTES,
-  STAFF_ROUTES,
-  STUDENT_ROUTES
-} from '../../routes/routing';
+import { Routes } from '../../routes/routing';
 
 class Header extends Component {
   constructor(props) {
@@ -37,7 +31,7 @@ class Header extends Component {
   }
   getBrand() {
     var name;
-    SUPER_ADMIN_ROUTES.map((prop, key) => {
+    Routes.map((prop, key) => {
       if (prop.collapse) {
         prop.views.map((prop, key) => {
           if (prop.path === this.props.location.pathname) {

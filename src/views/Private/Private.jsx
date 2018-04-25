@@ -6,16 +6,9 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { style } from '../../variables/Variables';
-import {
-  SUPER_ADMIN_ROUTES,
-  TRUST_ADMIN_ROUTES,
-  INSTITUTION_ADMIN_ROUTES,
-  STAFF_ROUTES,
-  STUDENT_ROUTES
-} from '../../routes/routing';
+import { Routes } from '../../routes/routing';
 import { alertConstants } from '../../constants/alert.constants';
 import { alertActions } from '../../redux/Actions/alert.actions';
-import './Private.css';
 
 class Private extends Component {
   constructor(props) {
@@ -76,7 +69,7 @@ class Private extends Component {
     }
   }
   render() {
-    const user = localStorage.getItem('user');
+    const user = JSON.parse(localStorage.getItem('user'));
 
     return (
       <div className="wrapper">
@@ -85,8 +78,8 @@ class Private extends Component {
         <div id="main-panel" className="main-panel">
           <Header {...this.props} />
           <Switch>
-            {user ? (
-              SUPER_ADMIN_ROUTES.map((prop, key) => {
+            {user && user.token ? (
+              Routes.map((prop, key) => {
                 if (prop.redirect) return <Redirect from={prop.path} to={prop.to} key={key} />;
                 return <Route exact path={prop.path} component={prop.component} key={key} />;
               })
