@@ -12,7 +12,7 @@ export function alert(state = {}, action) {
         type: alertConstants.ERROR,
         message: action.message
       };
-      case alertConstants.WARNING:
+    case alertConstants.WARNING:
       return {
         type: alertConstants.WARNING,
         message: action.message

@@ -120,7 +120,6 @@ class TrustListing extends Component {
     if (this.state.isTrustAdmin){
       document.getElementById('createTrustAdminForm').reset();
       this.toggleTab();
-      // this.getTrustAdminsById(this.state.trust._id);
     }
      
     if (this.state.isInstitution)

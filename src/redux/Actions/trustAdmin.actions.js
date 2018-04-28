@@ -37,9 +37,7 @@ function getTrustAdmins(params) {
       response => {
         if (actionHelper.successCheck(response)) {
           dispatch(actionHelper.success(trustAdminConstants.TRUST_ADMIN_GETBYID_SUCCESS, response.data.data));
-        } 
-        
-        else {
+        } else {
           dispatch(actionHelper.failure(trustAdminConstants.TRUST_ADMIN_GETBYID_FAILURE, response.data.error));
           dispatch(
             alertActions.error(

@@ -5,7 +5,8 @@ import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
 import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
 import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
 import Login from '../views/Login/Login';
-const user = JSON.parse(localStorage.getItem('user')).user || {};
+let Data = JSON.parse(localStorage.getItem('user'));
+Data = Data ? Data.user : {'user_type':{}};
 
 const SUPER_ADMIN_SIDEBAR = [
   { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },
@@ -139,7 +140,7 @@ STUDENT_SIDEBAR.forEach((prop, key) => {
 
 let Routes, SidebarRoutes;
 
-switch (user.user_type) {
+switch (Data.user_type) {
   case 'SuperAdmin':
     Routes = SUPER_ADMIN_ROUTES;
     SidebarRoutes = SUPER_ADMIN_SIDEBAR;

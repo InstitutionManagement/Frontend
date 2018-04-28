@@ -9,11 +9,11 @@ export function trustAdmin(state = {}, action) {
         registerloading: true
       };
     case trustAdminConstants.TRUST_ADMIN_REGISTER_SUCCESS:
-      const {adminsById} = state;
+      const { adminsById } = state;
       return {
         ...state,
         registerloading: false,
-        adminsById:[...adminsById, action.data]
+        adminsById: [...adminsById, action.data]
       };
     case trustAdminConstants.TRUST_ADMIN_REGISTER_FAILURE:
       return {
