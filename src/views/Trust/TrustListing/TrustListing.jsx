@@ -17,8 +17,8 @@ const formFields = {
   address: '',
   username: '',
   password: '',
-  website:'',
-  document_link:''
+  website: '',
+  document_link: ''
 };
 
 class TrustListing extends Component {
@@ -44,10 +44,10 @@ class TrustListing extends Component {
     this.props.dispatchDeleteTrust(id);
   }
 
-  getTrustAdminsById = id => {
+  getTrustAdminsById = trust_id => {
     const params = {
       condition: {
-        parent_trust_id: id
+        parent_trust_id: trust_id
       }
     };
     this.props.dispatchGetTrustAdmins(params);
@@ -57,7 +57,7 @@ class TrustListing extends Component {
     this.setState({ trust: prop });
     if (toggle === 'admin') {
       this.setState({ isTrustAdmin: true, isInstitution: false });
-      this.getTrustAdminsById(prop._id);
+      this.getTrustAdminsById(prop.trust_id);
     }
     if (toggle === 'institution') {
       this.setState({ isTrustAdmin: false, isInstitution: true });
@@ -78,17 +78,22 @@ class TrustListing extends Component {
   handleCreateInstitutionSubmit = e => {
     e.preventDefault();
     this.setState({ submitted: true });
-    const { name, email, phone, address,website, document_link } = this.state;
+    const { name, email, phone, address, website, document_link } = this.state;
     let institution = {
       name,
       email,
       phone,
       address,
-      parent_trust_id: this.state.trust._id,
+      parent_trust_id: this.state.trust.trust_id,
       website,
       document_link
     };
-    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.parent_trust_id !== '')
+    if (
+      institution.name !== '' &&
+      institution.email !== '' &&
+      institution.phone !== '' &&
+      institution.parent_trust_id !== ''
+    )
       this.props.dispatchCreateInstitutionSubmit(institution);
   };
 
@@ -103,7 +108,7 @@ class TrustListing extends Component {
       address,
       username,
       password,
-      parentTrustId: this.state.trust._id
+      parentTrustId: this.state.trust.trust_id
     };
     if (
       trustAdmin.username !== '' &&

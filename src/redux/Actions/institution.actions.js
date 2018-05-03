@@ -6,7 +6,7 @@ import { actionHelper } from './Helpers/action.helper';
 
 const registerInstitution = institution => {
   return dispatch => {
-    dispatch(actionHelper.request(institutionConstants.INSTITUTION_REGSITER_REQUEST))
+    dispatch(actionHelper.request(institutionConstants.INSTITUTION_REGSITER_REQUEST));
     institutionService.registerInstitution(institution).then(
       response => {
         if (actionHelper.successCheck(response)) {
@@ -34,9 +34,7 @@ const update = () => {};
 
 const _delete = () => {};
 
-const getAllInstitution = (params) => {
-
-};
+const getAllInstitution = params => {};
 
 export const institutionActions = {
   registerInstitution,

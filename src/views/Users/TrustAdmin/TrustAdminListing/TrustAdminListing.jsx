@@ -1,29 +1,29 @@
-import React, {Component} from 'react';
-import {connect} from 'react-redux';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Card from '../../../../components/Card/Card.jsx';
-import {trustAdminActions} from '../../../../redux/Actions/trustAdmin.actions';
+import { trustAdminActions } from '../../../../redux/Actions/trustAdmin.actions';
 
-class TrustAdminListing extends Component{
-    componentDidMount(){
-        this.props.getTrustAdmins();
-    }
- render(){
-    const {trustAdmin} = this.props;
+class TrustAdminListing extends Component {
+  componentDidMount() {
+    this.props.getTrustAdmins();
+  }
+  render() {
+    const { trustAdmin } = this.props;
     const loading = trustAdmin.loading ? 'Loading Trust Admins...' : 'Trust Admins';
 
-     return (
-         <div className="content">
-            <Grid fluid>
-                <Row>
-                    <Col md={12}>
-                        <Card 
-                        title = {loading}
-                        category="Trust Administrators in the platform are listed below. This page allows to Deactivate a Super Admin, Reset Password, Add Super Admin to a Group Policy"
-                        ctTableFullWidth
-                        ctTableResponsive
-                        content ={
-                            <Table hover>
+    return (
+      <div className="content">
+        <Grid fluid>
+          <Row>
+            <Col md={12}>
+              <Card
+                title={loading}
+                category="Trust Administrators in the platform are listed below. This page allows to Deactivate a Super Admin, Reset Password, Add Super Admin to a Group Policy"
+                ctTableFullWidth
+                ctTableResponsive
+                content={
+                  <Table hover>
                     <thead>
                       <tr>
                         <th>ID</th>
@@ -32,6 +32,7 @@ class TrustAdminListing extends Component{
                         <th>Name</th>
                         <th>Email</th>
                         <th>Address</th>
+                        <th>Trust Name</th>
                         <th />
                         <th />
                       </tr>
@@ -41,20 +42,18 @@ class TrustAdminListing extends Component{
                         trustAdmin.admins.length > 0 &&
                         trustAdmin.admins.map((prop, key) => {
                           return (
-                            <tr key={key} className={prop.status === 'DELETED' ? 'backgroundRed' : ''}>
+                            <tr key={key} className={prop.status.tag === 'DELETED' ? 'backgroundRed' : ''}>
                               <td>{key + 1}</td>
                               <td>
                                 <OverlayTrigger
                                   placement="top"
                                   overlay={
-                                    <Tooltip id="tooltip">
-                                      {prop.status === 'DELETED' ? 'Deleted' : 'Active'}
-                                    </Tooltip>
+                                    <Tooltip id="tooltip">{prop.status.tag === 'DELETED' ? 'Deleted' : 'Active'}</Tooltip>
                                   }
                                 >
                                   <i
                                     className={
-                                      prop.status === 'DELETED'
+                                      prop.status.tag === 'DELETED'
                                         ? 'icon fas fa-circle text-danger'
                                         : 'icon fas fa-circle text-success'
                                     }
@@ -70,8 +69,9 @@ class TrustAdminListing extends Component{
                                 {prop.address}
                                 <br />Phone : {prop.phone}
                               </td>
+                              <td>{prop.trust_name}</td>
                               <td className="center">
-                                {prop.status === 'DELETED' ? (
+                                {prop.status.tag === 'DELETED' ? (
                                   <OverlayTrigger
                                     placement="top"
                                     overlay={
@@ -135,27 +135,27 @@ class TrustAdminListing extends Component{
                         })}
                     </tbody>
                   </Table>
-                        }>
-                        </Card>
-                    </Col>
-                </Row>
-            </Grid>
-         </div>
-     );
- }
-} 
-
-const mapStateToProps = state => {
-    const { trustAdmin } = state;
-    return {
-        trustAdmin
-    };
+                }
+              />
+            </Col>
+          </Row>
+        </Grid>
+      </div>
+    );
+  }
 }
 
+const mapStateToProps = state => {
+  const { trustAdmin } = state;
+  return {
+    trustAdmin
+  };
+};
+
 const mapDispatchToProps = dispatch => ({
-    getTrustAdmins: () => {
-        dispatch(trustAdminActions.getAllTrustAdmins());
-    }
-})
+  getTrustAdmins: () => {
+    dispatch(trustAdminActions.getAllTrustAdmins());
+  }
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(TrustAdminListing);
