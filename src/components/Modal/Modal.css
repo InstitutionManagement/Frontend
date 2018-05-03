@@ -1,4 +1,4 @@
-.backdropStyle {
+/* .backdropStyle {
     position: fixed;
     top: 0;
     bottom: 0;
@@ -9,7 +9,7 @@
     z-index: 100;
 }
 
-.modalStyle {
+/* .modalStyle {
     background-color: #fff;
     border-radius: 5px;
     max-width: 60%;
@@ -18,9 +18,9 @@
     padding: 30;
     display: block;
     position: relative;
-}
+} */
 
-.modal-footer-content {
+/* .modal-footer-content {
     border-top: 1px solid #e8e8e8;
     padding: 15px 0px 0px 0px;
     height: 55px;
@@ -39,4 +39,4 @@
     text-transform: uppercase;
     font-weight: 400;
     color: #9A9A9A;
-}
+} */ 

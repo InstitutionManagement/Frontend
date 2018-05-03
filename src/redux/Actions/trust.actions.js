@@ -34,7 +34,7 @@ const getAll = condition => {
         }
       },
       error => {
-        if (error.response.status === 500 && error.response.data) {
+        if (error.response && error.response.status === 500 && error.response.data) {
           dispatch(actionHelper.failure(trustConstants.GETALL_FAILURE, String(error.response.data.error.message)));
           dispatch(alertActions.error(error.response.data.error.message));
         } else {

@@ -5,11 +5,12 @@ import { Card } from '../../components/Card/Card.jsx';
 import { FormInputs } from '../../components/FormInputs/FormInputs.jsx';
 import { UserCard } from '../../components/UserCard/UserCard.jsx';
 import Button from '../../elements/CustomButton/CustomButton.jsx';
-
-import avatar from '../../assets/img/faces/face-3.jpg';
+import { connect } from 'react-redux';
 
 class UserProfile extends Component {
   render() {
+    const { image_url, username, usename, name, email, phone, address } = this.props.authentication.user.user;
+    console.log(phone);
     return (
       <div className="content">
         <Grid fluid>
@@ -20,28 +21,21 @@ class UserProfile extends Component {
                 content={
                   <form>
                     <FormInputs
-                      ncols={['col-md-5', 'col-md-3', 'col-md-4']}
+                      ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
-                        {
-                          label: 'Company (disabled)',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Company',
-                          defaultValue: 'Creative Code Inc.',
-                          disabled: true
-                        },
+                        
                         {
                           label: 'Username',
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Username',
-                          defaultValue: 'michael23'
+                          defaultValue: `${username}`
                         },
                         {
-                          label: 'Email address',
-                          type: 'email',
+                          label: 'Password',
+                          type: 'password',
                           bsClass: 'form-control',
-                          placeholder: 'Email'
+                          placeholder: 'Passowrd'
                         }
                       ]}
                     />
@@ -49,22 +43,22 @@ class UserProfile extends Component {
                       ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
-                          label: 'First name',
+                          label: 'Phone',
                           type: 'text',
                           bsClass: 'form-control',
-                          placeholder: 'First name',
-                          defaultValue: 'Mike'
+                          placeholder: 'Phone',
+                          defaultValue: `${phone}`
                         },
                         {
-                          label: 'Last name',
-                          type: 'text',
+                          label: 'Email address',
+                          type: 'email',
                           bsClass: 'form-control',
-                          placeholder: 'Last name',
-                          defaultValue: 'Andrew'
+                          placeholder: 'Email',
+                          defaultValue: `${email}`
                         }
                       ]}
                     />
-                    <FormInputs
+                    {/* <FormInputs
                       ncols={['col-md-12']}
                       proprieties={[
                         {
@@ -72,46 +66,22 @@ class UserProfile extends Component {
                           type: 'text',
                           bsClass: 'form-control',
                           placeholder: 'Home Adress',
-                          defaultValue: 'Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09'
+                          defaultValue: `${address}`
                         }
                       ]}
-                    />
-                    <FormInputs
-                      ncols={['col-md-4', 'col-md-4', 'col-md-4']}
-                      proprieties={[
-                        {
-                          label: 'City',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'City',
-                          defaultValue: 'Mike'
-                        },
-                        {
-                          label: 'Country',
-                          type: 'text',
-                          bsClass: 'form-control',
-                          placeholder: 'Country',
-                          defaultValue: 'Andrew'
-                        },
-                        {
-                          label: 'Postal Code',
-                          type: 'number',
-                          bsClass: 'form-control',
-                          placeholder: 'ZIP Code'
-                        }
-                      ]}
-                    />
+                    /> */}
+                    
 
                     <Row>
                       <Col md={12}>
                         <FormGroup controlId="formControlsTextarea">
-                          <ControlLabel>About Me</ControlLabel>
+                          <ControlLabel>Address</ControlLabel>
                           <FormControl
                             rows="5"
                             componentClass="textarea"
                             bsClass="form-control"
                             placeholder="Here can be your description"
-                            defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."
+                            defaultValue={address}
                           />
                         </FormGroup>
                       </Col>
@@ -127,9 +97,9 @@ class UserProfile extends Component {
             <Col md={4}>
               <UserCard
                 bgImage="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"
-                avatar={avatar}
-                name="Mike Andrew"
-                userName="michael24"
+                avatar={image_url}
+                name={name}
+                userName={usename}
                 description={
                   <span>
                     "Lamborghini Mercy
@@ -161,4 +131,16 @@ class UserProfile extends Component {
   }
 }
 
-export default UserProfile;
+const mapStateToProps = state => {
+  const { authentication } = state;
+  return {
+    authentication
+  };
+};
+
+const mapDispachToProps = dispatch => ({
+  getSuperAdmins: () => {
+  }
+});
+
+export default connect(mapStateToProps, mapDispachToProps)(UserProfile);

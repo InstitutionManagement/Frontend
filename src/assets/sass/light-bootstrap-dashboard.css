@@ -9,6 +9,12 @@
 
  */
 /*      light colors         */
+.content .tab-content .tab-pane .table {
+  margin-top: 15px; }
+
+.content .tab-content .tab-pane form {
+  margin-top: 25px; }
+
 @keyframes spin {
   from {
     transform: rotate(0deg); }
@@ -1001,12 +1007,51 @@ body > .navbar-collapse[data-color="purple"]:after {
   background-color: #fc727a; }
 
 .modalStyle {
+  background-color: #fff;
+  border-radius: 5px;
+  min-height: 300;
+  margin: 0 auto;
+  padding: 30;
+  display: block;
+  position: relative;
   max-width: 80%; }
   .modalStyle form {
     margin-bottom: 0px; }
+  .modalStyle .close-icon {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    cursor: pointer;
+    font-size: 28px; }
+  .modalStyle .close-icon:focus, .modalStyle .close-icon:hover {
+    font-size: 29px;
+    color: #2e2c2c; }
+  .modalStyle h3 {
+    margin-top: 0px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8e8e8;
+    font-size: 24px; }
+  .modalStyle label {
+    font-size: 12px;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: #9A9A9A; }
 
 .backdropStyle {
-  padding: 35px; }
+  padding: 35px;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 100; }
+
+.modal-footer-content {
+  border-top: 1px solid #e8e8e8;
+  padding: 15px 0px 0px 0px;
+  height: 55px; }
 
 .table .radio,
 .table .checkbox {
@@ -1040,6 +1085,9 @@ body > .navbar-collapse[data-color="purple"]:after {
   color: #444444;
   font-weight: 400;
   padding-bottom: 5px; }
+
+.table > thead > tr > td.text-center {
+  text-align: center; }
 
 .table .td-actions .btn {
   opacity: 0.36;

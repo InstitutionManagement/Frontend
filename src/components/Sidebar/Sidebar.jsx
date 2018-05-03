@@ -46,7 +46,7 @@ class Sidebar extends Component {
           <ul className="nav">
             {this.state.width <= 991 ? <HeaderLinks /> : null}
             {SidebarRoutes.map((prop, key) => {
-              if (!prop.redirect && !prop.visible && prop.path != null) {
+              if (!prop.redirect && prop.visible && prop.path != null) {
                 return (
                   <li className={this.activeRoute(prop.path)} key={key}>
                     <NavLink to={prop.path} className="nav-link" activeClassName="active">
@@ -55,7 +55,7 @@ class Sidebar extends Component {
                     </NavLink>
                   </li>
                 );
-              } else if (!prop.redirect && !prop.visible && !prop.path && prop.children.length > 0) {
+              } else if (!prop.redirect && prop.visible && !prop.path && prop.children.length > 0) {
                 return (
                   <li
                     key={key}
@@ -73,7 +73,7 @@ class Sidebar extends Component {
                     {this.state[prop.name] && (
                       <ul className="nav">
                         {prop.children.map((cprop, ckey) => {
-                          if (!cprop.redirect && !cprop.visible && cprop.path != null) {
+                          if (!cprop.redirect && cprop.visible && cprop.path != null) {
                             return (
                               <li className={this.activeRoute(cprop.path)} key={key + ckey}>
                                 <NavLink to={cprop.path} className="nav-link" activeClassName="active">

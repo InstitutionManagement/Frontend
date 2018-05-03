@@ -5,29 +5,31 @@ import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
 import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
 import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
 import Login from '../views/Login/Login';
-const user = JSON.parse(localStorage.getItem('user')).user || {};
+let Data = JSON.parse(localStorage.getItem('user'));
+Data = Data ? Data.user : {'user_type':{}};
 
 const SUPER_ADMIN_SIDEBAR = [
-  { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard },
+  { path: '/dashboard', name: 'Dashboard', icon: 'pe-7s-graph', component: Dashboard , visible: true },
   {
-    path: null, name: 'User Management', icon: 'pe-7s-users', children: [
-      { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-add-user', component: CreateSuperAdmin },
-      { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing },
-      { path: '/trust-admin-listing', name: 'Trust Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing },
+    path: null, name: 'User Management', icon: 'pe-7s-users', visible: true, children: [
+      { path: '/create-super-admin', name: 'Create Super Admin', icon: 'pe-7s-add-user', component: CreateSuperAdmin , visible: true },
+      { path: '/super-admin-listing', name: 'Super Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing , visible: true },
+      { path: '/trust-admin-listing', name: 'Trust Admin Listing', icon: 'pe-7s-menu', component: SuperAdminListing , visible: true },
     ]
   },
   {
-    path: null, name: 'Trust Management', icon: 'pe-7s-culture', children: [
-      { path: '/create-trust', name: 'Create Trust', icon: 'pe-7s-home', component: CreateTrust },
-      { path: '/trust-listing', name: 'Trust Listing', icon: 'pe-7s-albums', component: TrustListing },
+    path: null, name: 'Trust Management', icon: 'pe-7s-culture', visible: true, children: [
+      { path: '/create-trust', name: 'Create Trust', icon: 'pe-7s-home', component: CreateTrust, visible: true },
+      { path: '/trust-listing', name: 'Trust Listing', icon: 'pe-7s-albums', component: TrustListing, visible: true },
     ]
   },
+  { path: '/user-profile', name: 'User Profile', icon: 'pe-7s-user', component: UserProfile, visible: false },
   { redirect: true, path: '/', to: '/dashboard', name: 'Dashboard' }
 ];
 
 let SUPER_ADMIN_ROUTES = [];
 SUPER_ADMIN_SIDEBAR.forEach((prop, key) => {
-  if (prop.path !== null) {
+  if (prop.path !== null ) {
     SUPER_ADMIN_ROUTES.push(prop);
   }
   else if (prop.path == null && prop.children.length > 0) {
@@ -139,7 +141,7 @@ STUDENT_SIDEBAR.forEach((prop, key) => {
 
 let Routes, SidebarRoutes;
 
-switch (user.user_type) {
+switch (Data.user_type) {
   case 'SuperAdmin':
     Routes = SUPER_ADMIN_ROUTES;
     SidebarRoutes = SUPER_ADMIN_SIDEBAR;

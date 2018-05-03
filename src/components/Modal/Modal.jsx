@@ -19,6 +19,7 @@ class Modal extends React.Component {
     return (
       <div className="backdropStyle">
         <div className="modalStyle">
+          {<i className="pe-7s-close close-icon" onClick={this.props.close} />}
           {this.props.header && <h3>{this.props.header}</h3>}
           {this.props.children}
           {this.props.onClose &&
