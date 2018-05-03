@@ -1,18 +1,26 @@
 import { alertActions } from './alert.actions';
 import { institutionService } from '../../services/institution.service';
 import { institutionConstants } from '../../constants/institution.constants';
+import { actionHelper } from './Helpers/action.helper';
 // import { request } from 'https';
 
-const create = institution => {
+const registerInstitution = institution => {
   return dispatch => {
-    // dispatch(request());
-    institutionService.create(institution).then(
-      institution => {
-        if (Object.keys(institution.data).length === 0) {
-          dispatch(alertActions.error(institution.error.errmsg ? institution.error.errmsg : institution.error.message));
+    dispatch(actionHelper.request(institutionConstants.INSTITUTION_REGSITER_REQUEST))
+    institutionService.registerInstitution(institution).then(
+      response => {
+        if (actionHelper.successCheck(response)) {
+          dispatch(actionHelper.success(institutionConstants.INSTITUTION_REGSITER_SUCCESS, institution));
+          dispatch(alertActions.success(response.data.data.message));
         } else {
-          // dispatch(success(institution.data));
-          dispatch(alertActions.success('Created Institution Successfully'));
+          dispatch(actionHelper.failure(institutionConstants.INSTITUTION_REGSITER_FAILURE, response.data.error));
+          dispatch(
+            alertActions.error(
+              response.data.error.errmsg
+                ? actionHelper.duplicateKeyMessage(response.data.error.errmsg)
+                : String(response.data.error.message)
+            )
+          );
         }
       },
       error => {
@@ -20,21 +28,19 @@ const create = institution => {
       }
     );
   };
-
-  function success(institution) {
-    return { type: institutionConstants };
-  }
 };
 
 const update = () => {};
 
 const _delete = () => {};
 
-const getAll = () => {};
+const getAllInstitution = (params) => {
+
+};
 
 export const institutionActions = {
-  create,
+  registerInstitution,
   update,
-  getAll,
+  getAllInstitution,
   delete: _delete
 };

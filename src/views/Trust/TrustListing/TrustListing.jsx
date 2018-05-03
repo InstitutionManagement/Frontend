@@ -16,7 +16,9 @@ const formFields = {
   phone: '',
   address: '',
   username: '',
-  password: ''
+  password: '',
+  website:'',
+  document_link:''
 };
 
 class TrustListing extends Component {
@@ -76,15 +78,17 @@ class TrustListing extends Component {
   handleCreateInstitutionSubmit = e => {
     e.preventDefault();
     this.setState({ submitted: true });
-    const { name, email, phone, address } = this.state;
+    const { name, email, phone, address,website, document_link } = this.state;
     let institution = {
       name,
       email,
       phone,
       address,
-      trust_id: this.state.trust._id
+      parent_trust_id: this.state.trust._id,
+      website,
+      document_link
     };
-    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.trust_id !== '')
+    if (institution.name !== '' && institution.email !== '' && institution.phone !== '' && institution.parent_trust_id !== '')
       this.props.dispatchCreateInstitutionSubmit(institution);
   };
 
@@ -238,7 +242,7 @@ class TrustListing extends Component {
 }
 
 const CreateInstitution = context => {
-  const { name, email, phone, submitted } = context.state;
+  const { name, email, phone, submitted, website, document_link } = context.state;
   return (
     <Grid fluid>
       <Row>
@@ -269,6 +273,27 @@ const CreateInstitution = context => {
                   name: 'phone',
                   bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
                   placeholder: 'Phone',
+                  onChange: context.handleChange
+                }
+              ]}
+            />
+            <FormInputs
+              ncols={['col-md-4', 'col-md-4']}
+              proprieties={[
+                {
+                  label: 'Website',
+                  type: 'text',
+                  name: 'website',
+                  bsClass: 'form-control' + (submitted && !website ? ' has-error' : ''),
+                  placeholder: 'Institution Website',
+                  onChange: context.handleChange
+                },
+                {
+                  label: 'Documents',
+                  type: 'text',
+                  name: 'document_link',
+                  bsClass: 'form-control' + (submitted && !document_link ? ' has-error' : ''),
+                  placeholder: 'Documents For the Institution',
                   onChange: context.handleChange
                 }
               ]}
@@ -483,7 +508,7 @@ const mapDispachToProps = dispatch => ({
     dispatch(trustActions.delete(id));
   },
   dispatchCreateInstitutionSubmit: institution => {
-    dispatch(institutionActions.create(institution));
+    dispatch(institutionActions.registerInstitution(institution));
   },
   dispatchCreateTrustAdminSubmit: trustAdmin => {
     dispatch(trustAdminActions.registerTrustAdmin(trustAdmin));
