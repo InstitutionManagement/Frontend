@@ -86,7 +86,11 @@ class TrustListing extends Component {
       address,
       parent_trust_id: this.state.trust.trust_id,
       website,
-      document_link
+      document_link,
+      created_by: {
+        name: this.props.name,
+        userId: this.props.userId
+      }
     };
     if (
       institution.name !== '' &&
@@ -497,8 +501,10 @@ const CreateTrustAdmin = context => {
 };
 
 const mapStateToProps = state => {
-  const { trusts, alert, trustAdmin } = state;
+  const { trusts, alert, trustAdmin, authentication } = state;
   return {
+    name: authentication.user.user.name,
+    userId: authentication.user.user.auth_id,
     trusts,
     trustAdmin,
     alert

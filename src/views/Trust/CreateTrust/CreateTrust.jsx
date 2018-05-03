@@ -161,7 +161,7 @@ const mapDispachToState = dispatch => ({
 const mapStateToProps = state => {
   return {
     name: state.authentication.user.user.name,
-    userId: state.authentication.user.user._id,
+    userId: state.authentication.user.user.auth_id,
     alert: state.alert
   };
 };
