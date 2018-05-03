@@ -15,23 +15,21 @@ import { institutionActions } from "../../../redux/Actions/institution.actions";
 import { Card } from "../../../components/Card/Card";
 import Modal from "../../../components/Modal/Modal";
 
-
-const formFields= {
-  name:'',
-  email:'',
-  phone:'',
-  institution:{}
-}
+const formFields = {
+  name: "",
+  email: "",
+  phone: "",
+  institution: {}
+};
 
 class InstitutionListing extends Component {
-
-  state ={
+  state = {
     ...formFields,
     submitted: false,
-    isModalOpen:false,
+    isModalOpen: false,
     isInsitutionAdmin: false,
     isStaff: false
-  }
+  };
 
   componentWillMount() {
     this.props.getAllInstitutions();
@@ -45,7 +43,7 @@ class InstitutionListing extends Component {
     if (toggle === "staff") {
       this.setState({ isInsitutionAdmin: false, isStaff: true });
     }
-  }
+  };
 
   handleChange = e => {
     const { name, value } = e.target;
@@ -96,7 +94,14 @@ class InstitutionListing extends Component {
                         Object.keys(institution.data).length > 0 &&
                         institution.data.map((prop, key) => {
                           return (
-                            <tr key={key} className={prop.status.tag === 'DELETED' ? 'backgroundRed' : ''}>
+                            <tr
+                              key={key}
+                              className={
+                                prop.status.tag === "DELETED"
+                                  ? "backgroundRed"
+                                  : ""
+                              }
+                            >
                               <td>{key + 1}</td>
                               <td>{prop.name}</td>
                               <td>{prop.email}</td>
@@ -113,15 +118,14 @@ class InstitutionListing extends Component {
                                   }
                                 >
                                   <i
-                                    className="icon text-info pe-7s-id"                                    
+                                    className="icon text-info pe-7s-id"
                                     onClick={e => {
-                                      if(prop.status.tag ==="DELETED"){
+                                      if (prop.status.tag === "DELETED") {
                                         e.preventDefault();
-                                      }else if(prop.status.tag==="ACTIVE"){
+                                      } else if (prop.status.tag === "ACTIVE") {
                                         this.setInstitution(prop, "admin");
                                         this.toggleModal();
                                       }
-                                      
                                     }}
                                   />
                                 </OverlayTrigger>
@@ -138,43 +142,54 @@ class InstitutionListing extends Component {
                                   <i
                                     className="icon text-primary pe-7s-user"
                                     onClick={e => {
-                                      this.setInstitution(prop, "staff");
-                                      this.toggleModal();
+                                      if (prop.status.tag === "DELETED") {
+                                        e.preventDefault();
+                                      } else if (prop.status.tag === "ACTIVE") {
+                                        this.setInstitution(prop, "staff");
+                                        this.toggleModal();
+                                      }
                                     }}
                                   />
                                 </OverlayTrigger>
                               </td>
                               <td>
-                              {
-                                prop.status.tag === 'DELETED' ?( <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Activate Institution</Tooltip>
-                                  }
-                                >
-                                  <i
-                                    className="icon pe-7s-check text-success"
-                                    onClick={this.toggleModal}
-                                  />
-                                </OverlayTrigger>):( <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Delete Institution</Tooltip>
-                                  }
-                                >
-                                  <i
-                                    className="icon pe-7s-trash text-danger"
-                                    onClick={this.toggleModal}
-                                  />
-                                </OverlayTrigger>)
-                              }
-                               
+                                {prop.status.tag === "DELETED" ? (
+                                  <OverlayTrigger
+                                    placement="top"
+                                    overlay={
+                                      <Tooltip id="tooltip">
+                                        Activate Institution
+                                      </Tooltip>
+                                    }
+                                  >
+                                    <i
+                                      className="icon pe-7s-check text-success"
+                                      onClick={this.toggleModal}
+                                    />
+                                  </OverlayTrigger>
+                                ) : (
+                                  <OverlayTrigger
+                                    placement="top"
+                                    overlay={
+                                      <Tooltip id="tooltip">
+                                        Delete Institution
+                                      </Tooltip>
+                                    }
+                                  >
+                                    <i
+                                      className="icon pe-7s-trash text-danger"
+                                      onClick={this.toggleModal}
+                                    />
+                                  </OverlayTrigger>
+                                )}
                               </td>
                               <td>
                                 <OverlayTrigger
                                   placement="top"
                                   overlay={
-                                    <Tooltip id="tooltip">Edit Institution</Tooltip>
+                                    <Tooltip id="tooltip">
+                                      Edit Institution
+                                    </Tooltip>
                                   }
                                 >
                                   <i
@@ -194,15 +209,14 @@ class InstitutionListing extends Component {
           </Row>
         </Grid>
         <Modal
-        show={this.state.isModalOpen}
-        close={this.toggleModal}
-       header={
-         this.state.isInsitutionAdmin 
-         ? `Add Admin to ${this.state.institution.name}`
-         : `Add Staff to ${this.state.institution.name}`
-       }
-        >
-        </Modal>
+          show={this.state.isModalOpen}
+          close={this.toggleModal}
+          header={
+            this.state.isInsitutionAdmin
+              ? `Add Admin to ${this.state.institution.name}`
+              : `Add Staff to ${this.state.institution.name}`
+          }
+        />
       </div>
     );
   }
