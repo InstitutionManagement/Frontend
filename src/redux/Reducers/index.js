@@ -7,6 +7,7 @@ import { alert } from './alert.reducer';
 import { trusts } from './trust.reducer';
 import { superAdmin } from './superAdmin.reducer';
 import { trustAdmin } from './trustAdmin.reducer';
+import { institution} from './institution.reducer';
 
 const rootReducer = combineReducers({
   alert,
@@ -15,7 +16,8 @@ const rootReducer = combineReducers({
   users,
   superAdmin,
   trusts,
-  trustAdmin
+  trustAdmin,
+  institution
 });
 
 export default rootReducer;

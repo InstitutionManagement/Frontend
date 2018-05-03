@@ -4,10 +4,10 @@ import { institutionConstants } from '../../constants/institution.constants';
 import { actionHelper } from './Helpers/action.helper';
 // import { request } from 'https';
 
-const registerInstitution = institution => {
+const register = institution => {
   return dispatch => {
     dispatch(actionHelper.request(institutionConstants.INSTITUTION_REGSITER_REQUEST));
-    institutionService.registerInstitution(institution).then(
+    institutionService.register(institution).then(
       response => {
         if (actionHelper.successCheck(response)) {
           dispatch(actionHelper.success(institutionConstants.INSTITUTION_REGSITER_SUCCESS, institution));
@@ -30,15 +30,40 @@ const registerInstitution = institution => {
   };
 };
 
+
+const getAll = condition => {
+  return dispatch => {
+    dispatch(actionHelper.request(institutionConstants.INSTITUTION_GETALL_REQUEST));
+    institutionService.getAll(condition).then(
+      response => {
+        if (actionHelper.successCheck(response)) {
+          dispatch(actionHelper.success(institutionConstants.INSTITUTION_GETALL_SUCCESS,response.data.data));
+        } else if (response.status === 200) {
+          dispatch(alertActions.error(response.data.error.message));
+        }
+      },
+      error => {
+        if (error.response && error.response.status === 500 && error.response.data) {
+          dispatch(actionHelper.failure(institutionConstants.INSTITUTION_GETALL_FAILURE, String(error.response.data.error.message)));
+          dispatch(alertActions.error(error.response.data.error.message));
+        } else {
+          dispatch(actionHelper.failure(institutionConstants.INSTITUTION_GETALL_FAILURE, error.message));
+          dispatch(alertActions.error(String(error.message)));
+        }
+      }
+    );
+  };
+}
+
+
 const update = () => {};
 
 const _delete = () => {};
 
-const getAllInstitution = params => {};
 
 export const institutionActions = {
-  registerInstitution,
+  register,
   update,
-  getAllInstitution,
+  getAll,
   delete: _delete
 };
