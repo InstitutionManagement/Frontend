@@ -40,6 +40,25 @@ export function trustAdmin(state = {}, action) {
         adminsById: []
       };
     // END ADMIN's BY TRUST ID
+     // START GET ALL ADMIN's 
+     case trustAdminConstants.TRUST_ADMIN_GETALL_REQUEST:
+     return {
+       ...state,
+       loading: true
+     };
+   case trustAdminConstants.TRUST_ADMIN_GETALL_SUCCESS:
+     return {
+       ...state,
+       loading: false,
+       admins: action.data
+     };
+   case trustAdminConstants.TRUST_ADMIN_GETALL_FAILURE:
+     return {
+       ...state,
+       loading: false,
+       admins: []
+     };
+   // END GET ALL  ADMIN's 
     default:
       return state;
   }

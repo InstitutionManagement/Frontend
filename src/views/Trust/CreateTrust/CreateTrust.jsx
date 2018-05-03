@@ -7,7 +7,6 @@ import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import { trustActions } from '../../../redux/Actions/trust.actions';
 import { alertConstants } from '../../../constants/alert.constants';
 
-
 class CreateTrust extends Component {
   state = {
     name: '',
@@ -19,8 +18,6 @@ class CreateTrust extends Component {
     isOpen: false
   };
 
-  
-
   handleChange = e => {
     const { name, value } = e.target;
     this.setState({ [name]: value });
@@ -30,7 +27,7 @@ class CreateTrust extends Component {
     this.setState({
       isOpen: !this.state.isOpen
     });
-  }
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -50,16 +47,16 @@ class CreateTrust extends Component {
     }
   }
 
-  clearForm = () =>{
+  clearForm = () => {
     document.getElementById('createTrustForm').reset();
-  }
+  };
 
   closeModal() {
-    this.setState({modalIsOpen: false});
+    this.setState({ modalIsOpen: false });
   }
 
   openModal() {
-    this.setState({modalIsOpen: true});
+    this.setState({ modalIsOpen: true });
   }
 
   render() {
@@ -69,7 +66,6 @@ class CreateTrust extends Component {
         <Grid fluid>
           <Row>
             <Col md={12}>
-            
               <Card
                 title="Create Trust"
                 content={

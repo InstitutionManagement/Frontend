@@ -56,7 +56,34 @@ function getTrustAdmins(params) {
   };
 }
 
+function getAllTrustAdmins(params = {}) {
+  return dispatch => {
+    dispatch(actionHelper.request(trustAdminConstants.TRUST_ADMIN_GETALL_REQUEST));
+    trustAdminService.getTrustAdmins(params).then(
+      response => {
+        if (actionHelper.successCheck(response)) {
+          dispatch(actionHelper.success(trustAdminConstants.TRUST_ADMIN_GETALL_SUCCESS, response.data.data));
+        } else {
+          dispatch(actionHelper.failure(trustAdminConstants.TRUST_ADMIN_GETALL_FAILURE, response.data.error));
+          dispatch(
+            alertActions.error(
+              response.data.error && response.data.error.errmsg
+                ? actionHelper.duplicateKeyMessage(response.data.error.errmsg)
+                : String(response.data.error.message)
+            )
+          );
+        }
+      },
+      error => {
+        dispatch(actionHelper.failure(trustAdminConstants.TRUST_ADMIN_GETALL_FAILURE, String(error.message)));
+        dispatch(alertActions.error(String(error.message)));
+      }
+    );
+  };
+}
+
 export const trustAdminActions = {
   registerTrustAdmin,
-  getTrustAdmins
+  getTrustAdmins,
+  getAllTrustAdmins
 };

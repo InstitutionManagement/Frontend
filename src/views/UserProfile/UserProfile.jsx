@@ -23,7 +23,6 @@ class UserProfile extends Component {
                     <FormInputs
                       ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
-                        
                         {
                           label: 'Username',
                           type: 'text',
@@ -70,7 +69,6 @@ class UserProfile extends Component {
                         }
                       ]}
                     /> */}
-                    
 
                     <Row>
                       <Col md={12}>
@@ -139,8 +137,7 @@ const mapStateToProps = state => {
 };
 
 const mapDispachToProps = dispatch => ({
-  getSuperAdmins: () => {
-  }
+  getSuperAdmins: () => {}
 });
 
 export default connect(mapStateToProps, mapDispachToProps)(UserProfile);
