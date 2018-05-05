@@ -1,34 +1,24 @@
-import React, { Component } from "react";
-import {
-  Grid,
-  Row,
-  Col,
-  FormGroup,
-  ControlLabel,
-  FormControl,
-  Table,
-  Tooltip,
-  OverlayTrigger
-} from "react-bootstrap";
-import { FormInputs } from "../../../components/FormInputs/FormInputs.jsx";
-import Card from "../../../components/Card/Card.jsx";
-import { trustActions } from "../../../redux/Actions/trust.actions";
-import { connect } from "react-redux";
-import Button from "../../../elements/CustomButton/CustomButton.jsx";
-import Modal from "../../../components/Modal/Modal";
-import { institutionActions } from "../../../redux/Actions/institution.actions";
-import { trustAdminActions } from "../../../redux/Actions/trustAdmin.actions";
-import { alertConstants } from "../../../constants/alert.constants";
+import React, { Component } from 'react';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
+import Card from '../../../components/Card/Card.jsx';
+import { trustActions } from '../../../redux/Actions/trust.actions';
+import { connect } from 'react-redux';
+import Button from '../../../elements/CustomButton/CustomButton.jsx';
+import Modal from '../../../components/Modal/Modal';
+import { institutionActions } from '../../../redux/Actions/institution.actions';
+import { trustAdminActions } from '../../../redux/Actions/trustAdmin.actions';
+import { alertConstants } from '../../../constants/alert.constants';
 
 const formFields = {
-  name: "",
-  email: "",
-  phone: "",
-  address: "",
-  username: "",
-  password: "",
-  website: "",
-  document_link: "",  
+  name: '',
+  email: '',
+  phone: '',
+  address: '',
+  username: '',
+  password: '',
+  website: '',
+  document_link: '',
   trust: {}
 };
 
@@ -66,11 +56,11 @@ class TrustListing extends Component {
 
   setTrust = (prop, toggle) => {
     this.setState({ trust: prop });
-    if (toggle === "admin") {
+    if (toggle === 'admin') {
       this.setState({ isTrustAdmin: true, isInstitution: false });
       this.getTrustAdminsById(prop.trust_id);
     }
-    if (toggle === "institution") {
+    if (toggle === 'institution') {
       this.setState({ isTrustAdmin: false, isInstitution: true });
     }
   };
@@ -104,10 +94,10 @@ class TrustListing extends Component {
       }
     };
     if (
-      institution.name !== "" &&
-      institution.email !== "" &&
-      institution.phone !== "" &&
-      institution.parent_trust_id !== ""
+      institution.name !== '' &&
+      institution.email !== '' &&
+      institution.phone !== '' &&
+      institution.parent_trust_id !== ''
     )
       this.props.dispatchCreateInstitutionSubmit(institution);
   };
@@ -126,39 +116,35 @@ class TrustListing extends Component {
       parent_trust_id: trust.trust_id
     };
     if (
-      trustAdmin.username !== "" &&
-      trustAdmin.password !== "" &&
-      trustAdmin.name !== "" &&
-      trustAdmin.email !== "" &&
-      trustAdmin.phone !== "" &&
-      trustAdmin.parent_trust_id !== ""
+      trustAdmin.username !== '' &&
+      trustAdmin.password !== '' &&
+      trustAdmin.name !== '' &&
+      trustAdmin.email !== '' &&
+      trustAdmin.phone !== '' &&
+      trustAdmin.parent_trust_id !== ''
     ) {
       this.props.dispatchCreateTrustAdminSubmit(trustAdmin);
     }
   };
 
   componentDidUpdate() {
-    if (
-      Object.keys(this.props.alert).length > 0 &&
-      this.props.alert.type === alertConstants.SUCCESS
-    ) {
+    if (Object.keys(this.props.alert).length > 0 && this.props.alert.type === alertConstants.SUCCESS) {
       this.clearForm();
     }
   }
 
   clearForm = () => {
     if (this.state.isTrustAdmin) {
-      document.getElementById("createTrustAdminForm").reset();
+      document.getElementById('createTrustAdminForm').reset();
       this.toggleTab();
     }
 
-    if (this.state.isInstitution)
-      document.getElementById("createInstitutionForm").reset();
+    if (this.state.isInstitution) document.getElementById('createInstitutionForm').reset();
   };
 
   render() {
     const { trusts } = this.props;
-    const loading = trusts.loading ? "Loading Trusts...." : "Trust Listing";
+    const loading = trusts.loading ? 'Loading Trusts....' : 'Trust Listing';
 
     return (
       <div className="content">
@@ -199,16 +185,12 @@ class TrustListing extends Component {
                               <td className="center">
                                 <OverlayTrigger
                                   placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">
-                                      Trust Admin Management
-                                    </Tooltip>
-                                  }
+                                  overlay={<Tooltip id="tooltip">Trust Admin Management</Tooltip>}
                                 >
                                   <i
                                     className="icon text-info pe-7s-id"
                                     onClick={e => {
-                                      this.setTrust(prop, "admin");
+                                      this.setTrust(prop, 'admin');
                                       this.toggleModal();
                                     }}
                                   />
@@ -217,45 +199,25 @@ class TrustListing extends Component {
                               <td className="center">
                                 <OverlayTrigger
                                   placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">
-                                      Add Institution
-                                    </Tooltip>
-                                  }
+                                  overlay={<Tooltip id="tooltip">Add Institution</Tooltip>}
                                 >
                                   <i
                                     className="icon text-primary pe-7s-culture"
                                     onClick={e => {
-                                      this.setTrust(prop, "institution");
+                                      this.setTrust(prop, 'institution');
                                       this.toggleModal();
                                     }}
                                   />
                                 </OverlayTrigger>
                               </td>
                               <td>
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Delete Trust</Tooltip>
-                                  }
-                                >
-                                  <i
-                                    className="icon pe-7s-trash text-danger"
-                                    onClick={this.toggleModal}
-                                  />
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
+                                  <i className="icon pe-7s-trash text-danger" onClick={this.toggleModal} />
                                 </OverlayTrigger>
                               </td>
                               <td>
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Edit Trust</Tooltip>
-                                  }
-                                >
-                                  <i
-                                    className="icon fas fa-pencil-alt text-info"
-                                    onClick={this.toggleModal}
-                                  />
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
+                                  <i className="icon fas fa-pencil-alt text-info" onClick={this.toggleModal} />
                                 </OverlayTrigger>
                               </td>
                             </tr>
@@ -276,7 +238,7 @@ class TrustListing extends Component {
               ? `Trust Admin Management for ${this.state.trust.name}`
               : this.state.isInstitution
                 ? `Add an Institution to ${this.state.trust.name}`
-                : ""
+                : ''
           }
         >
           <div>
@@ -290,75 +252,58 @@ class TrustListing extends Component {
 }
 
 const CreateInstitution = context => {
-  const {
-    name,
-    email,
-    phone,
-    submitted,
-    website,
-    document_link
-  } = context.state;
+  const { name, email, phone, submitted, website, document_link } = context.state;
   return (
     <Grid fluid>
       <Row>
         <Col md={12}>
-          <form
-            id="createInstitutionForm"
-            onSubmit={context.handleCreateInstitutionSubmit}
-          >
+          <form id="createInstitutionForm" onSubmit={context.handleCreateInstitutionSubmit}>
             <FormInputs
-              ncols={["col-md-5", "col-md-3", "col-md-4"]}
+              ncols={['col-md-5', 'col-md-3', 'col-md-4']}
               proprieties={[
                 {
-                  label: "Name",
-                  type: "text",
-                  name: "name",
-                  bsClass:
-                    "form-control" + (submitted && !name ? " has-error" : ""),
-                  placeholder: "Institution Name",
+                  label: 'Name',
+                  type: 'text',
+                  name: 'name',
+                  bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
+                  placeholder: 'Institution Name',
                   onChange: context.handleChange
                 },
                 {
-                  label: "Email",
-                  type: "email",
-                  name: "email",
-                  bsClass:
-                    "form-control" + (submitted && !email ? " has-error" : ""),
-                  placeholder: "Email",
+                  label: 'Email',
+                  type: 'email',
+                  name: 'email',
+                  bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
+                  placeholder: 'Email',
                   onChange: context.handleChange
                 },
                 {
-                  label: "Phone",
-                  type: "number",
-                  name: "phone",
-                  bsClass:
-                    "form-control" + (submitted && !phone ? " has-error" : ""),
-                  placeholder: "Phone",
+                  label: 'Phone',
+                  type: 'number',
+                  name: 'phone',
+                  bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
+                  placeholder: 'Phone',
                   onChange: context.handleChange
                 }
               ]}
             />
             <FormInputs
-              ncols={["col-md-4", "col-md-4"]}
+              ncols={['col-md-4', 'col-md-4']}
               proprieties={[
                 {
-                  label: "Website",
-                  type: "text",
-                  name: "website",
-                  bsClass:
-                    "form-control" +
-                    (submitted && !website ? " has-error" : ""),
-                  placeholder: "Institution Website",
+                  label: 'Website',
+                  type: 'text',
+                  name: 'website',
+                  bsClass: 'form-control' + (submitted && !website ? ' has-error' : ''),
+                  placeholder: 'Institution Website',
                   onChange: context.handleChange
                 },
                 {
-                  label: "Documents",
-                  type: "text",
-                  name: "document_link",
-                  bsClass:
-                    "form-control" +
-                    (submitted && !document_link ? " has-error" : ""),
-                  placeholder: "Documents For the Institution",
+                  label: 'Documents',
+                  type: 'text',
+                  name: 'document_link',
+                  bsClass: 'form-control' + (submitted && !document_link ? ' has-error' : ''),
+                  placeholder: 'Documents For the Institution',
                   onChange: context.handleChange
                 }
               ]}
@@ -379,12 +324,7 @@ const CreateInstitution = context => {
                 </FormGroup>
               </Col>
             </Row>
-            <Button
-              bsStyle="default"
-              marginLeft
-              pullRight
-              onClick={context.toggleModal}
-            >
+            <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
               Cancel
             </Button>
             <Button bsStyle="info" pullRight type="submit">
@@ -401,34 +341,22 @@ const CreateInstitution = context => {
 const CreateTrustAdmin = context => {
   const { name, email, phone, username, password, submitted } = context.state;
   const { trustAdmin } = context.props;
-  const loading = trustAdmin.adminsByIdloading
-    ? "Loading Trust Admins"
-    : "Trust Admin Listing";
+  const loading = trustAdmin.adminsByIdloading ? 'Loading Trust Admins' : 'Trust Admin Listing';
   return (
     <div className="content">
       <div className="clearfix row">
         <Col md={12}>
           <ul role="tablist" className="nav nav-tabs">
-            <li
-              className={context.state.tabToggler ? "active" : ""}
-              onClick={context.toggleTab}
-            >
+            <li className={context.state.tabToggler ? 'active' : ''} onClick={context.toggleTab}>
               <a role="tab">{loading}</a>
             </li>
-            <li
-              className={!context.state.tabToggler ? "active" : ""}
-              onClick={context.toggleTab}
-            >
+            <li className={!context.state.tabToggler ? 'active' : ''} onClick={context.toggleTab}>
               <a role="tab">Create New Trust Admin</a>
             </li>
           </ul>
         </Col>
         <div className="tab-content">
-          <div
-            className={
-              context.state.tabToggler ? "fade tab-pane active in" : "tab-pane"
-            }
-          >
+          <div className={context.state.tabToggler ? 'fade tab-pane active in' : 'tab-pane'}>
             <Grid fluid>
               <Row>
                 <Col md={12}>
@@ -458,22 +386,12 @@ const CreateTrustAdmin = context => {
                               <td>{prop.address}</td>
 
                               <td>
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Delete Trust</Tooltip>
-                                  }
-                                >
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Delete Trust</Tooltip>}>
                                   <i className="icon pe-7s-trash text-danger" />
                                 </OverlayTrigger>
                               </td>
                               <td>
-                                <OverlayTrigger
-                                  placement="top"
-                                  overlay={
-                                    <Tooltip id="tooltip">Edit Trust</Tooltip>
-                                  }
-                                >
+                                <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip">Edit Trust</Tooltip>}>
                                   <i className="icon fas fa-pencil-alt text-info" />
                                 </OverlayTrigger>
                               </td>
@@ -494,74 +412,57 @@ const CreateTrustAdmin = context => {
               </Row>
             </Grid>
           </div>
-          <div
-            className={
-              !context.state.tabToggler ? "fade tab-pane active in" : "tab-pane"
-            }
-          >
+          <div className={!context.state.tabToggler ? 'fade tab-pane active in' : 'tab-pane'}>
             <Grid fluid>
               <Row>
                 <Col md={12}>
-                  <form
-                    id="createTrustAdminForm"
-                    onSubmit={context.handleCreateTrustAdminSubmit}
-                  >
+                  <form id="createTrustAdminForm" onSubmit={context.handleCreateTrustAdminSubmit}>
                     <FormInputs
-                      ncols={["col-md-6", "col-md-6"]}
+                      ncols={['col-md-6', 'col-md-6']}
                       proprieties={[
                         {
-                          label: "Username",
-                          type: "text",
-                          name: "username",
-                          bsClass:
-                            "form-control" +
-                            (submitted && !username ? " has-error" : ""),
-                          placeholder: "Username",
+                          label: 'Username',
+                          type: 'text',
+                          name: 'username',
+                          bsClass: 'form-control' + (submitted && !username ? ' has-error' : ''),
+                          placeholder: 'Username',
                           onChange: context.handleChange
                         },
                         {
-                          label: "Password",
-                          type: "password",
-                          name: "password",
-                          bsClass:
-                            "form-control" +
-                            (submitted && !password ? " has-error" : ""),
-                          placeholder: "Password",
+                          label: 'Password',
+                          type: 'password',
+                          name: 'password',
+                          bsClass: 'form-control' + (submitted && !password ? ' has-error' : ''),
+                          placeholder: 'Password',
                           onChange: context.handleChange
                         }
                       ]}
                     />
                     <FormInputs
-                      ncols={["col-md-4", "col-md-4", "col-md-4"]}
+                      ncols={['col-md-4', 'col-md-4', 'col-md-4']}
                       proprieties={[
                         {
-                          label: "Name",
-                          type: "text",
-                          name: "name",
-                          bsClass:
-                            "form-control" +
-                            (submitted && !name ? " has-error" : ""),
-                          placeholder: "Name",
+                          label: 'Name',
+                          type: 'text',
+                          name: 'name',
+                          bsClass: 'form-control' + (submitted && !name ? ' has-error' : ''),
+                          placeholder: 'Name',
                           onChange: context.handleChange
                         },
                         {
-                          label: "Email",
-                          type: "email",
-                          name: "email",
-                          bsClass:
-                            "form-control" +
-                            (submitted && !email ? " has-error" : ""),
-                          placeholder: "Email",
+                          label: 'Email',
+                          type: 'email',
+                          name: 'email',
+                          bsClass: 'form-control' + (submitted && !email ? ' has-error' : ''),
+                          placeholder: 'Email',
                           onChange: context.handleChange
                         },
                         {
-                          label: "Phone",
-                          type: "number",
-                          name: "phone",
-                          bsClass:
-                            "form-control" +
-                            (submitted && !phone ? " has-error" : ""),
-                          placeholder: "Phone",
+                          label: 'Phone',
+                          type: 'number',
+                          name: 'phone',
+                          bsClass: 'form-control' + (submitted && !phone ? ' has-error' : ''),
+                          placeholder: 'Phone',
                           onChange: context.handleChange
                         }
                       ]}
@@ -582,12 +483,7 @@ const CreateTrustAdmin = context => {
                         </FormGroup>
                       </Col>
                     </Row>
-                    <Button
-                      bsStyle="default"
-                      marginLeft
-                      pullRight
-                      onClick={context.toggleModal}
-                    >
+                    <Button bsStyle="default" marginLeft pullRight onClick={context.toggleModal}>
                       Cancel
                     </Button>
                     <Button bsStyle="info" pullRight type="submit">

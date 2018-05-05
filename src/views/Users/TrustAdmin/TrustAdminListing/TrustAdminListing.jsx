@@ -48,7 +48,9 @@ class TrustAdminListing extends Component {
                                 <OverlayTrigger
                                   placement="top"
                                   overlay={
-                                    <Tooltip id="tooltip">{prop.status.tag === 'DELETED' ? 'Deleted' : 'Active'}</Tooltip>
+                                    <Tooltip id="tooltip">
+                                      {prop.status.tag === 'DELETED' ? 'Deleted' : 'Active'}
+                                    </Tooltip>
                                   }
                                 >
                                   <i
