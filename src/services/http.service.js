@@ -31,14 +31,14 @@ const http = axios.create({
   headers: HEADER
 });
 
-
-
-http.interceptors.response.use(function (response) {
+http.interceptors.response.use(
+  function(response) {
     return response;
-  }, function (error) {
+  },
+  function(error) {
     // Do something with response error
     return Promise.reject(error);
-  });
+  }
+);
 
-export  default http;
-
+export default http;
