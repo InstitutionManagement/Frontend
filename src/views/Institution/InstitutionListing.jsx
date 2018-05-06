@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { institutionActions } from '../../../redux/Actions/institution.actions';
-import { Card } from '../../../components/Card/Card';
-import Modal from '../../../components/Modal/Modal';
+import { institutionActions } from './actions';
+import { Card } from '../../components/Card/Card';
+import Modal from '../../components/Modal/Modal';
 
 const formFields = {
   name: '',

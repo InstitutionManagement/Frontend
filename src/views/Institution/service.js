@@ -1,4 +1,4 @@
-import http from './http.service';
+import http from '../../services/http.service';
 
 const register = institution => http.post('/api/institute/register', institution);
 

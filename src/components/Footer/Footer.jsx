@@ -22,7 +22,7 @@ class Footer extends Component {
               </li>
             </ul>
           </nav>
-          <p className="copyright pull-right">&copy; {new Date().getFullYear()} , react test development project</p>
+          <p className="copyright pull-right">&copy; {new Date().getFullYear()} , Hectane: Institution Management Suite</p>
         </Grid>
       </footer>
     );

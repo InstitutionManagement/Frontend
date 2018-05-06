@@ -1,7 +1,7 @@
-import { alertActions } from './alert.actions';
-import { institutionService } from '../../services/institution.service';
-import { institutionConstants } from '../../constants/institution.constants';
-import { actionHelper } from './Helpers/action.helper';
+import { alertActions } from '../../redux/Actions/alert.actions';
+import { institutionService } from './service';
+import { institutionConstants } from './constants';
+import { actionHelper } from '../../redux/Actions/Helpers/action.helper';
 // import { request } from 'https';
 
 const register = institution => {

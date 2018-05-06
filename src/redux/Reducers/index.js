@@ -7,7 +7,7 @@ import { alert } from './alert.reducer';
 import { trusts } from '../../views/Trust/reducer';
 import { superAdmin } from '../../views/Users/SuperAdmin/reducer';
 import { trustAdmin } from '../../views/Users/TrustAdmin/reducer';
-import { institution } from './institution.reducer';
+import { institution } from '../../views/Institution/reducer';
 
 const rootReducer = combineReducers({
   alert,

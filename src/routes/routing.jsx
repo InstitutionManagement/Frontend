@@ -6,7 +6,7 @@ import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin';
 import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing';
 import Login from '../views/Login/Login';
 import TrustAdminListing from '../views/Users/TrustAdmin/TrustAdminListing';
-import InstitutionListing from '../views/Institution/InstitutionListing/InstitutionListing';
+import InstitutionListing from '../views/Institution/InstitutionListing';
 let Data = JSON.parse(localStorage.getItem('user'));
 Data = Data ? Data.user : { user_type: {} };
 

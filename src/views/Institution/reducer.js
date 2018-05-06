@@ -1,4 +1,4 @@
-import { institutionConstants } from '../../constants/institution.constants';
+import { institutionConstants } from './constants';
 
 export function institution(state = {}, action) {
   switch (action.type) {

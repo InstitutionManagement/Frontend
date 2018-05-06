@@ -8,7 +8,7 @@ import { trustActions } from './actions';
 import Button from '../../elements/CustomButton/CustomButton';
 import Modal from '../../components/Modal/Modal';
 
-import { institutionActions } from '../../redux/Actions/institution.actions';
+import { institutionActions } from '../Institution/actions';
 import { trustAdminActions } from '../Users/TrustAdmin/actions';
 import { alertConstants } from '../../constants/alert.constants';
 
