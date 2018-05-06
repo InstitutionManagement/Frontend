@@ -1,4 +1,4 @@
-import { trustConstants } from '../../constants/trust.constants';
+import { trustConstants } from './constants';
 
 export function trusts(state = {}, action) {
   switch (action.type) {

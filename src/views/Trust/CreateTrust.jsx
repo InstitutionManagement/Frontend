@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
 import { connect } from 'react-redux';
-import { Card } from '../../../components/Card/Card.jsx';
-import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
-import Button from '../../../elements/CustomButton/CustomButton.jsx';
-import { trustActions } from '../../../redux/Actions/trust.actions';
-import { alertConstants } from '../../../constants/alert.constants';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import { Card } from '../../components/Card/Card';
+import { FormInputs } from '../../components/FormInputs/FormInputs';
+import Button from '../../elements/CustomButton/CustomButton';
+
+import { trustActions } from './actions';
+import { alertConstants } from '../../constants/alert.constants';
 
 class CreateTrust extends Component {
   state = {

@@ -1,7 +1,7 @@
-import { alertActions } from './alert.actions';
-import { trustService } from '../../services/trust.service';
-import { trustConstants } from '../../constants/trust.constants';
-import { actionHelper } from './Helpers/action.helper';
+import { alertActions } from '../../redux/Actions/alert.actions';
+import { trustService } from './service';
+import { trustConstants } from './constants';
+import { actionHelper } from '../../redux/Actions/Helpers/action.helper';
 
 const create = trust => {
   return dispatch => {
