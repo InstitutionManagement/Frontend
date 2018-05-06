@@ -35,7 +35,7 @@ class InstitutionListing extends Component {
     }
   };
 
-  deleteInstitution(id){
+  deleteInstitution(id) {
     this.props.deleteInstitution(id);
   }
 
@@ -142,10 +142,13 @@ class InstitutionListing extends Component {
                                     placement="top"
                                     overlay={<Tooltip id="tooltip">Delete Institution</Tooltip>}
                                   >
-                                    <i className="icon pe-7s-trash text-danger" onClick={e => {
-                                      e.preventDefault()
-                                      this.deleteInstitution(prop.institute_id)
-                                    }} />
+                                    <i
+                                      className="icon pe-7s-trash text-danger"
+                                      onClick={e => {
+                                        e.preventDefault();
+                                        this.deleteInstitution(prop.institute_id);
+                                      }}
+                                    />
                                   </OverlayTrigger>
                                 )}
                               </td>

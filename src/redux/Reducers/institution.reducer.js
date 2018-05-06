@@ -18,34 +18,35 @@ export function institution(state = {}, action) {
         loading: false,
         data: action.data
       };
-      //START DELETE 
-      case institutionConstants.INSTITUTION_DELETE_REQUEST:
-    return {
-      ...state,
-      data: state.data.map(institution => institution.institution_id === action.request.id 
-        ? {...institution, deleting: true} : institution
-      )
-    };
+    //START DELETE
+    case institutionConstants.INSTITUTION_DELETE_REQUEST:
+      return {
+        ...state,
+        data: state.data.map(
+          institution =>
+            institution.institution_id === action.request.id ? { ...institution, deleting: true } : institution
+        )
+      };
 
     case institutionConstants.INSTITUTION_DELETE_SUCCESS:
-    return {
-      ...state,
-      data: state.data.map(institution => {
-        if(institution.intitute_id === action.data.id){
-          institution.deleting = false;
-          institution.status.tag = 'DELETED';
-        }
-        return institution;
-      })
-    };
+      return {
+        ...state,
+        data: state.data.map(institution => {
+          if (institution.intitute_id === action.data.id) {
+            institution.deleting = false;
+            institution.status.tag = 'DELETED';
+          }
+          return institution;
+        })
+      };
 
     case institutionConstants.INSTITUTION_DELETE_FAILURE:
-    return {
-      ...state,
-      data: state.data.map(
-        institution => institutionConstants.deleting ? {...institution, deleting:false} : institution
-      )
-    }
+      return {
+        ...state,
+        data: state.data.map(
+          institution => (institutionConstants.deleting ? { ...institution, deleting: false } : institution)
+        )
+      };
     // END DELETE
 
     default:

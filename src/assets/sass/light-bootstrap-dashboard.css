@@ -1109,6 +1109,26 @@ body > .navbar-collapse[data-color="purple"]:after {
 .table > tbody > tr > td.center {
   text-align: center; }
 
+.table .icon {
+  font-size: 24;
+  font-weight: bolder;
+  cursor: pointer; }
+
+.table .icon.far {
+  font-weight: normal; }
+
+.table .profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #EEEEEE; }
+
+.table .profile-pic:hover, .table .profile-pic:focus {
+  border: 2px solid #41ff58; }
+
+.table .backgroundRed {
+  background-color: #ffeaea; }
+
 /*      Checkbox and radio         */
 .checkbox,
 .radio {

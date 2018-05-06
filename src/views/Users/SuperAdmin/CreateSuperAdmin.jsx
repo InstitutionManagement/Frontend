@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { superAdminActions } from '../../../../redux/Actions/superAdmin.actions';
-import { alertConstants } from '../../../../constants/alert.constants';
+import { superAdminActions } from './actions';
+import { alertConstants } from '../../../constants/alert.constants';
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
-import { Card } from '../../../../components/Card/Card.jsx';
-import { FormInputs } from '../../../../components/FormInputs/FormInputs.jsx';
-import Button from '../../../../elements/CustomButton/CustomButton.jsx';
+import { Card } from '../../../components/Card/Card';
+import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
+import Button from '../../../elements/CustomButton/CustomButton.jsx';
 class CreateSuperAdmin extends Component {
   state = {
     username: '',

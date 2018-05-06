@@ -1,7 +1,7 @@
-import { alertActions } from './alert.actions';
-import { actionHelper } from './Helpers/action.helper';
-import { trustAdminConstants } from '../../constants/trustAdmin.constants';
-import { trustAdminService } from '../../services/trustAdmin.service';
+import { alertActions } from '../../../redux/Actions/alert.actions';
+import { actionHelper } from '../../../redux/Actions/Helpers/action.helper';
+import { trustAdminConstants } from './constants';
+import { trustAdminService } from './service';
 
 function registerTrustAdmin(trustAdmin) {
   return dispatch => {

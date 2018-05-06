@@ -1,4 +1,4 @@
-import { trustAdminConstants } from '../../constants/trustAdmin.constants';
+import { trustAdminConstants } from './constants';
 
 export function trustAdmin(state = {}, action) {
   switch (action.type) {

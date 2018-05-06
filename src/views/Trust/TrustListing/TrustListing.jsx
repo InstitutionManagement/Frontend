@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import Button from '../../../elements/CustomButton/CustomButton.jsx';
 import Modal from '../../../components/Modal/Modal';
 import { institutionActions } from '../../../redux/Actions/institution.actions';
-import { trustAdminActions } from '../../../redux/Actions/trustAdmin.actions';
+import { trustAdminActions } from '../../Users/TrustAdmin/actions';
 import { alertConstants } from '../../../constants/alert.constants';
 
 const formFields = {

@@ -1,7 +1,7 @@
-import { superAdminConstants } from '../../constants/superAdmin.constants';
-import { superAdminService } from '../../services/superAdmin.service';
-import { alertActions } from './alert.actions';
-import { actionHelper } from './Helpers/action.helper';
+import { superAdminConstants } from './constants';
+import { superAdminService } from './service';
+import { alertActions } from '../../../redux/Actions/alert.actions';
+import { actionHelper } from '../../../redux/Actions/Helpers/action.helper';
 
 function registerSuperAdmin(user) {
   return dispatch => {

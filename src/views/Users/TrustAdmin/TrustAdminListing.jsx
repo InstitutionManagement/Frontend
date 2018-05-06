@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import Card from '../../../../components/Card/Card.jsx';
-import { trustAdminActions } from '../../../../redux/Actions/trustAdmin.actions';
+import Card from '../../../components/Card/Card.jsx';
+import { trustAdminActions } from './actions';
 
 class TrustAdminListing extends Component {
   componentDidMount() {
