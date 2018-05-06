@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { institutionActions } from '../../../redux/Actions/institution.actions';
-import { Card } from '../../../components/Card/Card';
-import Modal from '../../../components/Modal/Modal';
+import { institutionActions } from './actions';
+import { Card } from '../../components/Card/Card';
+import Modal from '../../components/Modal/Modal';
 
 const formFields = {
   name: '',
@@ -35,7 +35,7 @@ class InstitutionListing extends Component {
     }
   };
 
-  deleteInstitution(id){
+  deleteInstitution(id) {
     this.props.deleteInstitution(id);
   }
 
@@ -142,10 +142,13 @@ class InstitutionListing extends Component {
                                     placement="top"
                                     overlay={<Tooltip id="tooltip">Delete Institution</Tooltip>}
                                   >
-                                    <i className="icon pe-7s-trash text-danger" onClick={e => {
-                                      e.preventDefault()
-                                      this.deleteInstitution(prop.institute_id)
-                                    }} />
+                                    <i
+                                      className="icon pe-7s-trash text-danger"
+                                      onClick={e => {
+                                        e.preventDefault();
+                                        this.deleteInstitution(prop.institute_id);
+                                      }}
+                                    />
                                   </OverlayTrigger>
                                 )}
                               </td>

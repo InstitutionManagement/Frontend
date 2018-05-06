@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import { FormInputs } from '../../../components/FormInputs/FormInputs.jsx';
-import Card from '../../../components/Card/Card.jsx';
-import { trustActions } from '../../../redux/Actions/trust.actions';
 import { connect } from 'react-redux';
-import Button from '../../../elements/CustomButton/CustomButton.jsx';
-import Modal from '../../../components/Modal/Modal';
-import { institutionActions } from '../../../redux/Actions/institution.actions';
-import { trustAdminActions } from '../../../redux/Actions/trustAdmin.actions';
-import { alertConstants } from '../../../constants/alert.constants';
+
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
+import { FormInputs } from '../../components/FormInputs/FormInputs';
+import Card from '../../components/Card/Card';
+import { trustActions } from './actions';
+import Button from '../../elements/CustomButton/CustomButton';
+import Modal from '../../components/Modal/Modal';
+
+import { institutionActions } from '../Institution/actions';
+import { trustAdminActions } from '../Users/TrustAdmin/actions';
+import { alertConstants } from '../../constants/alert.constants';
 
 const formFields = {
   name: '',

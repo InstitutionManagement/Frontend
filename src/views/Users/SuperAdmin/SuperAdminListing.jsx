@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
-import Card from '../../../../components/Card/Card.jsx';
-import { superAdminActions } from '../../../../redux/Actions/superAdmin.actions';
+import Card from '../../../components/Card/Card';
+import { superAdminActions } from './actions';
 import { connect } from 'react-redux';
-import './SuperAdminListing.css';
 
 class SuperAdminListing extends Component {
   componentDidMount() {

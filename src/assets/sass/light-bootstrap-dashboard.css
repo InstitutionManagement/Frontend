@@ -219,17 +219,18 @@ input:focus {
     background-size: cover;
     background-position: center center; }
   .sidebar .logo {
-    padding: 10px 30px;
+    padding: 10px 30px 15px 30px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
     z-index: 4; }
     .sidebar .logo p {
       float: left;
-      font-size: 20px;
-      margin: 10px 10px;
+      font-size: 10px;
+      margin: 0px;
       color: #FFFFFF;
-      line-height: 20px;
-      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+      line-height: 10px;
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      text-transform: uppercase; }
     .sidebar .logo a.logo-mini {
       float: left;
       text-align: center;
@@ -350,16 +351,17 @@ input:focus {
 
 .sidebar .logo,
 body > .navbar-collapse .logo {
-  padding: 10px 30px;
+  padding: 10px 30px 15px 30px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
   .sidebar .logo p,
   body > .navbar-collapse .logo p {
     float: left;
-    font-size: 20px;
-    margin: 10px 10px;
+    font-size: 10px;
+    margin: 0px;
     color: #FFFFFF;
-    line-height: 20px;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    line-height: 10px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    text-transform: uppercase; }
   .sidebar .logo .simple-text,
   body > .navbar-collapse .logo .simple-text {
     text-transform: uppercase;
@@ -1108,6 +1110,26 @@ body > .navbar-collapse[data-color="purple"]:after {
 .table > thead > tr > th.center,
 .table > tbody > tr > td.center {
   text-align: center; }
+
+.table .icon {
+  font-size: 24;
+  font-weight: bolder;
+  cursor: pointer; }
+
+.table .icon.far {
+  font-weight: normal; }
+
+.table .profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 4px solid #EEEEEE; }
+
+.table .profile-pic:hover, .table .profile-pic:focus {
+  border: 2px solid #41ff58; }
+
+.table .backgroundRed {
+  background-color: #ffeaea; }
 
 /*      Checkbox and radio         */
 .checkbox,

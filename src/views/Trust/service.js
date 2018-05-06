@@ -1,4 +1,4 @@
-import http from './http.service';
+import http from '../../services/http.service';
 
 const create = trust => http.post(`/api/trust/register`, trust);
 

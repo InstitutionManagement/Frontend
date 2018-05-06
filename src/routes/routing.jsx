@@ -1,12 +1,12 @@
 import Dashboard from '../views/Dashboard/Dashboard';
 import UserProfile from '../views/UserProfile/UserProfile';
-import TrustListing from '../views/Trust/TrustListing/TrustListing';
-import CreateTrust from '../views/Trust/CreateTrust/CreateTrust';
-import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin/CreateSuperAdmin';
-import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing/SuperAdminListing';
+import TrustListing from '../views/Trust/TrustListing';
+import CreateTrust from '../views/Trust/CreateTrust';
+import CreateSuperAdmin from '../views/Users/SuperAdmin/CreateSuperAdmin';
+import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing';
 import Login from '../views/Login/Login';
-import TrustAdminListing from '../views/Users/TrustAdmin/TrustAdminListing/TrustAdminListing';
-import InstitutionListing from '../views/Institution/InstitutionListing/InstitutionListing';
+import TrustAdminListing from '../views/Users/TrustAdmin/TrustAdminListing';
+import InstitutionListing from '../views/Institution/InstitutionListing';
 let Data = JSON.parse(localStorage.getItem('user'));
 Data = Data ? Data.user : { user_type: {} };
 

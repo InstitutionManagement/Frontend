@@ -1,4 +1,4 @@
-import http from './http.service';
+import http from '../../../services/http.service';
 
 const getSuperAdminById = id => http.get('/users/' + id);
 

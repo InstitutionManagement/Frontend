@@ -33,14 +33,15 @@ class Sidebar extends Component {
       <div id="sidebar" className="sidebar" data-color="purple" data-image={imagine}>
         <div className="sidebar-background" style={sidebarBackground} />
         <div className="logo">
-          <a href="www.google.com" className="simple-text logo-mini">
+          <a href="https://frontend-institution.azurewebsites.net" className="simple-text logo-mini">
             <div className="logo-img">
               <img src={logo} alt="logo_image" />
             </div>
           </a>
-          <a href="www.google.com" className="simple-text logo-normal">
-            React Learning
+          <a href="https://frontend-institution.azurewebsites.net" className="simple-text logo-normal">
+            Hectane
           </a>
+          <p>Institution Management Suite</p>
         </div>
         <div className="sidebar-wrapper">
           <ul className="nav">
