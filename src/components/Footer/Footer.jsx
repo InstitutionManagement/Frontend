@@ -6,8 +6,9 @@ class Footer extends Component {
     return (
       <footer className="footer">
         <Grid>
-          
-          <p className="copyright pull-right">&copy; {new Date().getFullYear()} <b>Hectane</b> : Institution Management Suite</p>
+          <p className="copyright pull-right">
+            &copy; {new Date().getFullYear()} <b>Hectane</b> : Institution Management Suite
+          </p>
         </Grid>
       </footer>
     );

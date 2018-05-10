@@ -31,7 +31,7 @@ class Header extends Component {
   }
   getBrand() {
     var name;
-    Routes.map((prop, key) => {
+    this.props.headerData.map((prop, key) => {
       if (prop.collapse) {
         prop.views.map((prop, key) => {
           if (prop.path === this.props.location.pathname) {

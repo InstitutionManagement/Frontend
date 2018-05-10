@@ -35,7 +35,7 @@ function getSuperAdmins() {
     dispatch(actionHelper.request(superAdminConstants.SUPERADMIN_GETALL_REQUEST));
     superAdminService.getSuperAdmins().then(
       response => {
-        if (response.status === 200 && Object.keys(response.data.data).length > 0) {
+        if (actionHelper.successCheck(response)) {
           dispatch(actionHelper.success(superAdminConstants.SUPERADMIN_GETALL_SUCCESS, response.data.data));
         } else if (response.status === 200) {
           dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_GETALL_FAILURE, response.data.error));
@@ -43,13 +43,8 @@ function getSuperAdmins() {
         }
       },
       error => {
-        if (error.response.status === 500 && error.response.data) {
-          dispatch(
-            actionHelper.failure(
-              superAdminConstants.SUPERADMIN_GETALL_FAILURE,
-              String(error.response.data.error.message)
-            )
-          );
+        if (actionHelper.errorCheck(error.response)) {
+          dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_GETALL_FAILURE,String(error.response.data.error.message)));
           dispatch(alertActions.error(error.response.data.error.message));
         } else {
           dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_GETALL_FAILURE, error));

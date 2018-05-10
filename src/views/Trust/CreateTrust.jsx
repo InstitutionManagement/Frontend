@@ -24,12 +24,6 @@ class CreateTrust extends Component {
     this.setState({ [name]: value });
   };
 
-  toggleModal = () => {
-    this.setState({
-      isOpen: !this.state.isOpen
-    });
-  };
-
   handleSubmit = e => {
     e.preventDefault();
     const trust = {
@@ -51,14 +45,6 @@ class CreateTrust extends Component {
   clearForm = () => {
     document.getElementById('createTrustForm').reset();
   };
-
-  closeModal() {
-    this.setState({ modalIsOpen: false });
-  }
-
-  openModal() {
-    this.setState({ modalIsOpen: true });
-  }
 
   render() {
     const { name, email, phone, submitted } = this.state;

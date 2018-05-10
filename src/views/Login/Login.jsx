@@ -1,10 +1,12 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { userActions } from '../../redux/Actions/user.actions';
-import backgroundImage from '../../assets/img/login-bg.jpg';
-import logoImage from '../../assets/img/login-logo.png';
-import './Login.css';
-import A from '../../elements/A/A.jsx';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { userActions } from "../../redux/Actions/user.actions";
+import backgroundImage from "../../assets/img/login-bg.jpg";
+import logoImage from "../../assets/img/login-logo.png";
+import "./Login.css";
+import A from "../../elements/A/A.jsx";
+
+import { Redirect } from "react-router-dom";
 
 const SocialIcon = props => {
   return (
@@ -23,10 +25,13 @@ const SocialIcon = props => {
   );
 };
 
+// username: "vgautam",
+// password: "vgautam@321",
+
 class Login extends Component {
   state = {
-    username: 'vgautam',
-    password: 'vgautam@321',
+    username: "trustadmin",
+    password: "trustadmin",
     submitted: false
   };
 
@@ -53,14 +58,16 @@ class Login extends Component {
 
   render() {
     const backImage = {
-      backgroundImage: 'url(' + backgroundImage + ')'
+      backgroundImage: "url(" + backgroundImage + ")"
     };
     let formError = this.props.alert.type ? (
       <span className="error-message">{String(this.props.alert.message)}</span>
     ) : (
-      ''
+      ""
     );
     const { username, password } = this.state;
+
+    if (this.props.loggedIn) return <Redirect to="/dashboard" />;
 
     return (
       <div className="login-page sidebar-collapse">
@@ -83,9 +90,24 @@ class Login extends Component {
                 </li>
               </ul>
               <ul className="navbar-nav">
-                <SocialIcon text="Twitter" title="Follow us on Twitter" link="#" icon="fab fa-twitter" />
-                <SocialIcon text="Facebook" title="Follow us on Facebook" link="#" icon="fab fa-facebook" />
-                <SocialIcon text="Instagram" title="Follow us on Instagram" link="#" icon="fab fa-instagram" />
+                <SocialIcon
+                  text="Twitter"
+                  title="Follow us on Twitter"
+                  link="#"
+                  icon="fab fa-twitter"
+                />
+                <SocialIcon
+                  text="Facebook"
+                  title="Follow us on Facebook"
+                  link="#"
+                  icon="fab fa-facebook"
+                />
+                <SocialIcon
+                  text="Instagram"
+                  title="Follow us on Instagram"
+                  link="#"
+                  icon="fab fa-instagram"
+                />
               </ul>
             </div>
           </div>
@@ -134,7 +156,10 @@ class Login extends Component {
                   </div>
 
                   <div className="footer text-center">
-                    <button className="btn btn-primary btn-round btn-lg btn-block" type="submit">
+                    <button
+                      className="btn btn-primary btn-round btn-lg btn-block"
+                      type="submit"
+                    >
                       Sign In
                     </button>
                   </div>

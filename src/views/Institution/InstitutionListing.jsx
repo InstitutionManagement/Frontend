@@ -62,7 +62,7 @@ class InstitutionListing extends Component {
             <Col md={12}>
               <Card
                 title={loading}
-                category="Active Trusts in the System"
+                category="Active Institutions in the System"
                 ctTableFullWidth
                 ctTableResponsive
                 content={

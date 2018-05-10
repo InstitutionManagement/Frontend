@@ -25,6 +25,7 @@ export function trustAdmin(state = {}, action) {
     case trustAdminConstants.TRUST_ADMIN_GETBYID_REQUEST:
       return {
         ...state,
+        adminsById: [],
         adminsByIdloading: true
       };
     case trustAdminConstants.TRUST_ADMIN_GETBYID_SUCCESS:
