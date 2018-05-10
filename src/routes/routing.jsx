@@ -8,10 +8,6 @@ import Login from "../views/Login/Login";
 import TrustAdminListing from "../views/Users/TrustAdmin/TrustAdminListing";
 import InstitutionListing from "../views/Institution/InstitutionListing";
 import CreateInstitution from "../views/Institution/CreateInstitution";
-import Helper from "../services/helper.functions";
-
-let Data = Helper.UserValidator();
-Data = Data ? Data.user : { user_type: {} };
 
 const SUPER_ADMIN_SIDEBAR = [
   {
