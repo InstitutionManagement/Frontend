@@ -45,6 +45,10 @@ const http = axios.create({
 
 http.interceptors.request.use(
   config => {
+    if (config.url === '/api/login') {
+      delete config.headers['x-access-token'];
+      return config;
+    }
     if (!config.headers['x-access-token']) {
       config.headers = authHeader();
       http.defaults.headers = authHeader();

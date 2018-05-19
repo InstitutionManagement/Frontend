@@ -21,7 +21,11 @@ class Sidebar extends Component {
   }
 
   handleChildren(value) {
-    this.setState({ [value]: this.state[value] ? false : true });
+    if (this.state[value] && this.state[value] === true) {
+      this.setState({ [value]: false });
+    } else {
+      this.setState({ [value]: true });
+    }
   }
 
   render() {
