@@ -4,8 +4,8 @@ import Helper from './helper.functions';
 
 function authHeader() {
   // return authorization header with jwt token
-  let user =  Helper.UserValidator();
-  
+  let user = Helper.UserValidator();
+
   if (user && user.token) {
     return {
       'x-access-token': user.token
@@ -46,8 +46,8 @@ const http = axios.create({
 http.interceptors.request.use(
   config => {
     if (!config.headers['x-access-token']) {
-        config.headers = authHeader();
-        http.defaults.headers = authHeader();
+      config.headers = authHeader();
+      http.defaults.headers = authHeader();
     }
     return config;
   },

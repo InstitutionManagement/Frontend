@@ -1,15 +1,15 @@
-import React, { Component } from "react";
-import { Route, Switch, Redirect } from "react-router-dom";
-import NotificationSystem from "react-notification-system";
-import { connect } from "react-redux";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
-import Sidebar from "../../components/Sidebar/Sidebar";
-import { style } from "../../variables/Variables";
-import { SidebarRoutes, Routes } from "../../routes/routing";
-import { alertConstants } from "../../constants/alert.constants";
-import { alertActions } from "../../redux/Actions/alert.actions";
-import Helper from "../../services/helper.functions";
+import React, { Component } from 'react';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import NotificationSystem from 'react-notification-system';
+import { connect } from 'react-redux';
+import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
+import Sidebar from '../../components/Sidebar/Sidebar';
+import { style } from '../../variables/Variables';
+import { SidebarRoutes, Routes } from '../../routes/routing';
+import { alertConstants } from '../../constants/alert.constants';
+import { alertActions } from '../../redux/Actions/alert.actions';
+import Helper from '../../services/helper.functions';
 
 class Private extends Component {
   constructor(props) {
@@ -21,31 +21,31 @@ class Private extends Component {
     };
   }
 
-  handleNotificationClick(type, message, position = "tr") {
-    var level = "",
-      icon = "";
+  handleNotificationClick(type, message, position = 'tr') {
+    var level = '',
+      icon = '';
     switch (type) {
       case alertConstants.SUCCESS:
-        level = "success";
-        icon = "pe-7s-check";
+        level = 'success';
+        icon = 'pe-7s-check';
         break;
       case alertConstants.WARNING:
-        level = "warning";
-        icon = "pe-7s-less";
+        level = 'warning';
+        icon = 'pe-7s-less';
         break;
       case alertConstants.ERROR:
-        level = "error";
-        icon = "pe-7s-close";
+        level = 'error';
+        icon = 'pe-7s-close';
         break;
       case alertConstants.INFO:
-        level = "info";
-        icon = "pe-7s-info";
+        level = 'info';
+        icon = 'pe-7s-info';
         break;
       default:
         break;
     }
     this.state._notificationSystem.addNotification({
-      title: <span data-notify="icon" className={"notify-icon " + icon} />,
+      title: <span data-notify="icon" className={'notify-icon ' + icon} />,
       message: <div>{message}</div>,
       level: level,
       position: position,
@@ -59,9 +59,9 @@ class Private extends Component {
     if (
       window.innerWidth < 993 &&
       e.history.location.pathname !== e.location.pathname &&
-      document.documentElement.className.indexOf("nav-open") !== -1
+      document.documentElement.className.indexOf('nav-open') !== -1
     ) {
-      document.documentElement.classList.toggle("nav-open");
+      document.documentElement.classList.toggle('nav-open');
     }
     if (Object.keys(this.props.alert).length > 0) {
       const { type, message } = this.props.alert;
@@ -74,23 +74,23 @@ class Private extends Component {
     let sideBarData = [],
       routesData = [];
     switch (userType) {
-      case "SuperAdmin":
+      case 'SuperAdmin':
         routesData = Routes.SUPER_ADMIN_ROUTES;
         sideBarData = SidebarRoutes.SUPER_ADMIN_SIDEBAR;
         break;
-      case "TrustAdmin":
+      case 'TrustAdmin':
         routesData = Routes.TRUST_ADMIN_ROUTES;
         sideBarData = SidebarRoutes.TRUST_ADMIN_SIDEBAR;
         break;
-      case "InstitutionAdmin":
+      case 'InstitutionAdmin':
         routesData = Routes.INSTITUTION_ADMIN_ROUTES;
         sideBarData = SidebarRoutes.INSTITUTION_ADMIN_SIDEBAR;
         break;
-      case "Staff":
+      case 'Staff':
         routesData = Routes.STAFF_ROUTES;
         sideBarData = SidebarRoutes.STAFF_SIDEBAR;
         break;
-      case "Student":
+      case 'Student':
         routesData = Routes.STUDENT_ROUTES;
         sideBarData = SidebarRoutes.STUDENT_SIDEBAR;
         break;
@@ -106,7 +106,7 @@ class Private extends Component {
   }
 
   render() {
-    const user = Helper.UserValidator();;
+    const user = Helper.UserValidator();
     if (user && user.token && user.user && user.user.user_type) {
       let { sideBarData, routesData } = this.routeMatch(user.user.user_type);
       return (
@@ -118,21 +118,13 @@ class Private extends Component {
             <Switch>
               {user && user.token ? (
                 routesData.map((prop, key) => {
-                  if (prop.redirect)
-                    return <Redirect from={prop.path} to={prop.to} key={key} />;
-                  return (
-                    <Route
-                      exact
-                      path={prop.path}
-                      component={prop.component}
-                      key={key}
-                    />
-                  );
+                  if (prop.redirect) return <Redirect from={prop.path} to={prop.to} key={key} />;
+                  return <Route exact path={prop.path} component={prop.component} key={key} />;
                 })
               ) : (
                 <Redirect
                   to={{
-                    pathname: "/login",
+                    pathname: '/login',
                     state: { from: this.props.location }
                   }}
                 />
@@ -143,11 +135,7 @@ class Private extends Component {
         </div>
       );
     } else {
-      return (
-        <Redirect
-          to={{ pathname: "/login", state: { from: this.props.location } }}
-        />
-      );
+      return <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />;
     }
   }
 }

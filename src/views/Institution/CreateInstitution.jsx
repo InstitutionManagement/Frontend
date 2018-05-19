@@ -14,7 +14,7 @@ class CreateInstitution extends Component {
     email: '',
     phone: '',
     address: '',
-    website:'',
+    website: '',
     document_link: '',
     submitted: false,
     isOpen: false
@@ -25,7 +25,6 @@ class CreateInstitution extends Component {
     this.setState({ [name]: value });
   };
 
-
   handleCreateInstitutionSubmit = e => {
     e.preventDefault();
     this.setState({ submitted: true });
@@ -35,7 +34,7 @@ class CreateInstitution extends Component {
       email,
       phone,
       address,
-      parent_trust_id:'', //Want to fetch trust_id from loggedin Trust Admin
+      parent_trust_id: '', //Want to fetch trust_id from loggedin Trust Admin
       website,
       document_link,
       created_by: {
@@ -62,7 +61,6 @@ class CreateInstitution extends Component {
     document.getElementById('createInstitutionForm').reset();
   };
 
-
   render() {
     const { name, email, phone, submitted, website, document_link } = this.state;
     return (
@@ -73,7 +71,7 @@ class CreateInstitution extends Component {
               <Card
                 title="Create Institution"
                 content={
-                    <form id="createInstitutionForm" onSubmit={this.handleCreateInstitutionSubmit}>
+                  <form id="createInstitutionForm" onSubmit={this.handleCreateInstitutionSubmit}>
                     <FormInputs
                       ncols={['col-md-5', 'col-md-3', 'col-md-4']}
                       proprieties={[
@@ -124,7 +122,7 @@ class CreateInstitution extends Component {
                         }
                       ]}
                     />
-        
+
                     <Row>
                       <Col md={12}>
                         <FormGroup controlId="formControlsTextarea">

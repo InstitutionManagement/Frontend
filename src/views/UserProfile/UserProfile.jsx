@@ -100,9 +100,9 @@ class UserProfile extends Component {
                 userName={usename}
                 description={
                   <span>
-                   {email} <br/>
-                   {phone} <br/>
-                   {address} <br/>
+                    {email} <br />
+                    {phone} <br />
+                    {address} <br />
                   </span>
                 }
                 socials={

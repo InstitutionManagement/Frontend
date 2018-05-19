@@ -44,7 +44,12 @@ function getSuperAdmins() {
       },
       error => {
         if (actionHelper.errorCheck(error.response)) {
-          dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_GETALL_FAILURE,String(error.response.data.error.message)));
+          dispatch(
+            actionHelper.failure(
+              superAdminConstants.SUPERADMIN_GETALL_FAILURE,
+              String(error.response.data.error.message)
+            )
+          );
           dispatch(alertActions.error(error.response.data.error.message));
         } else {
           dispatch(actionHelper.failure(superAdminConstants.SUPERADMIN_GETALL_FAILURE, error));
