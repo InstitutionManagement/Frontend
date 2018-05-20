@@ -34,12 +34,12 @@ class CreateInstitution extends Component {
       email,
       phone,
       address,
-      parent_trust_id: '', //Want to fetch trust_id from loggedin Trust Admin
+      parent_trust_id: this.props.user.parent_trust_id,
       website,
       document_link,
       created_by: {
-        name: this.props.name,
-        userId: this.props.userId
+        name: this.props.user.name,
+        userId: this.props.user.auth_id
       }
     };
     if (
@@ -158,14 +158,14 @@ class CreateInstitution extends Component {
 
 const mapDispachToState = dispatch => ({
   dispatchSubmit: institution => {
-    dispatch(institutionActions.create(institution));
+    dispatch(institutionActions.register(institution));
   }
 });
 
 const mapStateToProps = state => {
   return {
-    name: state.authentication.user.user.name,
-    userId: state.authentication.user.user.auth_id,
+    user: state.authentication.user.user,
+
     alert: state.alert
   };
 };

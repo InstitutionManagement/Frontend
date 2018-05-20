@@ -8,6 +8,7 @@ import { trusts } from '../../views/Trust/reducer';
 import { superAdmin } from '../../views/Users/SuperAdmin/reducer';
 import { trustAdmin } from '../../views/Users/TrustAdmin/reducer';
 import { institution } from '../../views/Institution/reducer';
+import { institutionAdmin } from '../../views/Users/InstitutionAdmin/reducer';
 
 const rootReducer = combineReducers({
   alert,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   superAdmin,
   trusts,
   trustAdmin,
-  institution
+  institution,
+  institutionAdmin
 });
 
 export default rootReducer;

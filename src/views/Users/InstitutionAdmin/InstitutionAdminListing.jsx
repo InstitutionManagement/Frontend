@@ -1,17 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { institutionAdminActions } from './actions';
 import { Grid, Row, Col, Table, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import Card from '../../../components/Card/Card.jsx';
-import { trustAdminActions } from './actions';
 
-class TrustAdminListing extends Component {
+class InstitutionAdminListing extends Component {
   componentDidMount() {
-    this.props.getTrustAdmins();
+    if (this.props.user.user_type === 'TrustAdmin' && this.props.user.parent_trust_id) {
+      const condition = {
+        parent_trust_id: this.props.user.parent_trust_id,
+        status: 'STATUS_REQUIRED'
+      };
+      this.props.getInstitutionAdmins(condition);
+    }
   }
   render() {
-    const { trustAdmin } = this.props;
-    const loading = trustAdmin.loading ? 'Loading Trust Admins...' : 'Trust Admins';
-
+    const { institutionAdmin } = this.props;
+    const loading = institutionAdmin.loading ? 'Loading Institution Admins...' : 'Institution Admins';
     return (
       <div className="content">
         <Grid fluid>
@@ -19,7 +24,7 @@ class TrustAdminListing extends Component {
             <Col md={12}>
               <Card
                 title={loading}
-                category="Trust Administrators in the platform are listed below. This page allows to Deactivate a Trust Admin, Reset Password, Add Trust Admin to a Group Policy"
+                category="Institution Administrators in the platform are listed below. This page allows to Deactivate a Institution Admin, Reset Password"
                 ctTableFullWidth
                 ctTableResponsive
                 content={
@@ -38,9 +43,9 @@ class TrustAdminListing extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {trustAdmin.admins &&
-                        trustAdmin.admins.length > 0 &&
-                        trustAdmin.admins.map((prop, key) => {
+                      {institutionAdmin.data &&
+                        institutionAdmin.data.length > 0 &&
+                        institutionAdmin.data.map((prop, key) => {
                           return (
                             <tr key={key} className={prop.status.tag === 'DELETED' ? 'backgroundRed' : ''}>
                               <td>{key + 1}</td>
@@ -146,18 +151,17 @@ class TrustAdminListing extends Component {
     );
   }
 }
-
-const mapStateToProps = state => {
-  const { trustAdmin } = state;
+const mapStatetoProps = state => {
+  const { authentication, institutionAdmin } = state;
   return {
-    trustAdmin
+    user: authentication.user.user,
+    institutionAdmin
   };
 };
-
-const mapDispatchToProps = dispatch => ({
-  getTrustAdmins: () => {
-    dispatch(trustAdminActions.getAllTrustAdmins());
+const mapDispatchtoProps = dispatch => ({
+  getInstitutionAdmins: condition => {
+    dispatch(institutionAdminActions.getAll(condition));
   }
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrustAdminListing);
+export default connect(mapStatetoProps, mapDispatchtoProps)(InstitutionAdminListing);

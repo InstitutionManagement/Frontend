@@ -8,6 +8,7 @@ import Login from '../views/Login/Login';
 import TrustAdminListing from '../views/Users/TrustAdmin/TrustAdminListing';
 import InstitutionListing from '../views/Institution/InstitutionListing';
 import CreateInstitution from '../views/Institution/CreateInstitution';
+import InstitutionAdminListing from '../views/Users/InstitutionAdmin/InstitutionAdminListing';
 
 const SUPER_ADMIN_SIDEBAR = [
   {
@@ -118,10 +119,10 @@ const TRUST_ADMIN_SIDEBAR = [
     visible: true,
     children: [
       {
-        path: '/trust-admin-listing',
-        name: 'Trust Admin Listing',
+        path: '/institution-admin-listing',
+        name: 'Institution Admins',
         icon: 'pe-7s-menu',
-        component: TrustAdminListing,
+        component: InstitutionAdminListing,
         visible: true
       }
     ]
