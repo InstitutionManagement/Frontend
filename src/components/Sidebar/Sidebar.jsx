@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import HeaderLinks from '../Header/HeaderLinks';
 import imagine from '../../assets/img/sidebar-4.jpg';
 import logo from '../../assets/img/reactlogo.png';
-import { SidebarRoutes } from '../../routes/routing';
 
 class Sidebar extends Component {
   state = {
@@ -22,13 +21,18 @@ class Sidebar extends Component {
   }
 
   handleChildren(value) {
-    this.setState({ [value]: this.state[value] ? false : true });
+    if (this.state[value] && this.state[value] === true) {
+      this.setState({ [value]: false });
+    } else {
+      this.setState({ [value]: true });
+    }
   }
 
   render() {
     const sidebarBackground = {
       backgroundImage: 'url(' + imagine + ')'
     };
+
     return (
       <div id="sidebar" className="sidebar" data-color="purple" data-image={imagine}>
         <div className="sidebar-background" style={sidebarBackground} />
@@ -46,7 +50,7 @@ class Sidebar extends Component {
         <div className="sidebar-wrapper">
           <ul className="nav">
             {this.state.width <= 991 ? <HeaderLinks /> : null}
-            {SidebarRoutes.map((prop, key) => {
+            {this.props.sideBarData.map((prop, key) => {
               if (!prop.redirect && prop.visible && prop.path != null) {
                 return (
                   <li className={this.activeRoute(prop.path)} key={key}>

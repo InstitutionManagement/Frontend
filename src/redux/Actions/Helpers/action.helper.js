@@ -22,10 +22,13 @@ const duplicateKeyMessage = error => {
 
 const successCheck = response => response.status === 200 && response.data.error === null;
 
+const errorCheck = response => response && response.status === 500 && response.data;
+
 export const actionHelper = {
   request,
   success,
   failure,
   successCheck,
+  errorCheck,
   duplicateKeyMessage
 };

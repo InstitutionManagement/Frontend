@@ -1,26 +1,30 @@
 import { userConstants } from '../../constants/user.constants';
-let user;
-try {
-  user = JSON.parse(localStorage.getItem('user'));
-} catch (err) {
-  console.log('User Data in LocalStorage is not in good format');
-}
+import Helper from '../../services/helper.functions';
+
+let user = Helper.UserValidator();
+
 const initialState = user ? { loggedIn: true, user } : { loggedIn: false };
 
 export function authentication(state = initialState, action) {
   switch (action.type) {
     case userConstants.LOGIN_REQUEST:
       return {
+        loggedIn: false,
         loggingIn: true
       };
     case userConstants.LOGIN_SUCCESS:
       return {
-        loggedIn: true
+        loggedIn: true,
+        user: action.data
       };
     case userConstants.LOGIN_FAILURE:
-      return {};
+      return {
+        loggedIn: false
+      };
     case userConstants.LOGOUT:
-      return {};
+      return {
+        loggedIn: false
+      };
     default:
       return state;
   }

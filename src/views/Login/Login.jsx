@@ -6,6 +6,8 @@ import logoImage from '../../assets/img/login-logo.png';
 import './Login.css';
 import A from '../../elements/A/A.jsx';
 
+import { Redirect } from 'react-router-dom';
+
 const SocialIcon = props => {
   return (
     <li className="nav-item">
@@ -23,10 +25,13 @@ const SocialIcon = props => {
   );
 };
 
+// username: "vgautam",
+// password: "vgautam@321",
+
 class Login extends Component {
   state = {
-    username: 'vgautam',
-    password: 'vgautam@321',
+    username: 'trustadmin',
+    password: 'trustadmin',
     submitted: false
   };
 
@@ -61,6 +66,8 @@ class Login extends Component {
       ''
     );
     const { username, password } = this.state;
+
+    if (this.props.loggedIn) return <Redirect to="/dashboard" />;
 
     return (
       <div className="login-page sidebar-collapse">

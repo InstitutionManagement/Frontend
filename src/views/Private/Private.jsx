@@ -6,9 +6,10 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import { style } from '../../variables/Variables';
-import { Routes } from '../../routes/routing';
+import { SidebarRoutes, Routes } from '../../routes/routing';
 import { alertConstants } from '../../constants/alert.constants';
 import { alertActions } from '../../redux/Actions/alert.actions';
+import Helper from '../../services/helper.functions';
 
 class Private extends Component {
   constructor(props) {
@@ -68,29 +69,74 @@ class Private extends Component {
       this.props.clearAlert();
     }
   }
-  render() {
-    const user = JSON.parse(localStorage.getItem('user'));
 
-    return (
-      <div className="wrapper">
-        <NotificationSystem ref="notificationSystem" style={style} />
-        <Sidebar {...this.props} />
-        <div id="main-panel" className="main-panel">
-          <Header {...this.props} />
-          <Switch>
-            {user && user.token ? (
-              Routes.map((prop, key) => {
-                if (prop.redirect) return <Redirect from={prop.path} to={prop.to} key={key} />;
-                return <Route exact path={prop.path} component={prop.component} key={key} />;
-              })
-            ) : (
-              <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />
-            )}
-          </Switch>
-          <Footer />
+  routeMatch(userType) {
+    let sideBarData = [],
+      routesData = [];
+    switch (userType) {
+      case 'SuperAdmin':
+        routesData = Routes.SUPER_ADMIN_ROUTES;
+        sideBarData = SidebarRoutes.SUPER_ADMIN_SIDEBAR;
+        break;
+      case 'TrustAdmin':
+        routesData = Routes.TRUST_ADMIN_ROUTES;
+        sideBarData = SidebarRoutes.TRUST_ADMIN_SIDEBAR;
+        break;
+      case 'InstitutionAdmin':
+        routesData = Routes.INSTITUTION_ADMIN_ROUTES;
+        sideBarData = SidebarRoutes.INSTITUTION_ADMIN_SIDEBAR;
+        break;
+      case 'Staff':
+        routesData = Routes.STAFF_ROUTES;
+        sideBarData = SidebarRoutes.STAFF_SIDEBAR;
+        break;
+      case 'Student':
+        routesData = Routes.STUDENT_ROUTES;
+        sideBarData = SidebarRoutes.STUDENT_SIDEBAR;
+        break;
+      default:
+        routesData = Routes.DEFAULT_ROUTE;
+        sideBarData = SidebarRoutes.DEFAULT_SIDEBAR;
+        break;
+    }
+    return {
+      sideBarData,
+      routesData
+    };
+  }
+
+  render() {
+    const user = Helper.UserValidator();
+    if (user && user.token && user.user && user.user.user_type) {
+      let { sideBarData, routesData } = this.routeMatch(user.user.user_type);
+      return (
+        <div className="wrapper">
+          <NotificationSystem ref="notificationSystem" style={style} />
+          <Sidebar {...this.props} sideBarData={sideBarData} />
+          <div id="main-panel" className="main-panel">
+            <Header {...this.props} headerData={routesData} />
+            <Switch>
+              {user && user.token ? (
+                routesData.map((prop, key) => {
+                  if (prop.redirect) return <Redirect from={prop.path} to={prop.to} key={key} />;
+                  return <Route exact path={prop.path} component={prop.component} key={key} />;
+                })
+              ) : (
+                <Redirect
+                  to={{
+                    pathname: '/login',
+                    state: { from: this.props.location }
+                  }}
+                />
+              )}
+            </Switch>
+            <Footer />
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return <Redirect to={{ pathname: '/login', state: { from: this.props.location } }} />;
+    }
   }
 }
 

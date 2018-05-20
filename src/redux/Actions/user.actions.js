@@ -18,7 +18,6 @@ function login(username, password) {
         if (response.data.error === null && response.data.data.token !== null && actionHelper.successCheck(response)) {
           localStorage.setItem('user', JSON.stringify(response.data.data));
           dispatch(actionHelper.success(userConstants.LOGIN_SUCCESS, response.data.data));
-          window.location.href = '/dashboard';
         } else if (
           response.data.error === null &&
           response.data.data.token === null &&

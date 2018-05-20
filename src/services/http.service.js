@@ -1,9 +1,11 @@
 import axios from 'axios';
+import Helper from './helper.functions';
 // import { reporters } from 'mocha';
 
 function authHeader() {
   // return authorization header with jwt token
-  let user = JSON.parse(localStorage.getItem('user'));
+  let user = Helper.UserValidator();
+
   if (user && user.token) {
     return {
       'x-access-token': user.token
@@ -31,14 +33,29 @@ const http = axios.create({
   headers: HEADER
 });
 
-http.interceptors.response.use(
-  function(response) {
-    return response;
+// http.interceptors.response.use(
+//   function(response) {
+//     return response;
+//   },
+//   function(error) {
+//     // Do something with response error
+//     return Promise.reject(error);
+//   }
+// );
+
+http.interceptors.request.use(
+  config => {
+    if (config.url === '/api/login') {
+      delete config.headers['x-access-token'];
+      return config;
+    }
+    if (!config.headers['x-access-token']) {
+      config.headers = authHeader();
+      http.defaults.headers = authHeader();
+    }
+    return config;
   },
-  function(error) {
-    // Do something with response error
-    return Promise.reject(error);
-  }
+  error => Promise.reject(error)
 );
 
 export default http;

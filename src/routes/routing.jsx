@@ -7,8 +7,7 @@ import SuperAdminListing from '../views/Users/SuperAdmin/SuperAdminListing';
 import Login from '../views/Login/Login';
 import TrustAdminListing from '../views/Users/TrustAdmin/TrustAdminListing';
 import InstitutionListing from '../views/Institution/InstitutionListing';
-let Data = JSON.parse(localStorage.getItem('user'));
-Data = Data ? Data.user : { user_type: {} };
+import CreateInstitution from '../views/Institution/CreateInstitution';
 
 const SUPER_ADMIN_SIDEBAR = [
   {
@@ -68,6 +67,13 @@ const SUPER_ADMIN_SIDEBAR = [
         visible: true
       },
       {
+        path: '/create-institution',
+        name: 'Create Institution',
+        icon: 'pe-7s-home',
+        component: CreateInstitution,
+        visible: true
+      },
+      {
         path: '/institution-listing',
         name: 'Institution Listing',
         icon: 'pe-7s-culture',
@@ -102,55 +108,52 @@ const TRUST_ADMIN_SIDEBAR = [
     path: '/dashboard',
     name: 'Dashboard',
     icon: 'pe-7s-graph',
-    component: Dashboard
+    component: Dashboard,
+    visible: true
   },
   {
-    path: '/create-trust',
-    name: 'Create Trust',
-    icon: 'pe-7s-user',
-    component: CreateTrust
+    path: null,
+    name: 'User Management',
+    icon: 'pe-7s-users',
+    visible: true,
+    children: [
+      {
+        path: '/trust-admin-listing',
+        name: 'Trust Admin Listing',
+        icon: 'pe-7s-menu',
+        component: TrustAdminListing,
+        visible: true
+      }
+    ]
   },
   {
-    path: '/trust-listing',
-    name: 'Trust Listing',
-    icon: 'pe-7s-user',
-    component: TrustListing
+    path: null,
+    name: 'Trust Management',
+    icon: 'pe-7s-plugin',
+    visible: true,
+    children: [
+      {
+        path: '/create-institution',
+        name: 'Create Institution',
+        icon: 'pe-7s-home',
+        component: CreateInstitution,
+        visible: true
+      },
+      {
+        path: '/institution-listing',
+        name: 'Institution Listing',
+        icon: 'pe-7s-culture',
+        component: InstitutionListing,
+        visible: true
+      }
+    ]
   },
   {
-    path: '/create-super-admin',
-    name: 'Create Super Admin',
+    path: '/user-profile',
+    name: 'User Profile',
     icon: 'pe-7s-user',
-    component: UserProfile
-  },
-  {
-    path: '/super-admin-listing',
-    name: 'Super Admin Listing',
-    icon: 'pe-7s-user',
-    component: TrustListing
-  },
-  {
-    path: '/create-trust-admin',
-    name: 'Create Trust Admin',
-    icon: 'pe-7s-user',
-    component: UserProfile
-  },
-  {
-    path: '/trust-admin-listing',
-    name: 'Trust Admin Listing',
-    icon: 'pe-7s-user',
-    component: TrustListing
-  },
-  {
-    path: '/create-institution-admin',
-    name: 'Create Institution Admin',
-    icon: 'pe-7s-user',
-    component: UserProfile
-  },
-  {
-    path: '/institution-admin-listing',
-    name: 'Trust Admin Listing',
-    icon: 'pe-7s-user',
-    component: TrustListing
+    component: UserProfile,
+    visible: false
   },
   { redirect: true, path: '/', to: '/dashboard', name: 'Dashboard' }
 ];
@@ -373,33 +376,51 @@ STUDENT_SIDEBAR.forEach((prop, key) => {
   }
 });
 
-let Routes, SidebarRoutes;
+const DEFAULT_SIDEBAR = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
+const DEFAULT_ROUTE = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
 
-switch (Data.user_type) {
-  case 'SuperAdmin':
-    Routes = SUPER_ADMIN_ROUTES;
-    SidebarRoutes = SUPER_ADMIN_SIDEBAR;
-    break;
-  case 'TrustAdmin':
-    Routes = TRUST_ADMIN_ROUTES;
-    SidebarRoutes = TRUST_ADMIN_SIDEBAR;
-    break;
-  case 'InstitutionAdmin':
-    Routes = INSTITUTION_ADMIN_ROUTES;
-    SidebarRoutes = INSTITUTION_ADMIN_SIDEBAR;
-    break;
-  case 'Staff':
-    Routes = STAFF_ROUTES;
-    SidebarRoutes = STAFF_SIDEBAR;
-    break;
-  case 'Student':
-    Routes = STUDENT_ROUTES;
-    SidebarRoutes = STUDENT_SIDEBAR;
-    break;
-  default:
-    Routes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
-    SidebarRoutes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
-    break;
-}
+let Routes = {
+    SUPER_ADMIN_ROUTES,
+    TRUST_ADMIN_ROUTES,
+    INSTITUTION_ADMIN_ROUTES,
+    STAFF_ROUTES,
+    STUDENT_ROUTES,
+    DEFAULT_ROUTE
+  },
+  SidebarRoutes = {
+    SUPER_ADMIN_SIDEBAR,
+    TRUST_ADMIN_SIDEBAR,
+    INSTITUTION_ADMIN_SIDEBAR,
+    STAFF_SIDEBAR,
+    STUDENT_SIDEBAR,
+    DEFAULT_SIDEBAR
+  };
+
+// switch (Data.user_type) {
+//   case 'SuperAdmin':
+//     Routes = SUPER_ADMIN_ROUTES;
+//     SidebarRoutes = SUPER_ADMIN_SIDEBAR;
+//     break;
+//   case 'TrustAdmin':
+//     Routes = TRUST_ADMIN_ROUTES;
+//     SidebarRoutes = TRUST_ADMIN_SIDEBAR;
+//     break;
+//   case 'InstitutionAdmin':
+//     Routes = INSTITUTION_ADMIN_ROUTES;
+//     SidebarRoutes = INSTITUTION_ADMIN_SIDEBAR;
+//     break;
+//   case 'Staff':
+//     Routes = STAFF_ROUTES;
+//     SidebarRoutes = STAFF_SIDEBAR;
+//     break;
+//   case 'Student':
+//     Routes = STUDENT_ROUTES;
+//     SidebarRoutes = STUDENT_SIDEBAR;
+//     break;
+//   default:
+//     Routes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
+//     SidebarRoutes = [{ path: '/login', name: 'Logout', icon: 'pe-7s-power', component: Login }];
+//     break;
+// }
 
 export { Routes, SidebarRoutes };
